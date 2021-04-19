@@ -1,0 +1,69 @@
+<!--miniprogram/pages/createOrder/createOrder.wxml-->
+<van-cell-group>
+  <van-field
+    label="标题"
+    model:value="{{ title }}"
+    placeholder="请输入标题"
+  />
+  <!-- 选择业务类型 -->
+  <van-dropdown-menu>
+    <van-dropdown-item value="{{ 0 }}" options="{{ businessType }}" bind:change="changeType"/>
+  </van-dropdown-menu>
+  <!-- 未完成：图片 -->
+  <label>起始校区</label>
+  <label>目的校区</label>
+  <van-dropdown-menu>
+    <van-dropdown-item value="{{ 0 }}" options="{{ allCampus }}" bind:change="changeStart"/>
+    <van-dropdown-item value="{{ 0 }}" options="{{ allCampus }}" bind:change="changeEnd"/>
+  </van-dropdown-menu>
+  <!-- <van-field
+    label="起始校区"
+    model:value="{{ start }}"
+    placeholder="请输入起始校区"
+  />
+  <van-field
+    label="目的校区"
+    model:value="{{ end }}"
+    placeholder="请输入目的校区"
+  /> -->
+  <van-field
+    label="取货地点"
+    model:value="{{ goodsPlace }}"
+    placeholder="请输入取货地点"
+  />
+  <van-field
+    label="交易地点"
+    model:value="{{ dealPlace }}"
+    placeholder="请输入交易地点"
+  />
+  <!-- 时间 -->
+  <!-- <van-cell title="选择单个日期" value="{{ date }}" bind:click="onDisplay" />
+  <van-calendar show="{{ show }}" bind:close="onClose" bind:confirm="onConfirm" /> -->
+
+  <van-datetime-picker
+    title="选择完整时间"
+    type="datetime"
+    value="{{ currentDate }}"
+    min-date="{{ minDate }}"
+    max-date="{{ maxDate }}"
+    bind:input="onInputDate"
+  />
+
+  <van-field
+    label="联系方式"
+    model:value="{{ contact }}"
+    placeholder="请输入联系方式"
+  />
+  <!-- 下拉菜单DropdownMenu -->
+  <van-field
+    label="悬赏"
+    model:value="{{ reward }}"
+    placeholder="请输入悬赏"
+  />
+  <van-field
+    label="详细描述"
+    model:value="{{ description }}"
+    placeholder="请输入详细描述"
+  />
+  <van-button type="primary" bind:click="submit">创建</van-button>
+</van-cell-group>

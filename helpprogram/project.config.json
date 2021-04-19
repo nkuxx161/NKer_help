@@ -27,7 +27,6 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
@@ -38,8 +37,10 @@
     "minifyWXSS": true
   },
   "appid": "wx739adf511273a50d",
-  "projectname": "miniprogram-1",
+  "projectname": "NKU",
   "libVersion": "2.14.1",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
       "list": []
