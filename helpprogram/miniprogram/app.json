@@ -1,7 +1,7 @@
 {
-  "pages": [
+  "pages": [ 
     "pages/showCompletedOrder/showCompletedOrder",
-    "pages/createOrder/createOrder",
+   "pages/createOrder/createOrder",
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail"
   ],
@@ -21,6 +21,8 @@
     "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
     "van-dropdown-item": "@vant/weapp/dropdown-item/index",
     "van-calendar": "@vant/weapp/calendar/index",
-    "van-datetime-picker": "@vant/weapp/datetime-picker/index"
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index"
   }
 }
