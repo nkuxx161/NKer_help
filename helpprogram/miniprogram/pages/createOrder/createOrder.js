@@ -35,40 +35,59 @@ Page({
     maxDate: new Date(2025, 10, 1).getTime(),
     currentDate: new Date().getTime(),
 
-    businessType: [
-      { text: '外卖', value: 0 },
-      { text: '快递', value: 1 },
-      { text: '代购', value: 2 },
-      { text: '其他', value: 3 },
+    businessType: [{
+        text: '外卖',
+        value: 0
+      },
+      {
+        text: '快递',
+        value: 1
+      },
+      {
+        text: '代购',
+        value: 2
+      },
+      {
+        text: '其他',
+        value: 3
+      },
     ],
-    allCampus: [
-      { text: '八里台校区', value: 0},
-      { text: '津南校区', value: 1},
-      { text: '泰达校区', value: 2},
+    allCampus: [{
+        text: '八里台校区',
+        value: 0
+      },
+      {
+        text: '津南校区',
+        value: 1
+      },
+      {
+        text: '泰达校区',
+        value: 2
+      },
     ],
   },
 
-  changeType(e){
-    switch(e.detail){
-      case 0:{
+  changeType(e) {
+    switch (e.detail) {
+      case 0: {
         this.setData({
           type: '外卖'
         })
         break;
       }
-      case 1:{
+      case 1: {
         this.setData({
           type: '快递'
         })
         break;
       }
-      case 2:{
+      case 2: {
         this.setData({
           type: '代购'
         })
         break;
       }
-      case 3:{
+      case 3: {
         this.setData({
           type: '其他'
         })
@@ -77,21 +96,21 @@ Page({
     }
   },
 
-  changeStart(e){
-    switch(e.detail){
-      case 0:{
+  changeStart(e) {
+    switch (e.detail) {
+      case 0: {
         this.setData({
           start: '八里台校区'
         })
         break;
       }
-      case 1:{
+      case 1: {
         this.setData({
           start: '津南校区'
         })
         break;
       }
-      case 2:{
+      case 2: {
         this.setData({
           start: '泰达校区'
         })
@@ -99,21 +118,21 @@ Page({
       }
     }
   },
-  changeEnd(e){
-    switch(e.detail){
-      case 0:{
+  changeEnd(e) {
+    switch (e.detail) {
+      case 0: {
         this.setData({
           end: '八里台校区'
         })
         break;
       }
-      case 1:{
+      case 1: {
         this.setData({
           end: '津南校区'
         })
         break;
       }
-      case 2:{
+      case 2: {
         this.setData({
           end: '泰达校区'
         })
@@ -148,10 +167,10 @@ Page({
     });
   },
 
-  submit(e){
+  submit(e) {
     console.log(this.data)
     db.add({
-      data:{
+      data: {
         sendStudentID: this.data.sendStudentID,
         receiveStudentID: this.data.receiveStudentID,
         title: this.data.title,
@@ -176,27 +195,29 @@ Page({
   onLoad: function (options) {
     // 获取用户openid
     wx.cloud.callFunction({
-      name: 'getOpenID',
-    })
-    .then(res=>{
-      // console.log(res.result.event.userInfo.openId)
-      this.setData({
-        openid: res.result.event._openid
+        name: 'getOpenID',
       })
-    })
-    .catch(err=>{
-      console.log(err)
-    })
+      .then(res => {
+        // console.log(res.result.event.userInfo.openId)
+        this.setData({
+          openid: res.result.event._openid
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
     // 获取用户学号
-    userdb.where({'_openid':this.data.openid}).get()
-    .then(res=>{
-      // console.log(res.data[0].studentID)
-      this.setData({
-        sendStudentID: res.data[0].studentID
+    userdb.where({
+        '_openid': this.data.openid
+      }).get()
+      .then(res => {
+        // console.log(res.data[0].studentID)
+        this.setData({
+          sendStudentID: res.data[0].studentID
+        })
+      }).catch(err => {
+        console.log(err)
       })
-    }).catch(err=>{
-      console.log(err)
-    })
   },
 
   /**
