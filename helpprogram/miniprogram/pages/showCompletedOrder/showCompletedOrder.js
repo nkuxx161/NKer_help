@@ -9,8 +9,70 @@ Page({
    */
   data: {
     openid: '',
-    completedStatus: 3,
-    completedOrderList: []
+    status: 0,
+    waitOrderList: [],
+    doingOrderList: [],
+    cancelledOrderList: [],
+    completedOrderList: [],
+    currentOrderList: [],
+    active: 0
+  },
+
+  getList() {
+    db.where({
+        status: this.data.status,
+        _openid: this.data.openid
+      }).skip(this.data.currentOrderList.length).get()
+      .then(res => {
+        if(res.data.length==0){
+          wx.showToast({
+            title: '已到底',
+          })
+        }else{
+          switch (this.data.status) {
+            case 0: {
+              this.setData({
+                waitOrderList: this.data.waitOrderList.concat(res.data)           
+              })
+              this.setData({
+                currentOrderList: this.data.waitOrderList
+              })
+              break
+            }
+            case 1: {
+              this.setData({
+                doingOrderList: this.data.doingOrderList.concat(res.data)
+              })
+              this.setData({
+                currentOrderList: this.data.doingOrderList
+              })
+              break
+            }
+            case 2: {
+              this.setData({
+                cancelledOrderList: this.data.cancelledOrderList.concat(res.data)
+              })
+              this.setData({
+                currentOrderList: this.data.cancelledOrderList
+              })
+              break
+            }
+            case 3: {
+              this.setData({
+                completedOrderList: this.data.completedOrderList.concat(res.data)
+
+              })        
+              this.setData({
+                currentOrderList: this.data.completedOrderList
+              })     
+              break
+            }
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   },
 
   /**
@@ -25,36 +87,36 @@ Page({
         this.setData({
           openid: res.result.openid
         })
-        // console.log(this.data.openid)
-        // 找到该用户的已完成订单列表
-        //默认与的关系
-        db.where({
-            status: this.data.completedStatus,
-            _openid: this.data.openid
-          }).get()
-          .then(res => {
-            console.log(res.data)
-            this.setData({
-              completedOrderList: res.data
-            })
-          })
-          .catch(err => {
-            console.log(err)
-          })
+        this.getList()
       })
       .catch(err => {
         console.log(err)
       })
+      wx.startPullDownRefresh()
   },
 
   showDetail(id) {
-    console.log(id.currentTarget.dataset.id)
-    //页面跳转，带参id.currentTarget.dataset.id
+    this.setData({
+      status: 0,
+      waitOrderList: [],
+      doingOrderList: [],
+      cancelledOrderList: [],
+      completedOrderList: [],
+      currentOrderList: [],
+      active: 0
+    })
     wx.navigateTo({
       url: '../showOrderDetail/showOrderDetail?orderId=' + id.currentTarget.dataset.id,
     })
   },
 
+  onChange(event) {
+    this.setData({
+      status: event.detail.index,
+      currentOrderList: []
+    })
+    this.getList()
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -94,7 +156,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getList()
+    setTimeout(function(){
+      wx.stopPullDownRefresh()
+    },1000)
   },
 
   /**
