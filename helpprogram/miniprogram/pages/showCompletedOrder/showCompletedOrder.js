@@ -1,4 +1,3 @@
-// miniprogram/pages/showCompletedOrder.js
 const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
 const _ = wx.cloud.database().command
@@ -24,15 +23,15 @@ Page({
         _openid: this.data.openid
       }).skip(this.data.currentOrderList.length).get()
       .then(res => {
-        if(res.data.length==0){
+        if (res.data.length == 0) {
           wx.showToast({
             title: '已到底',
           })
-        }else{
+        } else {
           switch (this.data.status) {
             case 0: {
               this.setData({
-                waitOrderList: this.data.waitOrderList.concat(res.data)           
+                waitOrderList: this.data.waitOrderList.concat(res.data)
               })
               this.setData({
                 currentOrderList: this.data.waitOrderList
@@ -61,10 +60,10 @@ Page({
               this.setData({
                 completedOrderList: this.data.completedOrderList.concat(res.data)
 
-              })        
+              })
               this.setData({
                 currentOrderList: this.data.completedOrderList
-              })     
+              })
               break
             }
           }
@@ -92,7 +91,7 @@ Page({
       .catch(err => {
         console.log(err)
       })
-      wx.startPullDownRefresh()
+    wx.startPullDownRefresh()
   },
 
   showDetail(id) {
@@ -148,9 +147,9 @@ Page({
    */
   onReachBottom: function () {
     this.getList()
-    setTimeout(function(){
+    setTimeout(function () {
       wx.stopPullDownRefresh()
-    },1000)
+    }, 1000)
   },
 
   /**

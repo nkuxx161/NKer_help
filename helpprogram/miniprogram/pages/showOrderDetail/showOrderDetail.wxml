@@ -1,16 +1,15 @@
-<!--miniprogram/pages/showOrderDetail/showOrderDetail.wxml-->
 <van-cell-group>
-  <van-cell title="标题" value="{{order.title}}"/>
-  <van-cell title="类型" value="{{order.type}}"/>
-  <van-cell title="起始校区" value="{{order.start}}"/>
-  <van-cell title="目的校区" value="{{order.end}}"/>
-  <van-cell title="取货地点" value="{{order.goodsPlace}}"/>
-  <van-cell title="交易地点" value="{{order.dealPlace}}"/>
-  <van-cell title="时间" value="{{order.date}}"/>
-  <van-cell title="联系方式" value="{{order.contact}}"/>
-  <van-cell title="悬赏" value="{{order.reward}}"/>
-  <van-cell title="详细描述" value="{{order.description}}"/>
-  <van-cell title="图片" value="{{order.image}}"/>
-  <van-cell title="发单人学号" value="{{order.sendStudentID}}"/>
-  <van-cell title="接单人学号" value="{{order.receiveStudentID}}"/>
+  <van-cell title="标题" value="{{order.title}}" />
+  <van-cell title="类型" value="{{order.type}}" />
+  <van-cell title="起始校区" value="{{order.start}}" />
+  <van-cell title="目的校区" value="{{order.end}}" />
+  <van-cell title="取货地点" value="{{order.goodsPlace}}" />
+  <van-cell title="交易地点" value="{{order.dealPlace}}" />
+  <van-cell title="时间" value="{{order.date}}" />
+  <van-cell title="联系方式" value="{{order.contact}}" />
+  <van-cell title="悬赏" value="{{order.reward}}" />
+  <van-cell title="详细描述" value="{{order.description}}" />
+  <van-cell title="图片" value="{{order.image}}" />
+  <van-cell title="发单人学号" value="{{order.sendStudentID}}" />
+  <van-cell title="接单人学号" value="{{order.receiveStudentID}}" />
 </van-cell-group>

@@ -1,4 +1,3 @@
-<!--miniprogram/pages/showCompletedOrder.wxml-->
 <van-tabs active="{{ active }}" bind:change="onChange">
   <van-tab title="待接单"></van-tab>
   <van-tab title="已接单"></van-tab>
@@ -6,5 +5,5 @@
   <van-tab title="已完成"></van-tab>
 </van-tabs>
 <van-cell-group wx:for="{{currentOrderList}}" data-item="item">
-  <van-cell title="{{item.title}}" value="{{item.date}}" bind:click="showDetail" data-id='{{item._id}}'/>
+  <van-cell title="{{item.title}}" value="{{item.date}}" bind:click="showDetail" data-id='{{item._id}}' />
 </van-cell-group>
