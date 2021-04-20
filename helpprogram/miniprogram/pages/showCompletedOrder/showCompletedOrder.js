@@ -48,7 +48,6 @@ Page({
   },
 
   showDetail(id) {
-    //页面跳转，带参id.currentTarget.dataset.id
     wx.navigateTo({
       url: '../showOrderDetail/showOrderDetail?orderId=' + id.currentTarget.dataset.id,
     })
