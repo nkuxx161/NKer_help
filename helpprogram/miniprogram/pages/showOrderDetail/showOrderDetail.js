@@ -1,4 +1,3 @@
-// miniprogram/pages/showOrderDetail/showOrderDetail.js
 const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
 Page({
