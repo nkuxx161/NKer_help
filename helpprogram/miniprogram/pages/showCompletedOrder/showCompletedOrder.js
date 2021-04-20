@@ -96,15 +96,6 @@ Page({
   },
 
   showDetail(id) {
-    this.setData({
-      status: 0,
-      waitOrderList: [],
-      doingOrderList: [],
-      cancelledOrderList: [],
-      completedOrderList: [],
-      currentOrderList: [],
-      active: 0
-    })
     wx.navigateTo({
       url: '../showOrderDetail/showOrderDetail?orderId=' + id.currentTarget.dataset.id,
     })
