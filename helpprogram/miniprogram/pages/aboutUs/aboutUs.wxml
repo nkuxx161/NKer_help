@@ -1,0 +1,7 @@
+<!--pages/aboutUs/aboutUs.wxml-->
+<view>
+  <text>
+  about us
+  </text>
+</view>
+<view></view>
