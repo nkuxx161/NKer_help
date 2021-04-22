@@ -102,9 +102,34 @@ Page({
 
   onChange(event) {
     this.setData({
-      status: event.detail.index,
-      currentOrderList: []
+      status: event.detail.index
     })
+    switch (this.data.status) {
+      case 0: {
+        this.setData({
+          currentOrderList: this.data.waitOrderList
+        })
+        break
+      }
+      case 1: {
+        this.setData({
+          currentOrderList: this.data.doingOrderList
+        })
+        break
+      }
+      case 2: {
+        this.setData({
+          currentOrderList: this.data.cancelledOrderList
+        })
+        break
+      }
+      case 3: {
+        this.setData({
+          currentOrderList: this.data.completedOrderList
+        })
+        break
+      }
+    }
     this.getList()
   },
   /**
