@@ -1,7 +1,8 @@
 {
-  "pages": [ 
+  "pages": [
+    "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
-   "pages/createOrder/createOrder",
+    "pages/createOrder/createOrder",
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail"
   ],
