@@ -9,8 +9,6 @@ Page({
       ifLogin: 'No',
       name:'张三',
       id:'1812974'
-    
-
   },
 
   /**
@@ -67,6 +65,23 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  /**
+   * 跳转到关于我们
+   */
+  goToAboutUs: function(){
+    wx.navigateTo({ url: '../aboutUs/aboutUs', }) 
+  },
+  goNk: function(){
+    wx.request({
+      url: 'https://auth.nankai.edu.cn/oauth/sso/login',
+    })
+  //   wx.navigateTo({ url: '../nk/nk', success:function() {
+  //   wx.navigateTo({ url: '../aboutUs/aboutUs', })
+  //   }, //成功后的回调；
+  //   fail:function() { }, //失败后的回调；
+  //   complete:function() {wx.navigateTo({ url: '../aboutUs/aboutUs', })  
+  // } }) 
   }
   
 })

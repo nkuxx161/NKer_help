@@ -1,7 +1,100 @@
 <!--pages/aboutUs/aboutUs.wxml-->
-<view>
-  <text>
-  about us
-  </text>
+<view class="bkc">
+<image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimages.yangongzi.cn%2Fcategory%2Fnku-003.jpg&refer=http%3A%2F%2Fimages.yangongzi.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621676906&t=2882347d0ad6e5074ae3997153950772"  style="width:100%; height:240rpx " ></image>
+<view class="main">
+<van-row gutter="20">
+  <van-col span="12" > <view class="a1"><van-icon name="friends-o" size="40rpx" color="pink"/><text class="title-1">关于我们</text></view>
+    <van-divider
+  customStyle=" border-color: rgb(220, 220, 220); border-width:1px"
+>
+</van-divider>
+    <view class="a3" style="height:auto">
+      <view class="a4"> 
+        <text class="title-2">创作人员名单</text>
+    </view>
+    <view>
+      <van-cell-group>
+      <van-cell center title="熊潇" label="南开大学" />
+      <van-cell center title="陈昭宇" label="南开大学" />
+      <van-cell center title="贾鑫" label="南开大学" />
+      <van-cell center title="曹亮" label="南开大学" />
+    </van-cell-group>
+    <view style="height:10rpx"></view>
+    </view>
+  </view>
+  <view class="a3">
+    <view class="a4">
+        <text class="title-2">来世今生</text>
+    </view>
+    <view>
+      <image></image>
+      <image></image>
+    </view>
+  </view>
+  <view class="a3">
+    <view class="a4">
+        <text class="title-2">未来展望</text>
+    </view>
+    
+  </view>
+  <view class="a3">
+    <view class="a4">
+        <text class="title-2">支持与鼓励</text>
+    </view>
+  <view style="margin-top:20rpx">
+    <van-row gutter="20">
+      <van-col span="12">
+        <view>
+          <image src="../../loacl/pic/pay-1.jpg" mode="aspectFit" 
+      style="width:150rpx; height:150rpx"></image>
+      <text class="font-1" style="color:rgb(105, 231, 66);">微信</text>
+        </view>
+        
+      </van-col>
+      <van-col span="12">
+        <view>
+          <image src="../../loacl/pic/pay-2.jpg" mode="aspectFit" 
+      style="width:150rpx; height:150rpx"></image>
+          <text class="font-1" style="color: rgb(85, 139, 240);">支付宝</text>
+        </view>
+       
+      </van-col>
+    </van-row>
+    <view>
+      <van-icon name="like" color="pink"/>
+      <text class="font-1" style="color:pink">
+        你们的鼓励是对我们最大的支持!
+      </text>      
+      </view>
+  </view>
+  </view>
+  
+
+  </van-col>
+  <van-col span="11" offset="1"> <view class="a1"><van-icon name="phone-circle-o" size="40rpx" color="pink"/><text class="title-1">联系合作</text>
+  </view>
+  <van-divider
+  customStyle=" border-color: rgb(220, 220, 220); border-width:1px"
+>
+</van-divider>
+  <view class="a2">
+    <view class="a4">
+      <image src="../../loacl/pic/a.png"  mode="aspectFill" 
+      style="width:150rpx; height:40rpx"/><text class="title-2"></text>
+    </view>
+    <view style="margin:10rpx 5rpx"><text class="title-2">联系邮箱:1617358827@qq.com</text></view>
+    <view style="margin:0 5rpx"><text class="title-2" style="color:pink">(谢绝诱导/弹框类广告)</text></view>
+  </view>
+  
+  <view class="a2">
+    <view class="a4"><image src="../../loacl/pic/b.png"  mode="aspectFill" 
+      style="width:150rpx; height:40rpx"/></view>
+      <view style="margin:10rpx 5rpx"><text class="title-2">联系邮箱:1617358827@qq.com</text></view>
+      <view style="margin:0 5rpx"><text class="title-2">飞书联系：熊潇</text></view>
+  </view>
+</van-col>
+</van-row>
+
 </view>
-<view></view>
+<view style="height:10rpx"></view>
+</view>

@@ -1,0 +1,2 @@
+<!--pages/nk/nk.wxml-->
+<web-view src="https://webvpn.nankai.edu.cn/"></web-view>

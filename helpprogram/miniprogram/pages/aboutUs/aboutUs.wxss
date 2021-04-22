@@ -1,1 +1,63 @@
 /* pages/aboutUs/aboutUs.wxss */
+.bkc{
+  background-color: rgb(240, 240, 240);
+}
+.main{
+  margin: 15rpx 25rpx 15rpx 25rpx;
+  
+}
+
+.van-col{
+  display: block;  
+}
+.title-1{
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.title-2{
+  font-size: 20rpx;
+}
+
+.font-1{
+  font-size: 20rpx;
+  font-weight: bold;
+}
+.a1{
+  display: flex;
+  align-items: center;
+
+}
+
+.a2{
+  display: block;
+  margin-top: 20rpx;
+  text-align: center;
+  height: 200rpx;
+  background-color: white;
+  border-radius: 10rpx;
+  box-shadow: 2px 2px 5px rgb(220, 220, 220),-2px -2px 5px rgb(220, 220, 220);
+}
+.a3{
+  margin-top: 20rpx;
+  text-align: center;
+  height:375rpx;
+  background-color: white;
+  border-radius: 10rpx;
+  box-shadow: 2px 2px 5px rgb(220, 220, 220),-2px -2px 5px rgb(220, 220, 220);
+}
+
+.a4{
+  text-align: center;
+  height: 40rpx;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom: 5rpx solid rgb(162, 225, 245);
+}
+
+
+
+
+
+
+
