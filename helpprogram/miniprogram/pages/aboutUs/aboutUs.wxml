@@ -24,16 +24,16 @@
   </view>
   <view class="a3">
     <view class="a4">
-        <text class="title-2">来世今生</text>
-    </view>
-    <view>
-      <image></image>
-      <image></image>
-    </view>
-  </view>
-  <view class="a3">
-    <view class="a4">
-        <text class="title-2">未来展望</text>
+        <text class="title-2">发展理念</text>
+        <view class="a5"><text space="emsp">我们的目标</text></view>
+        <view class="a5"><text space="emsp">是让干饭人</text><text style="color:red; font-size:large; font-weight: bold;">足不出户</text></view>
+        <view class="a5"><text space="emsp">我们的目标</text></view>
+        <view class="a5"><text space="emsp">是让元和西饼</text><text style="color:red;font-size:large; font-weight: bold;">香飘泰达</text></view>
+        <view class="a5">
+          <text space="emsp" style="color:rgb(162, 225, 245);font-size:Large; font-weight: bold;">Peace</text>
+          <text space="emsp" style="font-weight: bold;"> & </text>
+          <text space="emsp" style="color:pink;font-size:large; font-weight: bold;">Love</text>
+        </view>
     </view>
     
   </view>

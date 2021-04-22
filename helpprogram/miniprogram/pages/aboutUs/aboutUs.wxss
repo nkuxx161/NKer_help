@@ -55,6 +55,11 @@
   border-bottom: 5rpx solid rgb(162, 225, 245);
 }
 
+.a5{
+  margin-top: 20rpx;
+  font-size: x-small;
+}
+
 
 
 
