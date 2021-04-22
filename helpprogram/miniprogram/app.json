@@ -1,12 +1,13 @@
 {
-  "pages": [ 
-    "pages/aboutUs/aboutUs",
-    "pages/userInfo/userInfo",
+  "pages": [
+    "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
-   "pages/createOrder/createOrder",
+    "pages/createOrder/createOrder",
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
-    "pages/nk/nk"
+    "pages/nk/nk",
+	"pages/aboutUs/aboutUs",
+    "pages/userInfo/userInfo"
     
 
   ],
