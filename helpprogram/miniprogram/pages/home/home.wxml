@@ -1,4 +1,4 @@
 <!--miniprogram/pages/home/home.wxml-->
 <van-cell-group wx:for="{{currentOrderList}}" data-item="item">
-  <van-cell title="{{item.title}}" value="{{item.date}}" data-id='{{item._id}}' />
+  <van-cell title="{{item.title}}" value="{{item.date}}" bind:click="showDetail" data-id='{{item._id}}' />
 </van-cell-group>
