@@ -2,7 +2,7 @@
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -27,6 +27,7 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
@@ -37,7 +38,8 @@
     "minifyWXSS": true
   },
   "appid": "wx739adf511273a50d",
-  "projectname": "home",
+  "projectname": "NKU",
+
   "libVersion": "2.14.1",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},

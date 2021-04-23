@@ -1,16 +1,21 @@
 {
-  "pages": [ 
-    "pages/home/home",
+  "pages": [
+    "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
     "pages/createOrder/createOrder",
     "pages/index/index",
-    "pages/showOrderDetail/showOrderDetail"
+    "pages/showOrderDetail/showOrderDetail",
+    "pages/nk/nk",
+	  "pages/aboutUs/aboutUs",
+    "pages/userInfo/userInfo",
+    "pages/home/home"
+
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "Nker help",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",
@@ -24,6 +29,12 @@
     "van-calendar": "@vant/weapp/calendar/index",
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-tab": "@vant/weapp/tab/index",
-    "van-tabs": "@vant/weapp/tabs/index"
+    "van-tabs": "@vant/weapp/tabs/index",
+    "van-image": "@vant/weapp/image/index",
+    "van-row": "@vant/weapp/row/index",
+    "van-col": "@vant/weapp/col/index",
+    "van-icon": "@vant/weapp/icon/index",
+    "van-divider": "@vant/weapp/divider/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index"
   }
 }

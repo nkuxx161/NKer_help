@@ -8,7 +8,8 @@ Page({
    */
   data: {
     openid: '',
-    status: 0,
+    receiveStudentID: '',
+    status: 1,
     waitOrderList: [],
     doingOrderList: [],
     cancelledOrderList: [],
@@ -17,11 +18,34 @@ Page({
     active: 0
   },
 
+  //获取接单人的学号
+  getReceiveStudentID(_openid) {
+    DB.collection('userInfo').where({
+        _openid: _openid
+      }).get()
+      .then(res => {
+        if (res.data.length == 0) {
+          console.log("接单人不存在学号")
+        } else {
+          console.log("获取接单人学号信息", res.data[0].studentID)
+          this.setData({
+            receiveStudentID: res.data[0].studentID
+          })
+          this.getList()
+        }
+      })
+      .catch(err => {
+        console.log("查询接单人学号失败")
+      })
+  },
+
+  //根据学号和状态查询订单
   getList() {
+    console.log("接单人学号", this.data.receiveStudentID)
     db.where({
         status: this.data.status,
-        _openid: this.data.openid
-      }).skip(this.data.currentOrderList.length).get()
+        receiveStudentID: this.data.receiveStudentID
+      }).skip(this.data.currentOrderList.length).limit(20).get()
       .then(res => {
         if (res.data.length == 0) {
           wx.showToast({
@@ -29,15 +53,6 @@ Page({
           })
         } else {
           switch (this.data.status) {
-            case 0: {
-              this.setData({
-                waitOrderList: this.data.waitOrderList.concat(res.data)
-              })
-              this.setData({
-                currentOrderList: this.data.waitOrderList
-              })
-              break
-            }
             case 1: {
               this.setData({
                 doingOrderList: this.data.doingOrderList.concat(res.data)
@@ -86,7 +101,7 @@ Page({
         this.setData({
           openid: res.result.openid
         })
-        this.getList()
+        this.getReceiveStudentID(this.data.openid)
       })
       .catch(err => {
         console.log(err)
@@ -94,42 +109,19 @@ Page({
     wx.startPullDownRefresh()
   },
 
-  showDetail(id) {
+  //跳转到订单详情页
+  showDetail(id) { 
     wx.navigateTo({
       url: '../showOrderDetail/showOrderDetail?orderId=' + id.currentTarget.dataset.id,
     })
   },
 
+  //切换订单列表
   onChange(event) {
+    // console.log("切换的栏目编号", event.detail.index)
     this.setData({
-      status: event.detail.index
+      status: event.detail.index + 1,
     })
-    switch (this.data.status) {
-      case 0: {
-        this.setData({
-          currentOrderList: this.data.waitOrderList
-        })
-        break
-      }
-      case 1: {
-        this.setData({
-          currentOrderList: this.data.doingOrderList
-        })
-        break
-      }
-      case 2: {
-        this.setData({
-          currentOrderList: this.data.cancelledOrderList
-        })
-        break
-      }
-      case 3: {
-        this.setData({
-          currentOrderList: this.data.completedOrderList
-        })
-        break
-      }
-    }
     this.getList()
   },
   /**
@@ -164,7 +156,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+  
   },
 
   /**
