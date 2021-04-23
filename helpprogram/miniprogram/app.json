@@ -6,9 +6,9 @@
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
-	"pages/aboutUs/aboutUs",
-    "pages/userInfo/userInfo"
-    
+	  "pages/aboutUs/aboutUs",
+    "pages/userInfo/userInfo",
+    "pages/home/home"
 
   ],
   "window": {
