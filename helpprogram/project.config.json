@@ -37,7 +37,7 @@
     "minifyWXSS": true
   },
   "appid": "wx739adf511273a50d",
-  "projectname": "temp",
+  "projectname": "home",
   "libVersion": "2.14.1",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
