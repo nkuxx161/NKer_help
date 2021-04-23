@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/home/home",
     "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
     "pages/createOrder/createOrder",
@@ -7,9 +8,7 @@
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
 	  "pages/aboutUs/aboutUs",
-    "pages/userInfo/userInfo",
-    "pages/home/home"
-
+    "pages/userInfo/userInfo"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
