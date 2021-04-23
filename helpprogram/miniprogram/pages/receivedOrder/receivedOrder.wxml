@@ -3,6 +3,8 @@
   <van-tab title="已取消"></van-tab>
   <van-tab title="已完成"></van-tab>
 </van-tabs>
-<van-cell-group wx:for="{{currentOrderList}}" data-item="item">
+<van-cell-group wx:key="index" wx:for="{{currentOrderList}}" data-item="item">
   <van-cell title="{{item.title}}" value="{{item.date}}" bind:click="showDetail" data-id='{{item._id}}' />
 </van-cell-group>
+
+<van-toast id="van-toast" />

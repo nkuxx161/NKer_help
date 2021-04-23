@@ -1,3 +1,5 @@
+import Toast from '@vant/weapp/toast/toast'
+
 const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
 const _ = wx.cloud.database().command
@@ -10,7 +12,6 @@ Page({
     openid: '',
     receiveStudentID: '',
     status: 1,
-    waitOrderList: [],
     doingOrderList: [],
     cancelledOrderList: [],
     completedOrderList: [],
@@ -27,7 +28,7 @@ Page({
         if (res.data.length == 0) {
           console.log("接单人不存在学号")
         } else {
-          console.log("获取接单人学号信息", res.data[0].studentID)
+          // console.log("获取接单人学号信息", res.data[0].studentID)
           this.setData({
             receiveStudentID: res.data[0].studentID
           })
@@ -41,7 +42,7 @@ Page({
 
   //根据学号和状态查询订单
   getList() {
-    console.log("接单人学号", this.data.receiveStudentID)
+    // console.log("接单人学号", this.data.receiveStudentID)
     db.where({
         status: this.data.status,
         receiveStudentID: this.data.receiveStudentID
@@ -110,7 +111,7 @@ Page({
   },
 
   //跳转到订单详情页
-  showDetail(id) { 
+  showDetail(id) {
     wx.navigateTo({
       url: '../showOrderDetail/showOrderDetail?orderId=' + id.currentTarget.dataset.id,
     })
@@ -122,6 +123,26 @@ Page({
     this.setData({
       status: event.detail.index + 1,
     })
+    switch (this.data.status) {
+      case 1:
+        this.setData({
+          currentOrderList: this.data.doingOrderList
+        })
+        break;
+      case 2:
+        this.setData({
+          currentOrderList: this.data.cancelledOrderList
+        })
+        break;
+      case 3:
+        this.setData({
+          currentOrderList: this.data.completedOrderList
+        })
+        break;
+      default:
+        Toast.fail('切换订单状态失败')
+        break;
+    }
     this.getList()
   },
   /**
@@ -156,7 +177,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
