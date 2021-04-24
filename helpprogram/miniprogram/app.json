@@ -36,6 +36,7 @@
     "van-divider": "@vant/weapp/divider/index",
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-toast": "@vant/weapp/toast/index",
-    "van-uploader": "@vant/weapp/uploader/index"
+    "van-uploader": "@vant/weapp/uploader/index",
+    "van-card": "@vant/weapp/card/index"
   }
 }

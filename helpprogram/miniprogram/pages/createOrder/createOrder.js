@@ -251,10 +251,31 @@ Page({
   },
 
   submit(e) {
-    let imageName = this.data.openid + this.randomString(10)
+    if (file == null) {//当不上传图片时
+      // console.log(this.data)
+      db.add({
+        data: {
+          sendStudentID: this.data.sendStudentID,
+          receiveStudentID: this.data.receiveStudentID,
+          title: this.data.title,
+          image: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
+          description: this.data.description,
+          start: this.data.start,
+          end: this.data.end,
+          goodsPlace: this.data.goodsPlace,
+          dealPlace: this.data.dealPlace,
+          type: this.data.type,
+          date: this.data.date,
+          contact: this.data.contact,
+          status: 0,
+          reward: this.data.reward,
+        }
+      })
+    } else {
+      let imageName = this.data.openid + this.randomString(10)
     // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
     wx.cloud.uploadFile({
-      cloudPath: 'images/' + imageName, // 仅为示例，非真实的接口地址
+      cloudPath: 'images/' + imageName, 
       filePath: file.url,
       success: res => {
         this.setData({
@@ -295,6 +316,7 @@ Page({
         })
       }
     })
+    }
   },
 
   //选择图片的回调函数
