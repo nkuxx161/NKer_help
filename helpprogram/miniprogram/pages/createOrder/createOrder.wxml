@@ -10,22 +10,22 @@
     <van-dropdown-item value="{{ 0 }}" options="{{ businessType }}" bind:change="changeType"/>
   </van-dropdown-menu>
   <!-- 未完成：图片 -->
+  <van-uploader class="uploader" file-list="{{ fileList }}" 
+  bind:after-read="afterRead" 
+  deletable="{{ true }}" 
+  max-count="1"
+  bind:delete="deleteImage" />
+
+  <!-- 校区 -->
+<view>
   <label>起始校区</label>
   <label>目的校区</label>
+</view>
   <van-dropdown-menu>
     <van-dropdown-item value="{{ 0 }}" options="{{ allCampus }}" bind:change="changeStart"/>
     <van-dropdown-item value="{{ 0 }}" options="{{ allCampus }}" bind:change="changeEnd"/>
   </van-dropdown-menu>
-  <!-- <van-field
-    label="起始校区"
-    model:value="{{ start }}"
-    placeholder="请输入起始校区"
-  />
-  <van-field
-    label="目的校区"
-    model:value="{{ end }}"
-    placeholder="请输入目的校区"
-  /> -->
+
   <van-field
     label="取货地点"
     model:value="{{ goodsPlace }}"
@@ -67,3 +67,5 @@
   />
   <van-button type="primary" bind:click="submit">创建</van-button>
 </van-cell-group>
+
+<van-toast id="van-toast" />
