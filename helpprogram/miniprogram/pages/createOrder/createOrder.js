@@ -1,7 +1,9 @@
-// miniprogram/pages/createOrder/createOrder.js
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
+
 const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
 const userdb = DB.collection('userInfo')
+let file = {}
 Page({
 
   /**
@@ -14,7 +16,8 @@ Page({
     sendStudentID: '',
     receiveStudentID: '',
     title: '',
-    image: '',
+    fileList: [],
+    image: "",
     description: '',
     start: '八里台校区',
     end: '八里台校区',
@@ -65,6 +68,86 @@ Page({
         value: 2
       },
     ],
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    // 获取用户openid
+    wx.cloud.callFunction({
+        name: 'getOpenID',
+      })
+      .then(res => {
+        // console.log(res.result.event.userInfo.openId)
+        this.setData({
+          openid: res.result.event.userInfo.openId
+        })
+        // 获取用户学号
+        userdb.where({
+            '_openid': this.data.openid
+          }).get()
+          .then(res => {
+            // console.log(res.data[0].studentID)
+            this.setData({
+              sendStudentID: res.data[0].studentID
+            })
+          }).catch(err => {
+            console.log(err)
+          })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   },
 
   changeType(e) {
@@ -168,104 +251,75 @@ Page({
   },
 
   submit(e) {
-    console.log(this.data)
-    db.add({
-      data: {
-        sendStudentID: this.data.sendStudentID,
-        receiveStudentID: this.data.receiveStudentID,
-        title: this.data.title,
-        image: this.data.image,
-        description: this.data.description,
-        start: this.data.start,
-        end: this.data.end,
-        goodsPlace: this.data.goodsPlace,
-        dealPlace: this.data.dealPlace,
-        type: this.data.type,
-        date: this.data.date,
-        contact: this.data.contact,
-        status: 0,
-        reward: this.data.reward,
+    let imageName = this.data.openid + this.randomString(10)
+    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+    wx.cloud.uploadFile({
+      cloudPath: 'images/' + imageName, // 仅为示例，非真实的接口地址
+      filePath: file.url,
+      success: res => {
+        this.setData({
+          image: res.fileID
+        })
+        // console.log(this.data)
+        db.add({
+          data: {
+            sendStudentID: this.data.sendStudentID,
+            receiveStudentID: this.data.receiveStudentID,
+            title: this.data.title,
+            image: this.data.image,
+            description: this.data.description,
+            start: this.data.start,
+            end: this.data.end,
+            goodsPlace: this.data.goodsPlace,
+            dealPlace: this.data.dealPlace,
+            type: this.data.type,
+            date: this.data.date,
+            contact: this.data.contact,
+            status: 0,
+            reward: this.data.reward,
+          }
+        })
+        Toast({
+          type: 'success',
+          message: '提交成功',
+          onClose: () => { //待实现比如说跳转界面等
+            console.log('执行OnClose函数');
+          },
+        });
+      },
+      fail: err => {
+        wx.showToast({
+          title: '提交订单失败',
+          icon: 'fail',
+          duration: 1000
+        })
       }
     })
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    // 获取用户openid
-    wx.cloud.callFunction({
-        name: 'getOpenID',
-      })
-      .then(res => {
-        // console.log(res.result.event.userInfo.openId)
-        this.setData({
-          openid: res.result.event._openid
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    // 获取用户学号
-    userdb.where({
-        '_openid': this.data.openid
-      }).get()
-      .then(res => {
-        // console.log(res.data[0].studentID)
-        this.setData({
-          sendStudentID: res.data[0].studentID
-        })
-      }).catch(err => {
-        console.log(err)
-      })
+  //选择图片的回调函数
+  afterRead(event) {
+    file = event.detail.file
+    // console.log(file) 
+    this.setData({
+      fileList: [].concat(file)
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  //删除选择的图片
+  deleteImage(event) {
+    // console.log(event.detail)
+    this.setData({
+      fileList: []
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  //随机生成图片名字
+  randomString(length) {
+    var str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var result = '';
+    for (var i = length; i > 0; --i)
+      result += str[Math.floor(Math.random() * str.length)];
+    return result;
   }
 })

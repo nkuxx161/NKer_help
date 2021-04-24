@@ -1,4 +1,5 @@
 {
+  "setting": {},
   "condition": {
     "plugin": {
       "list": []
@@ -12,14 +13,15 @@
     "miniprogram": {
       "list": [
         {
-          "id": -1,
-          "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide",
-          "query": ""
-        },
-        {
           "name": "jiedanlist",
           "pathName": "pages/receivedOrder/receivedOrder",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "创建订单",
+          "pathName": "pages/createOrder/createOrder",
+          "query": "",
           "scene": null
         }
       ]

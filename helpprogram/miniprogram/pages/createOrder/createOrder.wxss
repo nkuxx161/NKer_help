@@ -1,1 +1,3 @@
-/* miniprogram/pages/createOrder/createOrder.wxss */
+.uploader {
+  margin: 10rpx 0;
+}
