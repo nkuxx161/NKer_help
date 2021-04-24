@@ -132,6 +132,29 @@ Page({
     }
     this.getList()
   },
+
+  //取消订单
+  cancelOrder() {
+    //待实现
+    console.log('取消订单')
+
+  },
+
+  //提交订单 
+  submitComplete() {
+    // 待实现
+    console.log('提交订单')
+
+  },
+
+  //评价订单
+  cancelOrder() {
+    //待实现
+    console.log('评价订单')
+  },
+
+
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

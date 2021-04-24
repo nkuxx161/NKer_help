@@ -8,12 +8,16 @@
   <view class="order_card" bindtap="showDetail" data-id="{{item._id}}">
     <van-card num="1" price="{{item.reward}}" desc="{{item.description}}" title="{{item.title}}" thumb="{{item.image}}"
       lazy-load tag="{{item.type}}" thumb-mode="aspectFill">
-      <view slot="footer">
+      <view slot="footer" wx:if="{{item.status == 1}}">
         <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder">取消订单</van-button>
-        <van-button type="primary" size="mini" catchtap="submitComplete">确认提交</van-button>
+        <van-button type="primary" size="mini" catchtap="submitComplete" data-id="{{item._id}}">确认提交</van-button>
+      </view>
+      <view slot="footer" wx:if="{{item.status == 3}}">
+        <van-button type="primary" size="mini" catchtap="submitReview">评价</van-button>
       </view>
     </van-card>
   </view>
 </view>
 
 <van-toast id="van-toast" />
+<van-dialog id="van-dialog" />
