@@ -19,6 +19,78 @@ Page({
     active: 0
   },
 
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    // 获取用户openid
+    wx.cloud.callFunction({
+        name: 'getOpenID',
+      })
+      .then(res => {
+        this.setData({
+          openid: res.result.openid
+        })
+        this.getReceiveStudentID(this.data.openid)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    wx.startPullDownRefresh()
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    this.getList()
+    setTimeout(function () {
+      wx.stopPullDownRefresh()
+    }, 1000)
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  },
+
   //获取接单人的学号
   getReceiveStudentID(_openid) {
     DB.collection('userInfo').where({
@@ -90,26 +162,6 @@ Page({
       })
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    // 获取用户openid
-    wx.cloud.callFunction({
-        name: 'getOpenID',
-      })
-      .then(res => {
-        this.setData({
-          openid: res.result.openid
-        })
-        this.getReceiveStudentID(this.data.openid)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    wx.startPullDownRefresh()
-  },
-
   //跳转到订单详情页
   showDetail(id) {
     wx.navigateTo({
@@ -145,55 +197,19 @@ Page({
     }
     this.getList()
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+
+  //取消订单
+  cancelOrder() {
+    //待实现
+    console.log('取消订单')
 
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    this.getList()
-    setTimeout(function () {
-      wx.stopPullDownRefresh()
-    }, 1000)
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+  //提交订单 
+  submitComplete() {
+    // 待实现
+    console.log('提交订单')
 
   }
+
 })

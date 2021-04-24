@@ -23,6 +23,18 @@
           "pathName": "pages/createOrder/createOrder",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "接单人",
+          "pathName": "pages/receivedOrder/receivedOrder",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "发单人",
+          "pathName": "pages/showCompletedOrder/showCompletedOrder",
+          "query": "",
+          "scene": null
         }
       ]
     }
