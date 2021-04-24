@@ -1,4 +1,5 @@
 import Toast from '@vant/weapp/toast/toast'
+import Dialog from '@vant/weapp/dialog/dialog'
 
 const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
@@ -206,10 +207,45 @@ Page({
   },
 
   //提交订单 
-  submitComplete() {
-    // 待实现
-    console.log('提交订单')
+  submitComplete(event) {
+    Dialog.confirm({
+        title: '完成接单',
+        message: '确认提交此订单吗',
+        theme: 'round-button',
+      })
+      .then(() => {
+        //确认提交订单
+        let id = event.currentTarget.dataset.id
+        // console.log(id)
+        wx.cloud.callFunction({
+            name: 'updateOrderStatus',
+            data: {
+              id: id,
+              status: 3
+            }
+          })
+          .then(res => {
+            // console.log("接单人提交订单成功", res)
+            this.setData({
+              currentOrderList: [],
+              doingOrderList: []
+            })
+            this.getList()
+          })
+          .catch(err => {
+            console.log("接单人提交订单失败", err)
+          })
+      })
+      .catch(() => {
+        //取消提交订单
+        console.log('取消提交订单')
+      })
+  },
 
+  //评价订单
+  cancelOrder() {
+    //待实现
+    console.log('评价订单')
   }
 
 })
