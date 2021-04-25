@@ -1,14 +1,18 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/userInfo/userInfo",
     "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
     "pages/createOrder/createOrder",
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
-	  "pages/aboutUs/aboutUs",
-    "pages/userInfo/userInfo"
+     "pages/aboutUs/aboutUs"
+
+  
+    
+    
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -39,5 +43,6 @@
     "van-uploader": "@vant/weapp/uploader/index",
     "van-card": "@vant/weapp/card/index",
     "van-dialog": "@vant/weapp/dialog/index"
+
   }
 }

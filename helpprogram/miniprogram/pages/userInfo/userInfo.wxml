@@ -1,18 +1,22 @@
 <!--pages/userInfo/userInfo.wxml-->
-<view>
+<view class="a1">
   <van-notice-bar
   left-icon="volume-o"
-  text="在代码阅读过程中人们说脏话的频率是衡量代码质量的唯一标准。"
+  text="使用过程中切记保护个人安全，选择人流量大的地点交接"
 />
 <van-row gutter="10">
-  <van-col span="7" offset="1"><van-image round width="100px" height="100px" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.yonglang.co%2Fwx_img%2Fimage_jpeg%2F3e0757a9-0eea-4d5b-8743-1e3cb14a2cde.png&refer=http%3A%2F%2Fphoto.yonglang.co&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621600425&t=a552c0f07952a07b4f053f7cc088f74f" /></van-col>
+  <van-col span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.yonglang.co%2Fwx_img%2Fimage_jpeg%2F3e0757a9-0eea-4d5b-8743-1e3cb14a2cde.png&refer=http%3A%2F%2Fphoto.yonglang.co&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621600425&t=a552c0f07952a07b4f053f7cc088f74f" /></van-col>
   <van-col span="14" offset="1">
-    <text wx:if="{{ifLogin=='No'}}" bindtap="goNk">点击进行注册登录</text>
-    <text wx:if="{{ifLogin=='Yes'}}" decode="{{true}}">{{id}}&nbsp;&nbsp;</text>
+    <text wx:if="{{ifLogin=='No'}}">请点击下方按钮登录</text>
     <text wx:if="{{ifLogin=='Yes'}}">{{name}}</text>
   </van-col>
 </van-row>
 </view>
-
-<van-button wx:if="{{ifLogin=='Yes'}}" type="warning" block>退出登录</van-button>
-<van-button class="aboutUs" block bindtap="goToAboutUs">关于我们</van-button>
+<button wx:if="{{ifLogin=='No'}}" class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+  授权登录
+ </button>
+<button wx:if="{{flag=='No'}}" block bindtap="goNk" class="button1">身份认证</button>
+<button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToAboutUs" class="button1">关于我们</button>
+<van-button wx:if="{{ifLogin=='Yes'}}" type="warning"class="quit" block bindtap="showDialog2">退出登录</van-button>
+<van-dialog id="van-dialog" />
+<van-toast id="van-toast" />
