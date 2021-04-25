@@ -1,13 +1,16 @@
 {
   "pages": [
+    "pages/userInfo/userInfo",
     "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
     "pages/createOrder/createOrder",
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
-	"pages/aboutUs/aboutUs",
-    "pages/userInfo/userInfo"
+  "pages/aboutUs/aboutUs"
+
+  
+    
     
 
   ],
@@ -35,6 +38,9 @@
     "van-col": "@vant/weapp/col/index",
     "van-icon": "@vant/weapp/icon/index",
     "van-divider": "@vant/weapp/divider/index",
-    "van-notice-bar": "@vant/weapp/notice-bar/index"
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
+    "van-toast": "@vant/weapp/toast/index",
+    "van-dialog": "@vant/weapp/dialog/index"
+
   }
 }
