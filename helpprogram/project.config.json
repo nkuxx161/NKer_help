@@ -21,7 +21,7 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
-    "useApiHostProcess": false,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -37,7 +37,7 @@
     "packNpmRelationList": [],
     "minifyWXSS": true
   },
-  "appid": "wx739adf511273a50d",
+  "appid": "wx8dab19a9c2ca0bcd",
   "projectname": "NKU",
   "libVersion": "2.14.1",
   "simulatorType": "wechat",
