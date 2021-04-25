@@ -14,7 +14,8 @@ Page({
     cancelledOrderList: [],
     completedOrderList: [],
     currentOrderList: [],
-    active: 0
+    active: 0,
+    flag: false
   },
 
   getList() {
@@ -101,6 +102,12 @@ Page({
   },
 
   onChange(event) {
+    if(this.data.flag==true){
+      this.setData({
+        flag: false,
+        completedOrderList: []
+      })
+    }
     this.setData({
       status: event.detail.index
     })
@@ -141,10 +148,27 @@ Page({
   },
 
   //提交订单 
-  submitComplete() {
-    // 待实现
-    console.log('提交订单')
-
+  submitComplete(e) {
+    //更改状态
+    db.doc(e.currentTarget.dataset.id).update({
+      data:{
+        status: 3
+      }
+    })
+    .then(res=>{
+      console.log(res)
+      this.setData({
+        doingOrderList: [],
+        flag:true
+      })    
+      this.setData({
+        currentOrderList: this.data.doingOrderList
+      })
+      this.getList()
+    })
+    .catch(err=>{
+      console.log(err)
+    })
   },
 
   //评价订单
