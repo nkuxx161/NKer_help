@@ -1,3 +1,5 @@
+import Dialog from '@vant/weapp/dialog/dialog'
+import Toast from '@vant/weapp/toast/toast'
 const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
 const _ = wx.cloud.database().command
@@ -15,7 +17,8 @@ Page({
     completedOrderList: [],
     currentOrderList: [],
     active: 0,
-    flag: false
+    flag: false,
+    cancelFlag: false
   },
 
   getList() {
@@ -108,6 +111,12 @@ Page({
         completedOrderList: []
       })
     }
+    if(this.data.cancelFlag==true){
+      this.setData({
+        cancelFlag: false,
+        waitOrderList: []
+      })
+    }
     this.setData({
       status: event.detail.index
     })
@@ -139,12 +148,45 @@ Page({
     }
     this.getList()
   },
-
+  
   //取消订单
-  cancelOrder() {
+  cancelOrder(event) {
     //待实现
-    console.log('取消订单')
+    Dialog.confirm({
+      title: '确认取消订单吗？',
+      message: '取消后将不再接受他人的接单',
+    })
+      .then(() => {
+        let id = event.currentTarget.dataset.id
+        console.log(event)
+        wx.cloud.callFunction({
+            name: 'updateOrderStatus',
+            data: {
+              id: id,
+              status: 2
+            }
+          })
+          .then(res => {
+            Toast({
+              type: 'success',
+              message: '已取消订单',
+            })
+            this.setData({
+              currentOrderList: [],
+              waitOrderList: [],
+              cancelFlag: true
+            })
+            this.getList()
+          })
+          .catch(err => {
+            console.log("接单人取消订单失败", err)
+          })
 
+      })
+      .catch(() => {
+        // on cancel
+      }),
+    console.log('取消订单')
   },
 
   //提交订单 
@@ -172,12 +214,10 @@ Page({
   },
 
   //评价订单
-  cancelOrder() {
+  submitReview() {
     //待实现
     console.log('评价订单')
   },
-
-
 
   /**
    * 生命周期函数--监听页面初次渲染完成
