@@ -23,7 +23,7 @@ Page({
     phoneNumber:'未设置',
     email:'未设置',
     error:'',
-    img:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.yonglang.co%2Fwx_img%2Fimage_jpeg%2F3e0757a9-0eea-4d5b-8743-1e3cb14a2cde.png&refer=http%3A%2F%2Fphoto.yonglang.co&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621600425&t=a552c0f07952a07b4f053f7cc088f74f',
+    img:'',
   },
 
   /**
@@ -49,7 +49,8 @@ Page({
             collage:res.data[0].collage,
             telePhoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
-            name:res.data[0].studentName
+            name:res.data[0].studentName,
+            img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
           })
         }
       })
@@ -59,9 +60,6 @@ Page({
     })
     .catch(err => {
       console.log(err)
-    })
-    this.setData({
-      name:options.name
     })
   },
 
@@ -244,13 +242,34 @@ Page({
    * 更改头像
    */
   changeImg:function(){
+    const that =this
+    let imageName = this.data.openid
     wx.chooseImage({
       count: 1,
       sizeType: ['original', 'compressed'],
       sourceType: ['album', 'camera'],
       success (res) {
-        this.setData({
-          img:res.tempFilePaths
+        const tempFilePaths = res.tempFilePaths
+        wx.cloud.uploadFile({
+          cloudPath:'images/'+imageName+'.jpg', 
+          filePath: tempFilePaths[0],
+          success :function(res){
+            that.onLoad()
+            console.log(that.data.img)
+            wx.showToast({
+              title: '上传头像成功',
+              icon: 'sucess',
+              duration: 1000
+            })
+          },
+          fail: err => {
+            wx.showToast({
+              title: '上传头像失败',
+              icon: 'fail',
+              duration: 1000
+            })
+          }
+
         })
       }
     })

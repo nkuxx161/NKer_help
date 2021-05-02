@@ -18,7 +18,7 @@ Page({
       showT:'No',
       canIUse: wx.canIUse('button.open-type.getUserInfo'),
       flag:'No',
-      img:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.yonglang.co%2Fwx_img%2Fimage_jpeg%2F3e0757a9-0eea-4d5b-8743-1e3cb14a2cde.png&refer=http%3A%2F%2Fphoto.yonglang.co&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621600425&t=a552c0f07952a07b4f053f7cc088f74f',
+      img:' ',
   },
 
   /**
@@ -36,7 +36,8 @@ Page({
         if(res.data.length != 0){
           this.setData({
             name:res.data[0].studentName,
-            flag:'Yes'
+            flag:'Yes',
+            img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
           })
         }
       })

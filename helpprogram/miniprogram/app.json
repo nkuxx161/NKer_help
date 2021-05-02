@@ -1,5 +1,6 @@
 {
   "pages": [ 
+    
     "pages/userInfo/userInfo",
     "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
@@ -7,6 +8,7 @@
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
+    "pages/inputCancelReason/inputCancelReason",
     "pages/help/help",
     "pages/aboutUs/aboutUs",
     "pages/detailInfo/detailInfo",
