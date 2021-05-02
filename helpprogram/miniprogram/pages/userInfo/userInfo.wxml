@@ -12,7 +12,7 @@
   </van-col>
 </van-row>
 </view>
-<button wx:if="{{ifLogin=='No'}}" class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+<button wx:if="{{ifLogin=='No'}}" class='bottom' type='primary' bindtap="getUserProfile">
   授权登录
  </button>
 <button wx:if="{{flag=='No'}}" block bindtap="goNk" class="button1">身份认证</button>
