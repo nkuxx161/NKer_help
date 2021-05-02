@@ -1,5 +1,5 @@
 {
-  "pages": [
+  "pages": [ 
     "pages/userInfo/userInfo",
     "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
@@ -7,11 +7,10 @@
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
-  "pages/aboutUs/aboutUs"
-
-  
-    
-    
+    "pages/help/help",
+    "pages/aboutUs/aboutUs",
+    "pages/detailInfo/detailInfo",
+    "pages/changeName/changeName"
 
   ],
   "window": {
@@ -40,7 +39,9 @@
     "van-divider": "@vant/weapp/divider/index",
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-toast": "@vant/weapp/toast/index",
-    "van-dialog": "@vant/weapp/dialog/index"
+    "van-dialog": "@vant/weapp/dialog/index",
+    "van-picker": "@vant/weapp/picker/index",
+    "van-popup": "@vant/weapp/popup/index"
 
   }
 }

@@ -1,0 +1,12 @@
+<!--pages/changeName/changeName.wxml-->
+<view class="a1">
+  <text>
+    修改昵称
+  </text>
+</view>
+<van-field
+    model:value="{{ name }}"
+    border="{{ false }}"
+    clearable
+  />
+  <button  class="comfirm" block bindtap="comfirmName">确认</button>

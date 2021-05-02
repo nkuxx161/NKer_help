@@ -24,6 +24,6 @@
   font-size: 35rpx;
   width:80%;
   background-color: rgb(255, 255, 255);
-  color:rgb(162, 225, 245);
+  color:rgb(78, 116, 128);
   box-shadow: 2px 2px 5px rgb(220, 220, 220),-2px -2px 5px rgb(220, 220, 220);
  }

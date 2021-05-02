@@ -1,4 +1,4 @@
-// pages/nk/nk.js
+// pages/changeName/changeName.js
 const DB = wx.cloud.database()
 const db = DB.collection('userInfo')
 Page({
@@ -7,13 +7,39 @@ Page({
    * 页面的初始数据
    */
   data: {
-      src:'https://webvpn.nankai.edu.cn/'
+    id:'',
+    name:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.cloud.callFunction({
+      name: 'getOpenID',
+    })
+    .then(res => {
+      this.setData({
+        openid: res.result.openid
+      })
+      db.where({
+        _openid:res.result.openid
+      }).get()
+      .then(res=>{
+        if(res.data.length != 0){
+          this.setData({
+            name:res.data[0].studentName,
+            id:res.data[0]._id,
+          })
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
   },
 
   /**
@@ -64,30 +90,16 @@ Page({
   onShareAppMessage: function () {
 
   },
-  load: function (e) {
-    // 获取url
-    const src = e.detail.src;
-    console.log(src)
-    const nkweb= "https://webvpn.nankai.edu.cn/"
-    // 检测到指定值执行跳转逻辑
-    // console.log(this.data.ifLogin)
-    if(src == nkweb){
-      // console.log(this.data.ifLogin)
-      db.add({
-        data:{
-        college:"未设置",
-        defaultCampus:"未设置",
-        email:"未设置",
-        phoneNumber:"未设置",
-        receiveCount: 0,
-        receiveScore: 0,
-        sendCount: 0,
-        sendScore:0,
-        studentID: " ",
-        studentName:"请输入一个名字",
-        userIcon:" "
-      }})
-      wx.redirectTo({ url: '../userInfo/userInfo?flag=Yes&showToast=Yes'}) 
-    }
+  comfirmName:function(){
+    db.doc(this.data.id).update({
+      data:{
+        studentName:this.data.name
+      },
+      success: function (res) {
+        console.log("修改成功", res)
+      }
+    })
+    wx.redirectTo({url:'../detailInfo/detailInfo'})
   }
+
 })
