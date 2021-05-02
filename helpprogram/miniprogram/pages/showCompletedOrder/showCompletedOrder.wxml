@@ -13,7 +13,7 @@
     <van-card num="1" price="{{item.reward}}" desc="{{item.description}}" title="{{item.title}}" thumb="{{item.image}}"
       lazy-load tag="{{item.type}}" thumb-mode="aspectFill">
       <view slot="footer" wx:if="{{item.status == 0}}">
-        <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder">取消订单</van-button>
+        <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder" data-id='{{item._id}}'>取消订单</van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 1}}">
         <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder">取消订单</van-button>
@@ -25,5 +25,5 @@
     </van-card>
   </view>
 </view>
-
+<van-dialog id="van-dialog" />
 <van-toast id="van-toast" />
