@@ -1,11 +1,29 @@
 /* pages/userInfo/userInfo.wxss */
-.aboutUs{
+.quit{
   width:100%;
   position:fixed;
   bottom:0;  
 }
 .van-col{
-  height:120px;
+  height:200rpx;
   display: flex;
   align-items: center;
 }
+.a1{
+  border-bottom: 5rpx solid rgb(230, 230, 230);
+}
+.bottom {
+  margin: 10rpx 10%; 
+  border-radius: 80rpx;
+  font-size: 35rpx;
+  width:80%;
+ }
+ .button1 {
+  margin: 10rpx 10%; 
+  border-radius: 80rpx;
+  font-size: 35rpx;
+  width:80%;
+  background-color: rgb(255, 255, 255);
+  color:rgb(162, 225, 245);
+  box-shadow: 2px 2px 5px rgb(220, 220, 220),-2px -2px 5px rgb(220, 220, 220);
+ }
