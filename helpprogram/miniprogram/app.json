@@ -3,15 +3,14 @@
   "pages": [    
     "pages/home/home",
     "pages/showCompletedOrder/showCompletedOrder",
-    "pages/userInfo/userInfo",
     "pages/receivedOrder/receivedOrder",
+    "pages/userInfo/userInfo",
     "pages/createOrder/createOrder",
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
     "pages/inputCancelReason/inputCancelReason",
     "pages/help/help",
-    "pages/inputCancelReason/inputCancelReason",
     "pages/aboutUs/aboutUs",
     "pages/detailInfo/detailInfo",
     "pages/changeName/changeName"
@@ -48,7 +47,9 @@
     "van-picker": "@vant/weapp/picker/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-collapse": "@vant/weapp/collapse/index",
-    "van-collapse-item": "@vant/weapp/collapse-item/index"
+    "van-collapse-item": "@vant/weapp/collapse-item/index",
+    "van-tabbar": "@vant/weapp/tabbar/index",
+    "van-tabbar-item": "@vant/weapp/tabbar-item/index"
 
   }
 }

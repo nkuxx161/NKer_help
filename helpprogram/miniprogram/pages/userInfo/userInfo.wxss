@@ -2,7 +2,7 @@
 .quit{
   width:100%;
   position:fixed;
-  bottom:0;  
+  bottom:100rpx;  
 }
 .van-col{
   height:200rpx;

@@ -82,7 +82,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.hideHomeButton({
+      success: (res) => {},
+    })
   },
 
   /**
@@ -178,6 +180,36 @@ Page({
         })
       }
     })
+  },
+  changeBar(event) {
+    // event.detail 的值为当前选中项的索引
+    this.setData({ active: event.detail });
+    
+    switch (this.data.active){
+      case 'home':{ wx.redirectTo({
+        url: '../home/home',
+      })}
+      case 'myOrder':{
+        wx.redirectTo({
+          url: '../showCompletedOrder/showCompletedOrder',
+        })
+      }
+      case 'createOrder':{
+        wx.navigateTo({
+          url: '../createOrder/createOrder',
+        })
+      }
+      case 'receiveOrder':{
+        wx.redirectTo({
+          url: '../receivedOrder/receivedOrder',
+        })
+      }
+      case 'userInfo':{
+        wx.redirectTo({
+          url: '../userInfo/userInfo',
+        })
+      }
+    }
   },
     
 })
