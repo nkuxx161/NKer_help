@@ -9,8 +9,9 @@
     "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
-    "pages/inputCancelReason/inputCancelReason"，
+    "pages/inputCancelReason/inputCancelReason",
     "pages/help/help",
+    "pages/inputCancelReason/inputCancelReason",
     "pages/aboutUs/aboutUs",
     "pages/detailInfo/detailInfo",
     "pages/changeName/changeName"
@@ -45,6 +46,9 @@
     "van-card": "@vant/weapp/card/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "van-picker": "@vant/weapp/picker/index",
-    "van-popup": "@vant/weapp/popup/index"
+    "van-popup": "@vant/weapp/popup/index",
+    "van-collapse": "@vant/weapp/collapse/index",
+    "van-collapse-item": "@vant/weapp/collapse-item/index"
+
   }
 }

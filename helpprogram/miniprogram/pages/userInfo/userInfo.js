@@ -11,14 +11,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    userInfo: {},
+    hasUserInfo: false,
       openid: '',
       show:false,
       ifLogin:'No',
       name:'',
       showT:'No',
-      canIUse: wx.canIUse('button.open-type.getUserInfo'),
       flag:'No',
-      img:'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fphoto.yonglang.co%2Fwx_img%2Fimage_jpeg%2F3e0757a9-0eea-4d5b-8743-1e3cb14a2cde.png&refer=http%3A%2F%2Fphoto.yonglang.co&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621600425&t=a552c0f07952a07b4f053f7cc088f74f',
+      img:' ',
   },
 
   /**
@@ -36,7 +37,8 @@ Page({
         if(res.data.length != 0){
           this.setData({
             name:res.data[0].studentName,
-            flag:'Yes'
+            flag:'Yes',
+            img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
           })
         }
       })
@@ -50,22 +52,11 @@ Page({
     
   var that = this;
   // 查看是否授权
-  wx.getSetting({
-   success: function (res) {
-    if (res.authSetting['scope.userInfo']) {
-     wx.getUserInfo({
-      success: function (res) {
-       //从数据库获取用户信息
-       that.queryUsreInfo();
-       //用户已经授权过
-       that.setData({
-        ifLogin:'Yes',
-       })
-      }
-     });
-    }
-   }
-  })
+  if (wx.getUserProfile) {
+    this.setData({
+      ifLogin:'Yes'
+    })
+  }
     this.setData(
       {
         flag:options.flag,
@@ -147,24 +138,6 @@ Page({
     wx.navigateTo({ url: '../help/help', }) 
   },
   /**
-   * 跳转到微信认证
-   */
-  logIn:function(){
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.userInfo']) {
-          wx.authorize({
-            scope: 'scope.userInfo',
-            success () {
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-              wx.getUserInfo()
-            }
-          })
-        }
-      }
-    })
-  },
-  /**
    * 去往认证页面
    */
   goNk: function(){
@@ -191,73 +164,20 @@ Page({
         // on cancel
       });
   },
-  bindGetUserInfo: function (e) {
-    if (e.detail.userInfo) {
-     //用户按了允许授权按钮
-     var that = this;
-     //插入登录的用户的相关信息到数据库
-     wx.request({
-      url: getApp().globalData.urlPath + 'hstc_interface/insert_user',
-      data: {
-       openid: getApp().globalData.openid,
-       nickName: e.detail.userInfo.nickName,
-       avatarUrl: e.detail.userInfo.avatarUrl,
-       province:e.detail.userInfo.province,
-       city: e.detail.userInfo.city
-      },
-      header: {
-       'content-type': 'application/json'
-      },
-      success: function (res) {
-       //从数据库获取用户信息
-       that.queryUsreInfo();
-       console.log("插入小程序登录用户信息成功！");
-      }
-     });
-     //授权成功后，跳转进入小程序首页
-     this.setData({
-       ifLogin:'Yes'
-     })
-     if(this.data.flag=='No'){
-      Dialog.alert({
-        title: '请进行认证',
-        message: '小程序需要您的认证才能提供正常的服务哦'
-      })
-        .then(() => {
+  getUserProfile(e) {
+    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
+    // 开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
+    wx.getUserProfile({
+      desc: '用于完善会员资料', 
+      success: (res) => {
+        
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true,
+          ifLogin:'Yes'
         })
-       
-
-     }
-    } else {
-     //用户按了拒绝按钮
-     wx.showModal({
-      title:'警告',
-      content:'您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
-      showCancel:false,
-      confirmText:'返回授权',
-      success:function(res){
-       if (res.confirm) {
-        console.log('用户点击了“返回授权”')
-       } 
       }
-     })
-    }
-   },
-   //获取用户信息接口
-   queryUsreInfo: function () {
-    wx.request({
-     url: getApp().globalData.urlPath + 'hstc_interface/queryByOpenid',
-     data: {
-      openid: getApp().globalData.openid
-     },
-     header: {
-      'content-type': 'application/json'
-     },
-     success: function (res) {
-      console.log(res.data);
-      getApp().globalData.userInfo = res.data;
-     }
     })
-   },
+  },
     
 })
