@@ -8,7 +8,7 @@
   <van-col span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="{{img}}" /></van-col>
   <van-col span="14" offset="1">
     <text wx:if="{{ifLogin=='No'}}">请点击下方按钮登录</text>
-    <text wx:if="{{ifLogin=='Yes'}}">{{name}}</text>
+    <text wx:if="{{ifLogin=='Yes'}}" style="font-size:40rpx">{{name}}</text>
   </van-col>
 </van-row>
 </view>
