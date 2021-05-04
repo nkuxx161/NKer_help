@@ -82,7 +82,8 @@ Page({
     if (this.data.status == 4) {
       db.where({
           status: 4,
-          _openid: _.not(_.eq(this.data.openid))
+          _openid: this.data.openid,
+          cancelPerson: 2
         }).skip(this.data.currentOrderList.length).get()
         .then(res => {
           if (res.data.length == 0) {
@@ -192,10 +193,11 @@ Page({
         let id = event.currentTarget.dataset.id
         if (this.data.status == 0) {
           wx.cloud.callFunction({
-              name: 'updateOrderStatus',
+              name: 'updateCancelStatus',
               data: {
                 id: id,
-                status: 2
+                status: 2,
+                cancelPerson: 1
               }
             })
             .then(res => {
@@ -349,32 +351,35 @@ Page({
   },
   changeBar(event) {
     // event.detail 的值为当前选中项的索引
-    this.setData({ active: event.detail });
-    switch (this.data.active){
-      case 'home':{ wx.redirectTo({
-        url: '../home/home',
-      })
-      break
-    }
-      case 'myOrder':{
+    this.setData({
+      active: event.detail
+    });
+    switch (this.data.active) {
+      case 'home': {
+        wx.redirectTo({
+          url: '../home/home',
+        })
+        break
+      }
+      case 'myOrder': {
         wx.redirectTo({
           url: '../showCompletedOrder/showCompletedOrder',
         })
         break
       }
-      case 'createOrder':{
+      case 'createOrder': {
         wx.navigateTo({
           url: '../createOrder/createOrder',
         })
         break
       }
-      case 'receiveOrder':{
+      case 'receiveOrder': {
         wx.redirectTo({
           url: '../receivedOrder/receivedOrder',
         })
         break
       }
-      case 'userInfo':{
+      case 'userInfo': {
         wx.redirectTo({
           url: '../userInfo/userInfo',
         })

@@ -25,10 +25,11 @@ Page({
 
   submitCancelReason() {
     wx.cloud.callFunction({
-        name: 'updateOrderStatus',
+        name: 'updateCancelStatus',
         data: {
           id: this.data.orderId,
-          status: 2
+          status: 2,
+          cancelPerson: 1
         }
       })
       .then(res => {
