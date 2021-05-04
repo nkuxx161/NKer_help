@@ -19,7 +19,7 @@ Page({
       name:'',
       showT:'No',
       flag:'No',
-      img:' ',
+      img:'',
   },
 
   /**
@@ -35,11 +35,19 @@ Page({
       }).get()
       .then(res=>{
         if(res.data.length != 0){
+          if(res.data[0].userIcon=='1')
           this.setData({
             name:res.data[0].studentName,
             flag:'Yes',
             img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
           })
+          else{
+            this.setData({
+              name:res.data[0].studentName,
+              flag:'Yes',
+              img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
+            })
+          }
         }
       })
       .catch(err => {
@@ -184,30 +192,35 @@ Page({
   changeBar(event) {
     // event.detail 的值为当前选中项的索引
     this.setData({ active: event.detail });
-    
     switch (this.data.active){
       case 'home':{ wx.redirectTo({
         url: '../home/home',
-      })}
+      })
+      break
+    }
       case 'myOrder':{
         wx.redirectTo({
           url: '../showCompletedOrder/showCompletedOrder',
         })
+        break
       }
       case 'createOrder':{
         wx.navigateTo({
           url: '../createOrder/createOrder',
         })
+        break
       }
       case 'receiveOrder':{
         wx.redirectTo({
           url: '../receivedOrder/receivedOrder',
         })
+        break
       }
       case 'userInfo':{
         wx.redirectTo({
           url: '../userInfo/userInfo',
         })
+        break
       }
     }
   },

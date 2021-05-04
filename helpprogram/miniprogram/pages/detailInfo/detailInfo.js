@@ -41,8 +41,8 @@ Page({
         _openid:res.result.openid
       }).get()
       .then(res=>{
-
         if(res.data.length != 0){
+          if(res.data[0].userIcon=='1')
           this.setData({
             id:res.data[0]._id,
             campus:res.data[0].defaultCampus,
@@ -51,6 +51,16 @@ Page({
             email:res.data[0].email,
             name:res.data[0].studentName,
             img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
+          })
+          else
+          this.setData({
+            id:res.data[0]._id,
+            campus:res.data[0].defaultCampus,
+            collage:res.data[0].collage,
+            telePhoneNumber:res.data[0].phoneNumber,
+            email:res.data[0].email,
+            name:res.data[0].studentName,
+            img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
           })
         }
       })
@@ -254,8 +264,14 @@ Page({
           cloudPath:'images/'+imageName+'.jpg', 
           filePath: tempFilePaths[0],
           success :function(res){
-            that.onLoad()
-            console.log(that.data.img)
+            db.doc(that.data.id).update({
+              data:{
+                userIcon:'1'
+              },
+              success: function (res) {
+                console.log("修改成功", res)
+              }
+            })
             wx.showToast({
               title: '上传头像成功',
               icon: 'sucess',

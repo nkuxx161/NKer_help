@@ -85,7 +85,7 @@ Page({
         sendScore:0,
         studentID: " ",
         studentName:"请输入一个名字",
-        userIcon:" "
+        userIcon:"0"
       }})
       wx.redirectTo({ url: '../userInfo/userInfo?flag=Yes&showToast=Yes'}) 
     }
