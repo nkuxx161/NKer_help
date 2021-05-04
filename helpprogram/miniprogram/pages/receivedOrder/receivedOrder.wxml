@@ -13,7 +13,7 @@
         <van-button type="primary" size="mini" catchtap="submitComplete" data-id="{{item._id}}">确认提交</van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">
-        <van-button type="primary" size="mini" catchtap="submitReview">评价</van-button>
+        <van-button type="primary" size="mini" catchtap="submitReview" data-id="{{item._id}}">评价</van-button>
       </view>
     </van-card>
   </view>

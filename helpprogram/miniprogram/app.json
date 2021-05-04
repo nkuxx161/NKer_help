@@ -1,12 +1,11 @@
 {
-
-  "pages": [    
+  "pages": [
+    "pages/userreview/userreview",
     "pages/home/home",
     "pages/showCompletedOrder/showCompletedOrder",
     "pages/receivedOrder/receivedOrder",
     "pages/userInfo/userInfo",
     "pages/createOrder/createOrder",
-    "pages/index/index",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
     "pages/inputCancelReason/inputCancelReason",
@@ -44,6 +43,8 @@
     "van-uploader": "@vant/weapp/uploader/index",
     "van-card": "@vant/weapp/card/index",
     "van-dialog": "@vant/weapp/dialog/index",
+    "van-rate": "@vant/weapp/rate/index",
+    "van-panel": "@vant/weapp/panel/index",
     "van-picker": "@vant/weapp/picker/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-collapse": "@vant/weapp/collapse/index",

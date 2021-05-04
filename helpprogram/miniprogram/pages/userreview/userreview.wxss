@@ -1,0 +1,16 @@
+.order_card {
+  margin-bottom: 20rpx;
+}
+
+.review {
+  display: flex;
+  align-items: center;
+}
+
+.text_review {
+  margin-left: 30rpx;
+}
+
+.uploader {
+  margin: 10rpx 0;
+}
