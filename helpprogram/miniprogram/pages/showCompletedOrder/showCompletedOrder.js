@@ -172,7 +172,7 @@ Page({
   },
 
   //评价订单
-  cancelOrder() {
+  submitReview() {
     //待实现
     console.log('评价订单')
   },

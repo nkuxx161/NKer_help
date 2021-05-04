@@ -1,0 +1,35 @@
+<!-- 标题 未实现 -->
+<van-panel title="提交评价" desc="" status="" use-footer-slot>
+  <view class="order_card" bindtap="showDetail" data-id="{{goods._id}}">
+    <van-card num="1" price="{{goods.reward}}" desc="{{goods.description}}" title="{{goods.title}}"
+      thumb="{{goods.image}}" lazy-load tag="{{goods.type}}" thumb-mode="aspectFill">
+    </van-card>
+  </view>
+
+  <!-- 上传图片（可选） -->
+  <view>
+    <!-- 未完成：图片 -->
+    <van-uploader class="uploader" file-list="{{ fileList }}" bind:after-read="afterRead" deletable="{{ true }}"
+      max-count="1" bind:delete="deleteImage" />
+  </view>
+
+  <!-- 评分 -->
+  <view class="review">
+    <text class="text_review">综合评分：</text>
+    <van-rate value="{{ score }}" size="{{ 25 }}" allow-half color="#ee0a24" void-color="#eee" void-icon="star"
+      bind:change="onChangeScore" />
+  </view>
+
+  <!-- 文字评论 -->
+  <view wx:if="{{type=='RtoS'}}">
+    <van-cell-group>
+      <van-field model:value="{{ word }}" label="评价" type="textarea" placeholder="请输入评价" autosize border="{{ true }}" focus maxlength="500" show-word-limit/>
+    </van-cell-group>
+  </view>
+
+  <view slot="footer">
+    <van-button block color="linear-gradient(to right, #4bb0ff, #6149f6)" catchtap="completeReview">确认</van-button>
+  </view>
+</van-panel>
+
+<van-toast id="van-toast" />

@@ -243,9 +243,12 @@ Page({
   },
 
   //评价订单
-  cancelOrder() {
-    //待实现
-    console.log('评价订单')
+  submitReview(event) {
+    console.log('评价订单', event.currentTarget.dataset.id)
+    let orderId = event.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '/pages/userreview/userreview' + '?id=' + orderId + '&studentID=' + this.data.receiveStudentID + '&type=RtoS',
+    })
   }
 
 })

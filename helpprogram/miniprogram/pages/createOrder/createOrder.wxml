@@ -9,7 +9,8 @@
   <van-dropdown-menu>
     <van-dropdown-item value="{{ 0 }}" options="{{ businessType }}" bind:change="changeType"/>
   </van-dropdown-menu>
-  <!-- 未完成：图片 -->
+  
+  <!-- 图片 -->
   <van-uploader class="uploader" file-list="{{ fileList }}" 
   bind:after-read="afterRead" 
   deletable="{{ true }}" 
