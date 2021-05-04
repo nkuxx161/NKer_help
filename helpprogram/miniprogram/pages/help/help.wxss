@@ -1,0 +1,21 @@
+/* pages/help/help.wxss */
+.van-collapse-item{
+  margin:15rpx 10rpx
+}
+.a1{
+  height:100rpx;
+  width: auto;
+  margin:10rpx 10rpx;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+}
+
+.font-1{
+  color: rgb(162, 225, 245)
+}
+.connectWith{
+  width:100%;
+  position:fixed;
+  bottom:0;  
+}

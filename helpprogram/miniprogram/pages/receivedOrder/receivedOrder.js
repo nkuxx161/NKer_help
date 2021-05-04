@@ -51,7 +51,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    wx.hideHomeButton({
+      success: (res) => {},
+    })
   },
 
   /**
@@ -249,6 +251,42 @@ Page({
     wx.navigateTo({
       url: '/pages/userreview/userreview' + '?id=' + orderId + '&studentID=' + this.data.receiveStudentID + '&type=RtoS',
     })
-  }
+  },
+
+  changeBar(event) {
+    // event.detail 的值为当前选中项的索引
+    this.setData({ active: event.detail });
+    switch (this.data.active){
+      case 'home':{ wx.redirectTo({
+        url: '../home/home',
+      })
+      break
+    }
+      case 'myOrder':{
+        wx.redirectTo({
+          url: '../showCompletedOrder/showCompletedOrder',
+        })
+        break
+      }
+      case 'createOrder':{
+        wx.navigateTo({
+          url: '../createOrder/createOrder',
+        })
+        break
+      }
+      case 'receiveOrder':{
+        wx.redirectTo({
+          url: '../receivedOrder/receivedOrder',
+        })
+        break
+      }
+      case 'userInfo':{
+        wx.redirectTo({
+          url: '../userInfo/userInfo',
+        })
+        break
+      }
+    }
+  },
 
 })

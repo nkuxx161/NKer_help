@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    active: 0,
     status: 0,
     currentOrderList: [],
     waitOrderList: [],
@@ -95,5 +96,40 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  changeBar(event) {
+    // event.detail 的值为当前选中项的索引
+    this.setData({ active: event.detail });
+    switch (this.data.active){
+      case 'home':{ wx.redirectTo({
+        url: '../home/home',
+      })
+      break
+    }
+      case 'myOrder':{
+        wx.redirectTo({
+          url: '../showCompletedOrder/showCompletedOrder',
+        })
+        break
+      }
+      case 'createOrder':{
+        wx.navigateTo({
+          url: '../createOrder/createOrder',
+        })
+        break
+      }
+      case 'receiveOrder':{
+        wx.redirectTo({
+          url: '../receivedOrder/receivedOrder',
+        })
+        break
+      }
+      case 'userInfo':{
+        wx.redirectTo({
+          url: '../userInfo/userInfo',
+        })
+        break
+      }
+    }
+  },
 })

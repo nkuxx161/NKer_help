@@ -1,0 +1,21 @@
+/* pages/detailInfo/detailInfo.wxss */
+.a1{
+  border-bottom: 5rpx solid rgb(230, 230, 230);
+}
+.a2{
+  margin: 5% 2%; 
+}
+.a3{
+  display: flex;
+}
+.van-col{
+  height:200rpx;
+  display: flex;
+  align-items: center;
+}
+.text-1{
+  font-size:35rpx;
+}
+.button-1{
+  height: 50rpx;
+}

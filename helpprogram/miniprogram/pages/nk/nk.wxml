@@ -1,2 +1,2 @@
 <!--pages/nk/nk.wxml-->
-<web-view src="https://webvpn.nankai.edu.cn/"></web-view>
+<web-view src="{{src}}" bindload="load"></web-view>

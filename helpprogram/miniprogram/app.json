@@ -2,13 +2,17 @@
   "pages": [
     "pages/userreview/userreview",
     "pages/home/home",
-    "pages/receivedOrder/receivedOrder",
     "pages/showCompletedOrder/showCompletedOrder",
+    "pages/receivedOrder/receivedOrder",
+    "pages/userInfo/userInfo",
     "pages/createOrder/createOrder",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
-	  "pages/aboutUs/aboutUs",
-    "pages/userInfo/userInfo"
+    "pages/inputCancelReason/inputCancelReason",
+    "pages/help/help",
+    "pages/aboutUs/aboutUs",
+    "pages/detailInfo/detailInfo",
+    "pages/changeName/changeName"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -40,6 +44,13 @@
     "van-card": "@vant/weapp/card/index",
     "van-dialog": "@vant/weapp/dialog/index",
     "van-rate": "@vant/weapp/rate/index",
-    "van-panel": "@vant/weapp/panel/index"
+    "van-panel": "@vant/weapp/panel/index",
+    "van-picker": "@vant/weapp/picker/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-collapse": "@vant/weapp/collapse/index",
+    "van-collapse-item": "@vant/weapp/collapse-item/index",
+    "van-tabbar": "@vant/weapp/tabbar/index",
+    "van-tabbar-item": "@vant/weapp/tabbar-item/index"
+
   }
 }

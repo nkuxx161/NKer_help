@@ -1,0 +1,18 @@
+/* pages/changeName/changeName.wxss */
+.a1{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  height: 100rpx;
+  margin-bottom: 30rpx;
+}
+.comfirm{
+  margin: 10rpx 10%; 
+  position:fixed;
+  bottom:0;  
+  font-size: 35rpx;
+  width:80%;
+  color:rgb(247, 161, 128);
+  border-radius: 80rpx;
+  box-shadow: 2px 2px 5px rgb(220, 220, 220),-2px -2px 5px rgb(220, 220, 220);
+}

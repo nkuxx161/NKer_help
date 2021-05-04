@@ -1,0 +1,124 @@
+<!--pages/detailInfo/detailInfo.wxml-->
+<view class="a1">
+  <van-notice-bar
+  left-icon="volume-o"
+  text="使用过程中切记保护个人安全，选择人流量大的地点交接"
+/>
+<van-row gutter="10">
+  <van-col span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="{{img}}" bindtap='changeImg'/></van-col>
+  <van-col span="14" offset="1">
+    <text bindtap='changeName'>{{name}}</text>
+  </van-col>
+</van-row>
+</view>
+<view class="a2">
+<van-cell-group>
+  <van-cell
+  is-link
+  title="校区"
+  icon="location-o"
+  bind:click="toShowCampus"
+  label="{{campus}}"
+/>
+<van-cell
+  is-link
+  title="学院"
+  icon="wap-home-o"
+  bind:click="toShowCollage"
+  label="{{collage}}" 
+/>
+<van-cell
+  is-link
+  title="手机号"
+  icon="phone-o"
+  bind:click="toShowPhone"
+  label="{{phoneNumber}}"
+/>
+<van-cell
+  is-link
+  title="邮箱"
+  icon="comment-o"
+  bind:click="toShowEmail"
+  label="{{email}}"
+/>
+<van-cell
+  title="接单数"
+/>
+<van-cell
+  title="发单数"
+/>
+<van-cell
+  title="接单总分"
+/>
+<van-cell
+  title="发单总分"
+/>
+</van-cell-group>
+
+</view>
+<van-popup 
+  show="{{showCampus}}" 
+  bind:close="closeShowCampus"
+  closeable
+  close-icon="passed"
+  position="bottom"
+  custom-style="height: 40%"
+>
+<van-picker
+  columns="{{ allCampus }}"
+  bind:change="changeCampus"
+/>
+</van-popup>
+<van-popup 
+  show="{{showCollage}}" 
+  bind:close="closeShowCollage"
+  closeable
+  close-icon="passed"
+  position="bottom"
+  custom-style="height: 40%"
+>
+<van-picker
+  columns="{{ allCollage }}"
+  bind:change="changeCollage"
+/>
+</van-popup>
+<van-popup 
+  show="{{showPhone}}" 
+  bind:close="closeShowPhone"
+  position="bottom"
+  custom-style="height:40%"
+>
+<view class="a3">
+  <button bindtap="closeShowPhone"><text class="text-1">取消</text></button>
+  <view style="width:50%"></view>
+  <button bindtap="comfirmPhone"><text class="text-1">确认</text></button>
+</view>
+
+<van-field
+    placeholder="请输入电话号码"
+    value="{{ value }}"
+    border="{{ false }}"
+    bind:change="changePhone"
+    error-message='{{error}}'
+  />
+
+</van-popup>
+<van-popup 
+  show="{{showEmail}}" 
+  bind:close="closeShowEmail"
+  position="bottom"
+  custom-style="height: 40%"
+>
+<view class="a3">
+  <button bindtap="closeShowEmail"><text class="text-1">取消</text></button>
+  <view style="width:50%"></view>
+  <button bindtap="comfirmEmail"><text class="text-1">确认</text></button>
+</view>
+<van-field
+    value="{{ value }}"
+    placeholder="请输入邮箱"
+    border="{{ false }}"
+    bind:change="changeEmail"
+    error-message='{{error}}'
+  />
+</van-popup>

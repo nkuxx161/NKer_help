@@ -1,0 +1,26 @@
+<!--pages/help/help.wxml-->
+<image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimages.yangongzi.cn%2Fcategory%2Fnku-003.jpg&refer=http%3A%2F%2Fimages.yangongzi.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621676906&t=2882347d0ad6e5074ae3997153950772"  style="width:100%; height:240rpx " ></image>
+<view class="a1">
+  <text space="emsp" class="font-1"> 常见问题与解决</text>
+</view>
+<van-collapse  accordion value="{{ activeNames }}" bind:change="onChange">
+  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number.png" title="如果个人资料修改后无反应怎么办？" name="1">
+    由于服务器的问题可能会使个人信息的修改和头像的设置变化时间较长，请耐心等待。
+  </van-collapse-item>
+  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (1).png" title="我如何取消订单？" name="2">
+    对于没有接受的订单，我们可以直接取消；但对于已经接受的订单，需要与对面的接单人进行协调取消，防止订单的物品已经进行完成，无法退换造成双方的损失。
+  </van-collapse-item>
+  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (2).png" title="取消订单后，对方一直联系不上怎么办？" name="3" >
+    如果超过正常取消时间（12h）订单会自动取消。
+  </van-collapse-item>
+  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (3).png" title="怎么样提高自己的星级与查看别人的星级" name="4" >
+    无论是接单与发单，系统都会记录，星级体现的不仅仅是接单的量更是完成的质量，可以去往他的主页得到他的信息
+  </van-collapse-item>
+  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (4).png" title="暂定" name="5" >
+    czy
+  </van-collapse-item>
+  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (5).png" title="暂定" name="6" >
+    czy
+  </van-collapse-item>
+</van-collapse>
+<van-button class="connectWith" block ><van-icon name="service-o" />联系客服</van-button>
