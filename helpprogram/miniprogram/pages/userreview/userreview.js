@@ -135,55 +135,192 @@ Page({
   //提交评价
   completeReview() {
     console.log('提交评价', this.data)
-    if (file == null) { //当不上传图片时
-      // console.log(this.data)
-      db.add({
-        data: {
-          receiveStudentID: this.data.studentID,
-          orderId: this.data.orderId,
-          RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
-          RtoSScore: this.data.score,
-          RtoSWord: this.data.word,
-        }
-      })
-    } else if (this.data.type == "RtoS"){ //当接单人对发单人评价时
-      let imageName = this.data.openid + this.randomString(10)
-      // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-      wx.cloud.uploadFile({
-        cloudPath: 'images/' + imageName,
-        filePath: file.url,
-        success: res => {
-          this.setData({
-            image: res.fileID
-          })
-          // console.log(this.data)
-          wx.cloud.database().collection('RtoSReview').add({
+    if (this.data.type == "RtoS") { //当接单人对发单人评价时
+      if (this.data.fileList.length === 0) { //当不上传图片时
+        // console.log(this.data)
+        wx.cloud.database().collection('RtoSReview').add({
+          data: {
+            receiveStudentID: this.data.studentID,
+            orderId: this.data.orderId,
+            RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
+            RtoSScore: this.data.score,
+            RtoSWord: this.data.word,
+          }
+        }).then(res=>{
+          wx.cloud.callFunction({
+            name: 'updateIsRtoSReviewed',
             data: {
-              receiveStudentID: this.data.studentID,
-              orderId: this.data.orderId,
-              RtoSImage: this.data.image,
-              RtoSScore: this.data.score,
-              RtoSWord: this.data.word,
+              id: this.data.orderId
             }
           })
-          Toast({
-            type: 'success',
-            message: '提交评价成功',
-            onClose: () => { //待实现比如说跳转界面等
-              console.log('执行OnClose函数');
-            },
-          });
-        },
-        fail: err => {
-          wx.showToast({
-            title: '提交评价失败',
-            icon: 'fail',
-            duration: 1000
+          .then(res => {
+            Toast({
+              type: 'success',
+              message: '更改状态成功',
+            })
           })
-        }
-      })
+          .catch(err => {
+            console.log("发单人取消订单失败", err)
+          })
+        })
+        .catch(err=>{
+          consoile.log(err)
+        })
+
+      } else {
+        let imageName = this.data.openid + this.randomString(10)
+        // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+        wx.cloud.uploadFile({
+          cloudPath: 'images/' + imageName,
+          filePath: file.url,
+          success: res => {
+            this.setData({
+              image: res.fileID
+            })
+            // console.log(this.data)
+            wx.cloud.database().collection('RtoSReview').add({
+              data: {
+                receiveStudentID: this.data.studentID,
+                orderId: this.data.orderId,
+                RtoSImage: this.data.image,
+                RtoSScore: this.data.score,
+                RtoSWord: this.data.word,
+              }
+            })
+            .then(res=>{
+              wx.cloud.callFunction({
+                name: 'updateIsRtoSReviewed',
+                data: {
+                  id: this.data.orderId
+                }
+              })
+              .then(res => {
+                Toast({
+                  type: 'success',
+                  message: '更改状态成功',
+                })
+              })
+              .catch(err => {
+                console.log("发单人取消订单失败", err)
+              })
+            })
+            .catch(err=>{
+              console.log(err)
+            })
+            Toast({
+              type: 'success',
+              message: '提交评价成功',
+              onClose: () => { //待实现比如说跳转界面等
+                console.log('执行OnClose函数');
+              },
+            });
+          },
+          fail: err => {
+            wx.showToast({
+              title: '提交评价失败',
+              icon: 'fail',
+              duration: 1000
+            })
+          }
+
+        })
+      }
+
+
+      
     } else if (this.data.type == 'StoR') { //当发单人对接单人做评价时
-      //未实现
-    }
+      if (this.data.fileList.length === 0) { //当不上传图片时
+        wx.cloud.database().collection('StoRReview').add({
+          data: {
+            sendStudentID: this.data.studentID,
+            orderId: this.data.orderId,
+            StoRScore: this.data.score,
+            StoRImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
+            StoRWord: this.data.word,
+          }
+        })
+        .then(res=>{
+          wx.cloud.callFunction({
+            name: 'updateIsStoRReviewed',
+            data: {
+              id: this.data.orderId
+            }
+          })
+          .then(res => {
+            Toast({
+              type: 'success',
+              message: '更改状态成功',
+            })
+          })
+          .catch(err => {
+            console.log("发单人取消订单失败", err)
+          })
+        })
+        .catch(err=>{
+          console.log(err)
+        })
+      } else {
+        let imageName = this.data.openid + this.randomString(10)
+        // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+        wx.cloud.uploadFile({
+          cloudPath: 'images/' + imageName,
+          filePath: file.url,
+          success: res => {
+            this.setData({
+              image: res.fileID
+            })
+            // console.log(this.data)
+            wx.cloud.database().collection('StoRReview').add({
+              data: {
+                sendStudentID: this.data.studentID,
+                orderId: this.data.orderId,
+                StoRScore: this.data.score,
+                StoRImage: this.data.image,
+                StoRWord: this.data.word,
+              }
+            })
+            .then(res=>{
+              wx.cloud.callFunction({
+                name: 'updateIsStoRReviewed',
+                data: {
+                  id: this.data.orderId
+                }
+              })
+              .then(res => {
+                Toast({
+                  type: 'success',
+                  message: '更改状态成功',
+                })
+              })
+              .catch(err => {
+                console.log("发单人取消订单失败", err)
+              })
+            })
+            .catch(err=>{
+              console.log(err)
+            })
+            Toast({
+              type: 'success',
+              message: '提交评价成功',
+              onClose: () => { //待实现比如说跳转界面等
+                console.log('执行OnClose函数');
+              },
+            })
+
+            wx.navigateBack()
+          },
+          fail: err => {
+            wx.showToast({
+              title: '提交评价失败',
+              icon: 'fail',
+              duration: 1000
+            })
+          }
+        })
+      }
+    } 
+    wx.redirectTo({
+      url: '../showCompletedOrder/showCompletedOrder?status='+3,
+    })
   }
 })

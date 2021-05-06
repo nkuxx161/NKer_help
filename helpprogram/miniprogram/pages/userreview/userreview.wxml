@@ -23,7 +23,12 @@
   <!-- 文字评论 -->
   <view wx:if="{{type=='RtoS'}}">
     <van-cell-group>
-      <van-field model:value="{{ word }}" label="评价" type="textarea" placeholder="请输入评价" autosize border="{{ true }}" focus maxlength="500" show-word-limit/>
+      <van-field model:value="{{ word }}" label="评价" type="textarea" placeholder="请输入对发单人的评价" autosize border="{{ true }}" focus maxlength="500" show-word-limit/>
+    </van-cell-group>
+  </view>
+  <view wx:if="{{type=='StoR'}}">
+    <van-cell-group>
+      <van-field model:value="{{ word }}" label="评价" type="textarea" placeholder="请输入对接单人的评价" autosize border="{{ true }}" focus maxlength="500" show-word-limit/>
     </van-cell-group>
   </view>
 
