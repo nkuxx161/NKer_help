@@ -1,4 +1,4 @@
-<van-tabs active="{{ active }}" bind:change="onChange">
+<van-tabs active="{{ status }}" bind:change="onChange" >
   <van-tab title="待接单"></van-tab>
   <van-tab title="已接单"></van-tab>
   <van-tab title="已取消"></van-tab>
@@ -21,11 +21,13 @@
         <van-button type="primary" size="mini" catchtap="submitComplete" data-id='{{item._id}}'>确认提交</van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">
-        <van-button type="primary" size="mini" catchtap="submitReview">评价</van-button>
+        <van-button type="primary" size="mini" catchtap="submitReview" data-id='{{item._id}}' data-studentID="{{item.sendStudentID}}" wx:if="{{item.isStoRReviewed == false}}">评价</van-button>
+        <text wx:if="{{item.isStoRReviewed}}">已评价</text>
       </view>
       <view slot="footer" wx:if="{{item.status == 4}}">
-        <van-button open-type="contact" type="default" size="mini" catchtap="service"  data-id='{{item._id}}'>联系客服</van-button>
-        <van-button type="primary" size="mini" catchtap="agreeCancel"  data-id='{{item._id}}'>同意取消</van-button>
+        <van-button open-type="contact" type="default" size="mini" catchtap="service"  data-id='{{item._id}}' wx:if="{{item.cancelPerson == 2}}">联系客服</van-button>
+        <van-button type="primary" size="mini" catchtap="agreeCancel"  data-id='{{item._id}}' wx:if="{{item.cancelPerson == 2}}">同意取消</van-button>
+        <van-button type="primary" size="mini" wx:if="{{item.cancelPerson == 1}}">处理中</van-button>
       </view>
     </van-card>
   </view>

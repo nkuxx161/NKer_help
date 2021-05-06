@@ -28,7 +28,7 @@ Page({
         name: 'updateCancelStatus',
         data: {
           id: this.data.orderId,
-          status: 2,
+          status: 4,
           cancelPerson: 1
         }
       })

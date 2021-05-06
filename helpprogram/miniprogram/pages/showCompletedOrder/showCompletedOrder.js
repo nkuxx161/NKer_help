@@ -17,7 +17,6 @@ Page({
     completedOrderList: [],
     pendingOrderList: [],
     currentOrderList: [],
-    active: 0,
     flag: false,
     cancelFlag: false,
     show: false,
@@ -83,7 +82,7 @@ Page({
       db.where({
           status: 4,
           _openid: this.data.openid,
-          cancelPerson: 2
+          // cancelPerson: 2
         }).skip(this.data.currentOrderList.length).get()
         .then(res => {
           if (res.data.length == 0) {
@@ -110,6 +109,14 @@ Page({
    */
   onLoad: function (options) {
     // 获取用户openid
+    if (options.status == 3) {
+      this.setData({
+        status: 3,
+        completedOrderList: [],
+        currentOrderList: []
+      })
+      this.getList()
+    }
     wx.cloud.callFunction({
         name: 'getOpenID',
       })
@@ -291,9 +298,12 @@ Page({
   },
 
   //评价订单
-  submitReview() {
+  submitReview(options) {
     //待实现
     console.log('评价订单')
+    wx.navigateTo({
+      url: '../userreview/userreview?id=' + options.currentTarget.dataset.id + '&studentID=' + options.currentTarget.dataset.studentid + '&type=StoR',
+    })
   },
 
   /**
