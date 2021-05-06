@@ -1,6 +1,9 @@
 // miniprogram/pages/home/home.js
+import Dialog from '@vant/weapp/dialog/dialog'
+import Toast from '@vant/weapp/toast/toast'
 const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
+const userdb = DB.collection('userInfo')
 const _ = wx.cloud.database().command
 Page({
 
@@ -8,6 +11,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    openid: '',
+    studentID: '',
     active: 0,
     status: 0,
     currentOrderList: [],
@@ -42,11 +47,73 @@ Page({
     })
   },
 
+
+  /** 确认接单 */
+  confirmOrder(event) {
+    Dialog.confirm({
+      title: '确认接单吗？',
+      message: '确认后需在要求时间内完成订单！',
+    })
+    .then(res => {
+      let id = event.currentTarget.dataset.id
+      wx.cloud.callFunction({
+        name: 'updateReceiveStudentID',
+        data:{
+          id: id,
+          status: 1,
+          studentID: this.data.studentID
+        }
+      })
+      .then(res => {
+        console.log(res)
+        this.setdata({
+          waitOrderList:[],
+          currentOrderList:[]
+        })
+        this.getList()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     this.getList()
+
+
+    // 获取用户openid
+    wx.cloud.callFunction({
+      name: 'getOpenID',
+    })
+    .then(res => {
+      // console.log(res.result.event.userInfo.openId)
+      this.setData({
+        openid: res.result.event.userInfo.openId
+      })
+      // 获取用户学号
+      userdb.where({
+          '_openid': this.data.openid
+        }).get()
+        .then(res => {
+          console.log(res.data[0].studentID)
+          this.setData({
+            studentID: res.data[0].studentID
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+    })
+    .catch(err => {
+      console.log(err)
+    })
   },
 
   /**
