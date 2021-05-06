@@ -284,6 +284,7 @@ Page({
           contact: this.data.contact,
           status: 0,
           reward: this.data.reward,
+          cancelPerson: 0,
         }
       })
     } else {

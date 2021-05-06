@@ -24,7 +24,7 @@
         <van-button type="primary" size="mini" catchtap="submitReview">评价</van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 4}}">
-        <van-button type="default" size="mini" catchtap="service"  data-id='{{item._id}}'>申请客服介入</van-button>
+        <van-button open-type="contact" type="default" size="mini" catchtap="service"  data-id='{{item._id}}'>联系客服</van-button>
         <van-button type="primary" size="mini" catchtap="agreeCancel"  data-id='{{item._id}}'>同意取消</van-button>
       </view>
     </van-card>
