@@ -1,9 +1,9 @@
 {
-  "pages": [
+  "pages": [ "pages/receivedOrder/receivedOrder",
     "pages/userreview/userreview",
     "pages/home/home",
     "pages/showCompletedOrder/showCompletedOrder",
-    "pages/receivedOrder/receivedOrder",
+   
     "pages/userInfo/userInfo",
     "pages/createOrder/createOrder",
     "pages/showOrderDetail/showOrderDetail",

@@ -266,7 +266,7 @@ Page({
   //向数据库提交订单信息
   submit(e) {
     this.getAccess()
-    if (file == null) { //当不上传图片时
+    if (this.data.fileList.length === 0) {//当不上传图片时
       // console.log(this.data)
       db.add({
         data: {
@@ -284,7 +284,8 @@ Page({
           contact: this.data.contact,
           status: 0,
           reward: this.data.reward,
-          cancelPerson: 0,
+          isStoRReviewed: false,
+          isRtoSReviewed: false
         }
       })
     } else {
@@ -314,6 +315,8 @@ Page({
               contact: this.data.contact,
               status: 0,
               reward: this.data.reward,
+              isStoRReviewed: false,
+              isRtoSReviewed: false
             }
           })
           Toast({
