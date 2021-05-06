@@ -2,67 +2,204 @@
 import Toast from '@vant/weapp/toast/toast'
 const DB = wx.cloud.database()
 const db = DB.collection('cancelReason')
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    type: 'sender',
     cancelReason: '',
-    orderId: ''
-
+    orderId: '',
+    sendStudentID: '',
+    receiveStudentID: '',
+    sendStudentOpenId: '',
+    receiveStudentOpenId: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      orderId: decodeURIComponent(options.orderId)
-    })
+    if (options.type != undefined) {
+      this.setData({
+        type: decodeURIComponent(options.type),
+        orderId: decodeURIComponent(options.orderId)
+      })
+    }
+    this.getOpenid()
+    // console.log(this.data.type)
   },
 
   submitCancelReason() {
-    wx.cloud.callFunction({
-        name: 'updateCancelStatus',
-        data: {
-          id: this.data.orderId,
-          status: 4,
-          cancelPerson: 1
-        }
-      })
-      .then(res => {
-        Toast({
-          type: 'success',
-          message: '该订单等待处理',
+    if (this.data.type == 'sender') { //发单人申请取消订单
+      wx.cloud.callFunction({
+          name: 'updateOrderStatus',
+          data: {
+            id: this.data.orderId,
+            status: 4
+          }
         })
+        .then(res => {
+          Toast({
+            type: 'success',
+            message: '该订单等待处理',
+          })
+        })
+        .catch(err => {
+          console.log("发单人取消订单失败", err)
+        })
+      db.add({
+          data: {
+            orderId: this.data.orderId,
+            sendCancelReason: this.data.cancelReason,
+            receiveCancelReason: ''
+          }
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      wx.navigateTo({
+        url: '../showCompletedOrder/showCompletedOrder',
       })
-      .catch(err => {
-        console.log("发单人取消订单失败", err)
+    } else if (this.data.type == 'receiver') { //接单人申请取消订单
+      wx.cloud.callFunction({
+          name: 'updateOrderStatus',
+          data: {
+            id: this.data.orderId,
+            status: 4
+          }
+        })
+        .then(res => {
+          this.messageToUser()
+          Toast({
+            type: 'success',
+            message: '该订单等待处理',
+          })
+        })
+        .catch(err => {
+          console.log("接单人取消订单失败", err)
+        })
+      db.add({
+          data: {
+            orderId: this.data.orderId,
+            sendCancelReason: '',
+            receiveCancelReason: this.data.cancelReason,
+          }
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      wx.navigateTo({
+        url: '../receivedOrder/receivedOrder',
       })
-    db.add({
-        data: {
-          orderId: this.data.orderId,
-          sendCancelReason: this.data.cancelReason,
-          receiveCancelReason: ''
-        }
-      })
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    wx.navigateTo({
-      url: '../showCompletedOrder/showCompletedOrder',
-    })
+    } else {
+      console.log('接单人申请取消订单失败')
+    }
+
   },
 
   cancelCancelReason() {
-    wx.navigateTo({
-      url: '../showCompletedOrder/showCompletedOrder',
-    })
+    if (this.data.type == 'sender') {
+      wx.navigateTo({
+        url: '../showCompletedOrder/showCompletedOrder',
+      })
+    } else if (this.data.type == 'receiver') {
+      wx.navigateTo({
+        url: '../receivedOrder/receivedOrder',
+      })
+    } else {
+      console.log('取消申请取消订单失败')
+    }
+  },
+
+  //根据学号查找openid
+  getOpenIdByStudentID(studentID) {
+    wx.cloud.database().collection('userInfo').where({
+        studentID: studentID
+      })
+      .get()
+      .then(res => {
+        console.log('查询用户成功', res.data[0]._openid)
+        if (this.data.type == 'receiver') {
+          this.setData({
+            sendStudentOpenId: res.data[0]._openid
+          })
+        } else {
+          this.setData({
+            receiveStudentOpenId: res.data[0]._openid
+          })
+        }
+      })
+      .catch(err => {
+        console.log('查询用户信息失败', err)
+      })
+  },
+
+  //根据订单号查询需要推送消息的对象的openid
+  getOpenid() {
+    wx.cloud.database().collection('orderInfo').doc(this.data.orderId)
+      .get()
+      .then(res => {
+        console.log('查询订单信息成功', res)
+        this.setData({
+          sendStudentID: res.data.sendStudentID,
+          receiveStudentID: res.data.receiveStudentID,
+          title: res.data.title
+        })
+        //利用学号查找openid
+        if (this.data.type == 'receiver') {
+          this.getOpenIdByStudentID(this.data.sendStudentID)
+        } else {
+          this.getOpenIdByStudentID(this.data.receiveStudentID)
+        }
+        console.log('消息推送', this.data)
+      })
+      .catch(err => {
+        console.log('查询订单信息失败', err)
+      })
+  },
+
+  //小程序请求取消的消息推送
+  messageToUser() {
+    if (this.data.type == 'receiver') { //接单人申请取消订单
+      wx.cloud.callFunction({
+        name: 'pushCancelMessage',
+        data: {
+          url: '/pages/showCompletedOrder/showCompletedOrder',
+          openId: this.data.sendStudentOpenId,
+          title: this.data.title,
+          orderId: this.data.orderId,
+          reason: this.data.cancelReason
+        }
+      }).then(res => {
+        console.log('推送取消消息成功', res)
+      }).catch(err => {
+        console.log('推送取消消息失败', err)
+      })
+    } else { //发单人申请取消订单
+      wx.cloud.callFunction({
+        name: 'pushCancelMessage',
+        data: {
+          url: '/pages/receivedOrder/receivedOrder',
+          openId: this.data.receiveStudentOpenId,
+          title: this.data.title,
+          orderId: this.data.orderId,
+          reason: this.data.cancelReason
+        }.then(res => {
+          console.log('推送取消消息成功', res)
+        }).catch(err => {
+          console.log('推送取消消息失败', err)
+        })
+      })
+    }
   },
 
   /**

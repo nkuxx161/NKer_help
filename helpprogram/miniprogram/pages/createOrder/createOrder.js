@@ -250,7 +250,22 @@ Page({
     });
   },
 
+  //让用户获取消息推送的授权
+  getAccess() {
+    wx.requestSubscribeMessage({
+      tmplIds: ['mVQCWb63Fa1nGEDlNU4GHp3lgUyfGD49ITzwHknynNM'],
+      success: (res) => {
+        console.log('授权成功', res)
+      },
+      fail: (err) => {
+        console.log('授权失败', err)
+      }
+    })
+  },
+
+  //向数据库提交订单信息
   submit(e) {
+    this.getAccess()
     if (this.data.fileList.length === 0) {//当不上传图片时
       // console.log(this.data)
       db.add({
@@ -269,59 +284,57 @@ Page({
           contact: this.data.contact,
           status: 0,
           reward: this.data.reward,
-          cancelPerson: 0,
           isStoRReviewed: false,
           isRtoSReviewed: false
         }
       })
     } else {
       let imageName = this.data.openid + this.randomString(10)
-    // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-    wx.cloud.uploadFile({
-      cloudPath: 'images/' + imageName, 
-      filePath: file.url,
-      success: res => {
-        this.setData({
-          image: res.fileID
-        })
-        // console.log(this.data)
-        db.add({
-          data: {
-            sendStudentID: this.data.sendStudentID,
-            receiveStudentID: this.data.receiveStudentID,
-            title: this.data.title,
-            image: this.data.image,
-            description: this.data.description,
-            start: this.data.start,
-            end: this.data.end,
-            goodsPlace: this.data.goodsPlace,
-            dealPlace: this.data.dealPlace,
-            type: this.data.type,
-            date: this.data.date,
-            contact: this.data.contact,
-            status: 0,
-            reward: this.data.reward,
-            cancelPerson: 0,
-            isStoRReviewed: false,
-            isRtoSReviewed: false
-          }
-        })
-        Toast({
-          type: 'success',
-          message: '提交成功',
-          onClose: () => { //待实现比如说跳转界面等
-            console.log('执行OnClose函数');
-          },
-        });
-      },
-      fail: err => {
-        wx.showToast({
-          title: '提交订单失败',
-          icon: 'fail',
-          duration: 1000
-        })
-      }
-    })
+      // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+      wx.cloud.uploadFile({
+        cloudPath: 'images/' + imageName,
+        filePath: file.url,
+        success: res => {
+          this.setData({
+            image: res.fileID
+          })
+          // console.log(this.data)
+          db.add({
+            data: {
+              sendStudentID: this.data.sendStudentID,
+              receiveStudentID: this.data.receiveStudentID,
+              title: this.data.title,
+              image: this.data.image,
+              description: this.data.description,
+              start: this.data.start,
+              end: this.data.end,
+              goodsPlace: this.data.goodsPlace,
+              dealPlace: this.data.dealPlace,
+              type: this.data.type,
+              date: this.data.date,
+              contact: this.data.contact,
+              status: 0,
+              reward: this.data.reward,
+              isStoRReviewed: false,
+              isRtoSReviewed: false
+            }
+          })
+          Toast({
+            type: 'success',
+            message: '提交成功',
+            onClose: () => { //待实现比如说跳转界面等
+              console.log('执行OnClose函数');
+            },
+          });
+        },
+        fail: err => {
+          wx.showToast({
+            title: '提交订单失败',
+            icon: 'fail',
+            duration: 1000
+          })
+        }
+      })
     }
   },
 
@@ -350,5 +363,5 @@ Page({
       result += str[Math.floor(Math.random() * str.length)];
     return result;
   },
-  
+
 })

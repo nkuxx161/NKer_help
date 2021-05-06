@@ -17,6 +17,7 @@ Page({
     cancelledOrderList: [],
     completedOrderList: [],
     currentOrderList: [],
+    pendingOrderList: [],
     active: 0
   },
 
@@ -157,6 +158,16 @@ Page({
               })
               break
             }
+            case 4: {
+              this.setData({
+                pendingOrderList: this.data.pendingOrderList.concat(res.data)
+
+              })
+              this.setData({
+                currentOrderList: this.data.pendingOrderList
+              })
+              break
+            }
           }
         }
       })
@@ -194,6 +205,11 @@ Page({
           currentOrderList: this.data.completedOrderList
         })
         break;
+      case 4:
+        this.setData({
+          currentOrderList: this.data.pendingOrderList
+        })
+        break;
       default:
         Toast.fail('切换订单状态失败')
         break;
@@ -202,13 +218,17 @@ Page({
   },
 
   //取消订单
-  cancelOrder() {
+  cancelOrder(event) {
     //待实现
-    console.log('取消订单')
+    let orderId = event.currentTarget.dataset.id
+    console.log('取消订单', orderId)
+    wx.navigateTo({
+      url: '../inputCancelReason/inputCancelReason?orderId=' + orderId + '&type=receiver',
+    })
 
   },
 
-  //提交订单 
+  //提交完成订单的请求 
   submitComplete(event) {
     Dialog.confirm({
         title: '完成接单',
@@ -253,34 +273,49 @@ Page({
     })
   },
 
+  //处理取消订单，联系客服介入
+  service() {
+    //待实现
+    console.log('接单人联系客服介入')
+  },
+
+  //处理取消订单，同意取消
+  agreeCancel() {
+    //待实现
+    console.log('接单人同意取消')
+  },
+
   changeBar(event) {
     // event.detail 的值为当前选中项的索引
-    this.setData({ active: event.detail });
-    switch (this.data.active){
-      case 'home':{ wx.redirectTo({
-        url: '../home/home',
-      })
-      break
-    }
-      case 'myOrder':{
+    this.setData({
+      active: event.detail
+    });
+    switch (this.data.active) {
+      case 'home': {
+        wx.redirectTo({
+          url: '../home/home',
+        })
+        break
+      }
+      case 'myOrder': {
         wx.redirectTo({
           url: '../showCompletedOrder/showCompletedOrder',
         })
         break
       }
-      case 'createOrder':{
+      case 'createOrder': {
         wx.navigateTo({
           url: '../createOrder/createOrder',
         })
         break
       }
-      case 'receiveOrder':{
+      case 'receiveOrder': {
         wx.redirectTo({
           url: '../receivedOrder/receivedOrder',
         })
         break
       }
-      case 'userInfo':{
+      case 'userInfo': {
         wx.redirectTo({
           url: '../userInfo/userInfo',
         })
