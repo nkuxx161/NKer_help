@@ -10,15 +10,17 @@
     <van-card num="1" price="{{item.reward}}" desc="{{item.description}}" title="{{item.title}}" thumb="{{item.image}}"
       lazy-load tag="{{item.type}}" thumb-mode="aspectFill">
       <view slot="footer" wx:if="{{item.status == 1}}">
-        <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder" data-id="{{item._id}}">取消订单</van-button>
+        <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder" data-id="{{item._id}}">取消订单
+        </van-button>
         <van-button type="primary" size="mini" catchtap="submitComplete" data-id="{{item._id}}">确认提交</van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">
         <van-button type="primary" size="mini" catchtap="submitReview" data-id="{{item._id}}">评价</van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 4}}">
-        <van-button type="default" size="mini" catchtap="service"  data-id='{{item._id}}'>申请客服介入</van-button>
-        <van-button type="primary" size="mini" catchtap="agreeCancel"  data-id='{{item._id}}'>同意取消</van-button>
+        <van-button type="default" size="mini" catchtap="service" data-id='{{item._id}}'>申请客服介入</van-button>
+        <van-button type="primary" size="mini" catchtap="agreeCancel" data-id='{{item._id}}' data-title="{{item.title}}"
+          data-sendstudentid="{{item._openid}}" data-description="{{item.description}}">同意取消</van-button>
       </view>
     </van-card>
   </view>
@@ -29,7 +31,9 @@
 <van-tabbar active="{{ active }}" bind:change="changeBar">
   <van-tabbar-item name="home" icon="home-o">主页</van-tabbar-item>
   <van-tabbar-item name="myOrder" icon="balance-list-o">我的订单</van-tabbar-item>
-  <van-tabbar-item name="createOrder"><van-icon name="add" size="65rpx" color="pink"/></van-tabbar-item>
+  <van-tabbar-item name="createOrder">
+    <van-icon name="add" size="65rpx" color="pink" />
+  </van-tabbar-item>
   <van-tabbar-item name="receiveOrder" icon="goods-collect-o">接受的订单</van-tabbar-item>
   <van-tabbar-item name="userInfo" icon="manager-o">我</van-tabbar-item>
 </van-tabbar>

@@ -219,7 +219,6 @@ Page({
 
   //取消订单
   cancelOrder(event) {
-    //待实现
     let orderId = event.currentTarget.dataset.id
     console.log('取消订单', orderId)
     wx.navigateTo({
@@ -280,9 +279,38 @@ Page({
   },
 
   //处理取消订单，同意取消
-  agreeCancel() {
+  agreeCancel(options) {
     //待实现
-    console.log('接单人同意取消')
+    Dialog.confirm({
+        title: '完成接单',
+        message: '确认提交此订单吗',
+        theme: 'round-button',
+      })
+      .then(() => {
+        let orderId = options.currentTarget.dataset.id
+        let sendStudentOpenId = options.currentTarget.dataset.sendstudentid
+        let title = options.currentTarget.dataset.title
+        let description = options.currentTarget.dataset.description
+        console.log('接单人同意取消订单', orderId, sendStudentOpenId, title, description)
+        wx.cloud.callFunction({
+          name: 'pushAgreeCancelMsg',
+          data: {
+            url: '/pages/receivedOrder/receivedOrder',
+            openId: sendStudentOpenId,
+            title: title,
+            orderId: orderId,
+            description: description,
+          }
+        }).then(res => {
+          console.log('推送取消消息成功', res)
+        }).catch(err => {
+          console.log('推送取消消息失败', err)
+        })
+      })
+      .catch(() => {
+        //取消提交订单
+        console.log('接单人取消同意的操作')
+      })
   },
 
   changeBar(event) {
