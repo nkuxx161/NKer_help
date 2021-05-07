@@ -5,7 +5,6 @@ const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
 const userdb = DB.collection('userInfo')
 const _ = wx.cloud.database().command
-const $ = _.aggregate
 Page({
 
   /**
