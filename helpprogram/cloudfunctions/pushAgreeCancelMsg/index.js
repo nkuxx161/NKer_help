@@ -12,20 +12,20 @@ exports.main = async (event, context) => {
       touser: event.openId, //要推送给那个用户
       page: event.url, //要跳转到那个小程序页面
       data: { //推送的内容
-        thing2: {
+        thing1: {
           value: event.title
         },
-        character_string6: {
+        character_string2: {
           value: event.orderId
         },
-        thing4: {
-          value: event.reason
+        phrase11: {
+          value: '已取消'
         },
-        thing1: {
-          value: event.type
+        thing15: {
+          value: event.description
         }
       },
-      templateId: 'XgpA413z8X4ki83NugtAKcIYXWSUJaYyKvpxhABWoTE'//模板id
+      templateId: 'mVQCWb63Fa1nGEDlNU4GHgVlEOmiKyH6_wlWQr4ijxY'//模板id
     })
     return result
   } catch (err) {
