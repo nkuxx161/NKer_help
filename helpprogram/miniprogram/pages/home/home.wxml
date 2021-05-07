@@ -1,4 +1,9 @@
 <!--miniprogram/pages/home/home.wxml-->
+<van-tabs active="{{ active }}" bind:change="onChange">
+  <van-tab title="全部"></van-tab>
+  <van-tab title="同校区"></van-tab>
+  <van-tab title="跨校区"></van-tab>
+</van-tabs>
 <view wx:key="index" wx:for="{{currentOrderList}}">
   <view class="order_card" bindtap="showDetail" data-id="{{item._id}}">
     <van-card num="1" price="{{item.reward}}" desc="{{item.description}}" title="{{item.title}}" thumb="{{item.image}}"

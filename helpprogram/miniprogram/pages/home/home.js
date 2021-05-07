@@ -5,6 +5,7 @@ const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
 const userdb = DB.collection('userInfo')
 const _ = wx.cloud.database().command
+const $ = _.aggregate
 Page({
 
   /**
@@ -14,15 +15,20 @@ Page({
     openid: '',
     studentID: '',
     active: 0,
+    index: 0,
     status: 0,
     currentOrderList: [],
     waitOrderList: [],
+    sameCampus: [],
+    differentCampus: [],
   },
+
+
 
   getList() {
     db.where({
       status: this.data.status
-    }).skip(this.data.currentOrderList.length).get()
+    }).skip(this.data.currentOrderList.length).limit(20).get()
     .then(res => {
       if (res.data.length == 0) {
         wx.showToast({
@@ -36,9 +42,46 @@ Page({
           this.setData({
             currentOrderList: this.data.waitOrderList
           })
+          for(var i=0; i<res.data.length;i++){
+            if(res.data[i].end == res.data[i].start){
+              this.setData({
+                sameCampus: this.data.sameCampus.concat(res.data[i])
+              })
+            } else {
+              this.setData({
+                differentCampus: this.data.differentCampus.concat(res.data[i])
+              })
+            }
+          }
         }
       }
     })
+  },
+
+  onChange(event){
+    this.setData({
+      index: event.detail.index+1,
+    })
+    switch(this.data.index){
+      case 1:
+        this.setData({
+          currentOrderList: this.data.waitOrderList,
+        })
+        break;
+      case 2:
+        this.setData({
+          currentOrderList: this.data.sameCampus,
+        })
+        break;
+      case 3:
+        this.setData({
+          currentOrderList: this.data.differentCampus,
+        })
+        break;
+      default:
+        Toast.fail('切换订单状态失败')
+        break;
+    }
   },
 
   showDetail(id) {
@@ -87,7 +130,6 @@ Page({
    */
   onLoad: function (options) {
     this.getList()
-
 
     // 获取用户openid
     wx.cloud.callFunction({
