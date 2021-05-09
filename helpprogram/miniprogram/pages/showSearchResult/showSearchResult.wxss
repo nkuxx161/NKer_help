@@ -1,1 +1,8 @@
 /* miniprogram/pages/showSearchResult/showSearchResult.wxss */
+.order_card {
+  margin-bottom: 20rpx;
+}
+
+.btn_confirm {
+  margin-right: 5rpx;
+}

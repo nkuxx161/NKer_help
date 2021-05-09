@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    disabled: true,
     value: '',
     openid: '',
     studentID: '',
@@ -25,7 +26,8 @@ Page({
 //搜索框
   onChangeSearch(e) {
     this.setData({
-      value: e.detail
+      value: e.detail,
+      disabled: false
     })
   },
 

@@ -22,13 +22,33 @@ Page({
   },
 
   getList() {
-    db.where({
+    console.log(this.data.value)
+    db.where(_.or([
+      {
+        title: DB.RegExp({
+          regexp: this.data.value,
+          options: 'i',
+        })
+      },
+      {
+        description: DB.RegExp({
+          regexp: this.data.value,
+          options: 'i',
+        })
+      },
+      {
+        goodsPlace: DB.RegExp({
+          regexp: this.data.value,
+          options: 'i',
+        })
+      }
+    ]).and([{
       status: 0
-    }).skip(this.data.currentOrderList.length).limit(20).get()
+    }])).skip(this.data.currentOrderList.length).limit(20).get()
     .then(res => {
-          this.setData({
-            waitOrderList: this.data.waitOrderList.concat(res.data)
-          })
+      this.setData({
+        waitOrderList: this.data.waitOrderList.concat(res.data)
+      })
           for(var i=0; i<res.data.length;i++){
             if(res.data[i].end == res.data[i].start){
               this.setData({
@@ -52,6 +72,9 @@ Page({
             this.setData({
               currentOrderList: this.data.differentCampus
             })
+      }
+      if(this.data.currentOrderList.length == 0){
+        Toast('没有相关的订单！')
       }
     })
   },
