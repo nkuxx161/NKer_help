@@ -1,0 +1,13 @@
+<!--miniprogram/pages/showSearchResult/showSearchResult.wxml-->
+<view wx:key="index" wx:for="{{currentOrderList}}">
+  <view class="order_card" bindtap="showDetail" data-id="{{item._id}}">
+    <van-card num="1" price="{{item.reward}}" desc="{{item.description}}" title="{{item.title}}" thumb="{{item.image}}"
+      lazy-load tag="{{item.type}}" thumb-mode="aspectFill">
+      <view slot="footer" wx:if="{{item.status == 0}}">
+        <van-button class="btn_confirm" type="danger" size="mini" catchtap="confirmOrder" data-id='{{item._id}}'>确认接单</van-button>
+      </view>
+    </van-card>
+  </view>
+</view>
+<van-toast id="van-toast" />
+<van-dialog id="van-dialog" />

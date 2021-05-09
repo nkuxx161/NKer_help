@@ -1,4 +1,4 @@
-// miniprogram/pages/home/home.js
+// miniprogram/pages/showSearchResult/showSearchResult.js
 import Dialog from '@vant/weapp/dialog/dialog'
 import Toast from '@vant/weapp/toast/toast'
 const DB = wx.cloud.database()
@@ -11,48 +11,21 @@ Page({
    * 页面的初始数据
    */
   data: {
-    value: '',
     openid: '',
     studentID: '',
-    active: 0,
-    index: 1,
-    status: 0,
     currentOrderList: [],
+    index: 1,
+    value: '',
     waitOrderList: [],
     sameCampus: [],
     differentCampus: [],
   },
-//搜索框
-  onChangeSearch(e) {
-    this.setData({
-      value: e.detail
-    })
-  },
 
-
-  onSearch(e) {
-    wx.navigateTo({
-      url: '../showSearchResult/showSearchResult?value=' + this.data.value +'&index=' + this.data.index,
-    })
-  },
-
-  onClick(e) {
-    wx.navigateTo({
-      url: '../showSearchResult/showSearchResult?value=' + this.data.value +'&index=' + this.data.index,
-    })
-  },
-//查找状态为0的订单 并将同校区、跨校区分类
   getList() {
     db.where({
-      status: this.data.status
+      status: 0
     }).skip(this.data.currentOrderList.length).limit(20).get()
     .then(res => {
-      if (res.data.length == 0) {
-        wx.showToast({
-          title: '已到底',
-        })
-      } else {
-        if(this.data.status == 0){
           this.setData({
             waitOrderList: this.data.waitOrderList.concat(res.data)
           })
@@ -79,37 +52,8 @@ Page({
             this.setData({
               currentOrderList: this.data.differentCampus
             })
-          }
-        }
       }
     })
-  },
-
-  //上部导航栏变化时事件
-  onChange(event){
-    this.setData({
-      index: event.detail.index+1,
-    })
-    switch(this.data.index){
-      case 1:
-        this.setData({
-          currentOrderList: this.data.waitOrderList,
-        })
-        break;
-      case 2:
-        this.setData({
-          currentOrderList: this.data.sameCampus,
-        })
-        break;
-      case 3:
-        this.setData({
-          currentOrderList: this.data.differentCampus,
-        })
-        break;
-      default:
-        Toast.fail('切换订单状态失败')
-        break;
-    }
   },
 
   showDetail(id) {
@@ -117,7 +61,6 @@ Page({
       url: '../showOrderDetail/showOrderDetail?orderId=' + id.currentTarget.dataset.id,
     })
   },
-
 
   /** 确认接单 */
   confirmOrder(event) {
@@ -153,12 +96,19 @@ Page({
     })
   },
 
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.setData({
+      value: options.value,
+      index: options.index,
+      currentOrderList: [],
+      waitOrderList: [],
+      sameCampus: [],
+      differentCampus:[]
+    })
+    this.getList()
     // 获取用户openid
     wx.cloud.callFunction({
       name: 'getOpenID',
@@ -197,13 +147,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      currentOrderList: [],
-      waitOrderList: [],
-      sameCampus: [],
-      differentCampus: [],
-    })
-    this.getList()
+
   },
 
   /**
@@ -239,40 +183,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  changeBar(event) {
-    // event.detail 的值为当前选中项的索引
-    this.setData({ active: event.detail });
-    switch (this.data.active){
-      case 'home':{ wx.redirectTo({
-        url: '../home/home',
-      })
-      break
-    }
-      case 'myOrder':{
-        wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder',
-        })
-        break
-      }
-      case 'createOrder':{
-        wx.navigateTo({
-          url: '../createOrder/createOrder',
-        })
-        break
-      }
-      case 'receiveOrder':{
-        wx.redirectTo({
-          url: '../receivedOrder/receivedOrder',
-        })
-        break
-      }
-      case 'userInfo':{
-        wx.redirectTo({
-          url: '../userInfo/userInfo',
-        })
-        break
-      }
-    }
-  },
+  }
 })
