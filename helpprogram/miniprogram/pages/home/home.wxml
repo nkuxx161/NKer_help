@@ -1,4 +1,7 @@
 <!--miniprogram/pages/home/home.wxml-->
+<van-search value="{{ value }}" placeholder="请输入搜索关键词" bind:search="onSearch" bind:change="onChangeSearch" use-action-slot="true" >
+  <view slot="action" bind:tap="onClick">搜索</view>
+</van-search>
 <van-tabs active="{{ active }}" bind:change="onChange">
   <van-tab title="全部"></van-tab>
   <van-tab title="同校区"></van-tab>
