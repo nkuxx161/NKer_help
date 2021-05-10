@@ -1,0 +1,11 @@
+<!--miniprogram/pages/showUserInfo/showUserInfo.wxml-->
+<van-cell-group>
+  <van-cell title="姓名" value="{{user.studentName}}" />
+  <van-cell title="学号" value="{{user.studentID}}" />
+  <van-cell title="校区" value="{{user.defaultCampus}}" />
+  <van-cell title="学院" value="{{user.college}}" />
+  <van-cell title="发单数" value="{{user.receiveCount}}" />
+  <van-cell title="支出总赏金" value="{{user.receiveScore}}" />
+  <van-cell title="接单数" value="{{user.sendCount}}" />
+  <van-cell title="赚取总赏金" value="{{user.sendScore}}" />
+</van-cell-group>

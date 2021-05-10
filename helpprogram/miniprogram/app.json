@@ -13,7 +13,8 @@
     "pages/help/help",
     "pages/aboutUs/aboutUs",
     "pages/detailInfo/detailInfo",
-    "pages/changeName/changeName"
+    "pages/changeName/changeName",
+    "pages/showUserInfo/showUserInfo"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

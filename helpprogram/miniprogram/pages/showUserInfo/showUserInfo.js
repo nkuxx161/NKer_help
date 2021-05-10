@@ -1,3 +1,4 @@
+// miniprogram/pages/showUserInfo/showUserInfo.js
 const DB = wx.cloud.database()
 const db = DB.collection('orderInfo')
 const userdb = DB.collection('userInfo')
@@ -8,14 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orderId: '',
-    order: [],
-    userID: ''
-  },
-  onClick(e) {
-    wx.navigateTo({
-      url: '../showUserInfo/showUserInfo?userID=' + this.data.userID,
-    })
+    userID: '',
+    user: []
   },
 
   /**
@@ -23,20 +18,21 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      orderId: decodeURIComponent(options.orderId)
+      userID: options.userID
     })
-    //获取该条订单 及 该订单发布者id
-    db.doc(this.data.orderId).get()
-      .then(res => {
-        this.setData({
-          order: res.data,
-          userID: res.data._openid
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    console.log(this.data.userID)
 
+    userdb.where({
+      _openid: this.data.userID
+    }).get()
+    .then(res => {
+      this.setData({
+        user: res.data[0]
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
   },
 
   /**
