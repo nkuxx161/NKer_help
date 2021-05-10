@@ -1,0 +1,9 @@
+<!--miniprogram/pages/showStoR/showStoR.wxml-->
+<view wx:key="index" wx:for="{{ showList }}">
+  <van-panel title="标题" desc="{{ item.StoRWord }}" status="评分：{{ item.StoRScore }}">
+    <view><van-image width="100" height="100" src="{{item.StoRImage}}" /></view>
+  </van-panel>
+  <van-divider />
+</view>
+<van-toast id="van-toast" />
+<van-dialog id="van-dialog" />

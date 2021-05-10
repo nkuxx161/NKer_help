@@ -1,7 +1,8 @@
-// miniprogram/pages/showUserInfo/showUserInfo.js
+// miniprogram/pages/showStoR/showStoR.js
+import Dialog from '@vant/weapp/dialog/dialog'
+import Toast from '@vant/weapp/toast/toast'
 const DB = wx.cloud.database()
-const db = DB.collection('orderInfo')
-const userdb = DB.collection('userInfo')
+const SRdb = DB.collection('StoRReview')
 const _ = wx.cloud.database().command
 Page({
 
@@ -10,19 +11,7 @@ Page({
    */
   data: {
     userID: '',
-    user: []
-  },
-
-  onClickSend(e) {
-    wx.navigateTo({
-      url: '../showStoR/showStoR?userID=' + this.data.userID,
-    })
-  },
-
-  onClickReceive(e) {
-    wx.navigateTo({
-      url: '../showStoR/showStoR?userID=' + this.data.userID,
-    })
+    showList: []
   },
 
   /**
@@ -32,18 +21,18 @@ Page({
     this.setData({
       userID: options.userID
     })
-    console.log(this.data.userID)
-
-    userdb.where({
+    SRdb.where({
       _openid: this.data.userID
-    }).get()
+    }).skip(this.data.showList.length).limit(20).get()
     .then(res => {
-      this.setData({
-        user: res.data[0]
-      })
-    })
-    .catch(err => {
-      console.log(err)
+      console.log(res)
+      if(res.data.length == 0){
+        Toast('暂无相关评价！')
+      } else {
+        this.setData({
+          showList: res.data
+        })
+      }
     })
   },
 
