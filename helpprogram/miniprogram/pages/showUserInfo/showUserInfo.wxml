@@ -8,4 +8,6 @@
   <van-cell title="支出总赏金" value="{{user.receiveScore}}" />
   <van-cell title="接单数" value="{{user.sendCount}}" />
   <van-cell title="赚取总赏金" value="{{user.sendScore}}" />
+  <van-cell title="历史发单收到的评价" bind:click="onClickSend" is-link />
+  <van-cell title="历史接单收到的评价" bind:click="onClickReceive" is-link />
 </van-cell-group>
