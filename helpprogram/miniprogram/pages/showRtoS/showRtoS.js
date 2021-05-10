@@ -1,8 +1,8 @@
-// miniprogram/pages/showStoR/showStoR.js
+// miniprogram/pages/showRtoS/showRtoS.js
 import Dialog from '@vant/weapp/dialog/dialog'
 import Toast from '@vant/weapp/toast/toast'
 const DB = wx.cloud.database()
-const SRdb = DB.collection('StoRReview')
+const RSdb = DB.collection('RtoSReview')
 const _ = wx.cloud.database().command
 Page({
 
@@ -21,7 +21,7 @@ Page({
     this.setData({
       userID: options.userID
     })
-    SRdb.where({
+    RSdb.where({
       _openid: this.data.userID
     }).skip(this.data.showList.length).limit(20).get()
     .then(res => {
