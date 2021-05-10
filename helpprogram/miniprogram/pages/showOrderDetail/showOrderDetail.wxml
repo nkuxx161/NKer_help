@@ -12,4 +12,5 @@
   <van-cell title="图片" value="{{order.image}}" />
   <van-cell title="发单人学号" value="{{order.sendStudentID}}" />
   <van-cell title="接单人学号" value="{{order.receiveStudentID}}" />
+  <van-cell title="发单人信息" bind:click="onClick" is-link />
 </van-cell-group>
