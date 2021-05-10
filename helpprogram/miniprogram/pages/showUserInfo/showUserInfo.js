@@ -15,7 +15,7 @@ Page({
 
   onClickSend(e) {
     wx.navigateTo({
-      url: '../showStoR/showStoR?userID=' + this.data.userID,
+      url: '../showRtoS/showRtoS?userID=' + this.data.userID,
     })
   },
 

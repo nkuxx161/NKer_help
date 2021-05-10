@@ -1,0 +1,9 @@
+<!--miniprogram/pages/showRtoS/showRtoS.wxml-->
+<view wx:key="index" wx:for="{{ showList }}">
+  <van-panel title="标题" desc="{{ item.RtoSWord }}" status="评分：{{ item.RtoSScore }}">
+    <view><van-image width="100" height="100" src="{{item.RtoSImage}}" /></view>
+  </van-panel>
+  <van-divider />
+</view>
+<van-toast id="van-toast" />
+<van-dialog id="van-dialog" />
