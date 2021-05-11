@@ -18,7 +18,7 @@ Page({
     name:'请输入一个名称',
     campus:'未设置',
     collage:'未设置',
-    tempPhoneNumber:' ',
+    tempPhoneNumber:'',
     tempEmail:'',
     phoneNumber:'未设置',
     email:'未设置',
@@ -51,7 +51,7 @@ Page({
             id:res.data[0]._id,
             campus:res.data[0].defaultCampus,
             collage:res.data[0].collage,
-            telePhoneNumber:res.data[0].phoneNumber,
+            phoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
             name:res.data[0].studentName,
             rCount:res.data[0].receiveCount,
@@ -65,7 +65,7 @@ Page({
             id:res.data[0]._id,
             campus:res.data[0].defaultCampus,
             collage:res.data[0].collage,
-            telePhoneNumber:res.data[0].phoneNumber,
+            phoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
             name:res.data[0].studentName,
             rCount:res.data[0].receiveCount,
@@ -114,7 +114,7 @@ Page({
       data:{
         defaultCampus:this.data.campus,
         collage:this.data.collage,
-        phoneNumber:this.data.telePhoneNumber,
+        phoneNumber:this.data.phoneNumber,
         email:this.data.email,
         studentName:this.data.name
       },
@@ -201,7 +201,6 @@ Page({
    * @param {*} event 
    */
   changePhone(event) {
-    event.detail;
     this.setData({ tempPhoneNumber: event.detail });
   },
   /**
@@ -220,6 +219,7 @@ Page({
       error:'',
       showPhone: false
     })
+    console.log(this.data.phoneNumber)
   }
   },
     /**

@@ -17,8 +17,10 @@
  </button>
 <button wx:if="{{flag=='No'}}" block bindtap="goNk" class="button1">身份认证</button>
 <button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToDetail" class="button1">个人资料</button>
+<button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToAddress" class="button1">地址管理</button>
 <button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToHelp" class="button1">帮助与反馈</button>
 <button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToAboutUs" class="button1">关于我们</button>
+
 <van-button wx:if="{{ifLogin=='Yes'}}" type="warning"class="quit" block bindtap="showDialog2">退出登录</van-button>
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />

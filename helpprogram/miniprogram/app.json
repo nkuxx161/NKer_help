@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/userInfo/userInfo",
     "pages/showSearchResult/showSearchResult",
     "pages/receivedOrder/receivedOrder",
     "pages/userreview/userreview",
     "pages/showCompletedOrder/showCompletedOrder",
-    "pages/userInfo/userInfo",
     "pages/createOrder/createOrder",
     "pages/showOrderDetail/showOrderDetail",
     "pages/nk/nk",
@@ -16,7 +16,8 @@
     "pages/changeName/changeName",
     "pages/showUserInfo/showUserInfo",
     "pages/showStoR/showStoR",
-    "pages/showRtoS/showRtoS"
+    "pages/showRtoS/showRtoS",
+    "pages/address/address"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
