@@ -109,6 +109,9 @@ Page({
    */
   onLoad: function (options) {
     // 获取用户openid
+    this.setData({
+      active:options.active
+    })
     if (options.status == 3) {
       this.setData({
         status: 3,
@@ -367,34 +370,34 @@ Page({
     switch (this.data.active) {
       case 'home': {
         wx.redirectTo({
-          url: '../home/home',
+          url: '../home/home?active='+'home',
         })
         break
       }
       case 'myOrder': {
         wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder',
+          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
         })
         break
       }
       case 'createOrder': {
         wx.navigateTo({
-          url: '../createOrder/createOrder',
+          url: '../createOrder/createOrder?active='+'createOrder',
         })
         break
       }
       case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder',
+          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
         })
         break
       }
       case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo',
+          url: '../userInfo/userInfo?active='+'userInfo',
         })
         break
       }
     }
-  },
+  }
 })

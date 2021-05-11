@@ -26,6 +26,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      active:options.active
+    })
+
     wx.cloud.callFunction({
       name: 'getOpenID',
     })
@@ -191,38 +195,41 @@ Page({
   },
   changeBar(event) {
     // event.detail 的值为当前选中项的索引
-    this.setData({ active: event.detail });
-    switch (this.data.active){
-      case 'home':{ wx.redirectTo({
-        url: '../home/home',
-      })
-      break
-    }
-      case 'myOrder':{
+    this.setData({
+      active: event.detail
+    });
+    switch (this.data.active) {
+      case 'home': {
         wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder',
+          url: '../home/home?active='+'home',
         })
         break
       }
-      case 'createOrder':{
+      case 'myOrder': {
+        wx.redirectTo({
+          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
+        })
+        break
+      }
+      case 'createOrder': {
         wx.navigateTo({
-          url: '../createOrder/createOrder',
+          url: '../createOrder/createOrder?active='+'createOrder',
         })
         break
       }
-      case 'receiveOrder':{
+      case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder',
+          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
         })
         break
       }
-      case 'userInfo':{
+      case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo',
+          url: '../userInfo/userInfo?active='+'userInfo',
         })
         break
       }
     }
-  },
+  }
     
 })

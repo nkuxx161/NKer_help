@@ -25,6 +25,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      active:options.active
+    })
+    console.log(this.data.active)
     // 获取用户openid
     wx.cloud.callFunction({
         name: 'getOpenID',
@@ -345,31 +349,31 @@ Page({
     switch (this.data.active) {
       case 'home': {
         wx.redirectTo({
-          url: '../home/home',
+          url: '../home/home?active='+'home',
         })
         break
       }
       case 'myOrder': {
         wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder',
+          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
         })
         break
       }
       case 'createOrder': {
         wx.navigateTo({
-          url: '../createOrder/createOrder',
+          url: '../createOrder/createOrder?active='+'createOrder',
         })
         break
       }
       case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder',
+          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
         })
         break
       }
       case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo',
+          url: '../userInfo/userInfo?active='+'userInfo',
         })
         break
       }
