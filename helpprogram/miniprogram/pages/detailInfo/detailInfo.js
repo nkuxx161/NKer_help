@@ -24,6 +24,10 @@ Page({
     email:'未设置',
     error:'',
     img:'',
+    rCount:0,
+    sCount:0,
+    rRate:0,
+    sRate:0,
   },
 
   /**
@@ -50,6 +54,10 @@ Page({
             telePhoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
             name:res.data[0].studentName,
+            rCount:res.data[0].receiveCount,
+            sCount:res.data[0].sendCount,
+            rRate:(res.data[0].receiveScore/res.data[0].receiveCount),
+            sRate:(res.data[0].sendScore/res.data[0].sendCount),
             img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
           })
           else
@@ -60,6 +68,10 @@ Page({
             telePhoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
             name:res.data[0].studentName,
+            rCount:res.data[0].receiveCount,
+            sCount:res.data[0].sendCount,
+            rRate:(res.data[0].receiveScore/res.data[0].receiveCount),
+            sRate:(res.data[0].sendScore/res.data[0].sendCount),
             img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
           })
         }
@@ -285,7 +297,6 @@ Page({
               duration: 1000
             })
           }
-
         })
       }
     })
