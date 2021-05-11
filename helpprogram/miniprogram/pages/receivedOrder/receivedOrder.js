@@ -272,18 +272,17 @@ Page({
     })
   },
 
-  //处理取消订单，联系客服介入
+  //处理取消订单，联系客服介入后的回调函数
   service() {
-    //待实现
+    //不用实现什么
     console.log('接单人联系客服介入')
   },
 
   //处理取消订单，同意取消
   agreeCancel(options) {
-    //待实现
     Dialog.confirm({
         title: '完成接单',
-        message: '确认提交此订单吗',
+        message: '确认同意取消此订单吗',
         theme: 'round-button',
       })
       .then(() => {
@@ -291,26 +290,51 @@ Page({
         let sendStudentOpenId = options.currentTarget.dataset.sendstudentid
         let title = options.currentTarget.dataset.title
         let description = options.currentTarget.dataset.description
-        console.log('接单人同意取消订单', orderId, sendStudentOpenId, title, description)
+        // console.log('接单人同意取消订单', orderId, sendStudentOpenId, title, description)
+        //修改数据库
         wx.cloud.callFunction({
-          name: 'pushAgreeCancelMsg',
-          data: {
-            url: '/pages/receivedOrder/receivedOrder',
-            openId: sendStudentOpenId,
-            title: title,
-            orderId: orderId,
-            description: description,
-          }
-        }).then(res => {
-          console.log('推送取消消息成功', res)
-        }).catch(err => {
-          console.log('推送取消消息失败', err)
-        })
+            name: 'updateOrderStatus',
+            data: {
+              id: orderId,
+              status: 2
+            }
+          })
+          .then(res => {
+            console.log("接单人同意取消订单成功", res)
+            this.setData({
+              currentOrderList: [],
+              pendingOrderList: []
+            })
+            this.getList()
+            //推送取消消息
+            wx.cloud.callFunction({
+              name: 'pushAgreeCancelMsg',
+              data: {
+                url: '/pages/receivedOrder/receivedOrder',
+                openId: sendStudentOpenId,
+                title: title,
+                orderId: orderId,
+                description: description,
+              }
+            }).then(res => {
+              console.log('推送取消消息成功', res)
+            }).catch(err => {
+              console.log('推送取消消息失败', err)
+            })
+          })
+          .catch(err => {
+            console.log("接单人同意取消订单失败", err)
+          })
       })
       .catch(() => {
         //取消提交订单
         console.log('接单人取消同意的操作')
       })
+  },
+
+  //捕获冒泡事件
+  nothing() {
+    //空方法，不用实现
   },
 
   changeBar(event) {
@@ -350,6 +374,6 @@ Page({
         break
       }
     }
-  },
+  }
 
 })
