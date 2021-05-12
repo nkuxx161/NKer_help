@@ -360,7 +360,7 @@ Page({
       }
       case 'createOrder': {
         wx.navigateTo({
-          url: '../createOrder/createOrder?active='+'createOrder',
+          url: '../createOrder/createOrder',
         })
         break
       }
