@@ -131,9 +131,6 @@ Page({
         ifdefault:false
       }})
       toast.success('增加成功')
-      wx.navigateBack({
-        delta: 0,
-      })
     }
     else{
       db.doc(this.data.id).update({
