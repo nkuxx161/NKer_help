@@ -157,6 +157,12 @@ Page({
   goNk: function(){
      wx.redirectTo({ url: '../nk/nk', }) 
   },
+   /**
+   * 去往地址管理
+   */
+  goToAddress: function(){
+    wx.navigateTo({ url: '../address/address', }) 
+ },
   onClose() {
     this.setData({ show: false });
   },

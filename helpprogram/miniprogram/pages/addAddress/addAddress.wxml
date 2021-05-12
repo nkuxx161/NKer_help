@@ -1,0 +1,53 @@
+<!--pages/addAddress/addAddress.wxml-->
+<!-- 信息部分开始 -->
+<form bindsubmit="formSubmit" report-submit="true">
+<view class = "info">
+<!-- 姓名部分 -->
+<view class = "item">
+<text>用户姓名</text>
+<view class = "right">
+<input type="text" name = "name"placeholder="{{name}}" focus="{{focus}}" bindinput="setName"/>
+</view>
+</view>
+
+<!-- 电话部分 -->
+<view class = "item">
+<text>联系电话</text>
+<view class = "right">
+<input name="tel" type="number" placeholder="{{tel}}"  focus="{{focus}}" bindinput="setPhone" />
+</view>
+</view>
+
+
+
+<!-- 收货地址部分 -->
+<view class = "item">
+<text>所在校区</text>
+<view class = "right">
+<picker mode="selector" class = "addre" value="{{addreValue}}" range="{{addreRange}}" bindchange="addrePickerBindchange">
+ {{addreRange[addreValue]}}
+</picker>
+
+</view>
+</view>
+
+<!-- 详细地址部分 -->
+<view class = "item-1">
+<text>详细地址</text>
+<view class = "right">
+<textarea  type="text" placeholder="{{door}}"  focus="{{focus}}" bindinput="setLocation"auto-height/>
+</view>
+</view>
+<!-- 设为默认地址 -->
+<!-- <view class="switch">
+  <view class="a1"><text>设为默认地址</text></view>
+  <van-switch checked="{{ checked }}" bind:change="ifdefault" size="40rpx" active-color="rgb(255, 160, 15)"/>
+  
+</view> -->
+
+</view>
+
+<!-- 信息部分结束 -->
+<button class = "save" bindtap="save">保存</button>
+</form>
+<van-toast id="van-toast" />

@@ -1,0 +1,65 @@
+/* pages/addAddress/addAddress.wxss */
+page {  
+  display: block;  
+  min-height: 100%;  
+  background-color:#f6f6f6;
+  font-family: "微软雅黑";
+  font-size: 30rpx;
+  color:#353535;
+  position: relative;
+} 
+.info{
+  background-color: #fff;
+}
+.item{
+  height:120rpx;
+  align-items: center;
+  display:flex;
+  margin-left:30rpx;
+  border-bottom:1rpx solid #eee;
+}
+.item-1{
+  height:300rpx;
+  align-items: center;
+  display:flex;
+  margin-left:30rpx;
+  border-bottom:1rpx solid #eee;
+}
+input placeholder{
+  color:red;
+}
+.area{
+  width:150rpx;
+  border:1rpx solid #939393;
+}
+.remind{
+  padding-top: 6rpx;
+  color:#e64340;
+  font-size:20rpx;
+}
+.save{
+  width:90%;
+  margin-top:30rpx;
+  background-color: rgb(87, 213, 230);
+  border-radius: 50rpx;
+  color:#fff;
+}
+.right{
+  padding-left: 30rpx;
+  width:75%;
+  display:flex;
+}
+input{
+  width:100%;
+}
+.switch{
+  display:flex;
+  align-items: center;
+  height: 80rpx;
+  margin: 10rpx 10rpx 0 30rpx;
+}
+.a1{
+  width: 80%;
+}
+
+
