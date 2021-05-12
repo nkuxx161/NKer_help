@@ -308,6 +308,13 @@ Page({
     })
   },
 
+  createAgain(options){
+    wx.redirectTo({
+      url: '../createOrder/createOrder?order='+JSON.stringify(options.currentTarget.dataset.order),
+    })
+    console.log(options.currentTarget.dataset.order)
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -381,7 +388,7 @@ Page({
       }
       case 'createOrder': {
         wx.navigateTo({
-          url: '../createOrder/createOrder?active='+'createOrder',
+          url: '../createOrder/createOrder',
         })
         break
       }
