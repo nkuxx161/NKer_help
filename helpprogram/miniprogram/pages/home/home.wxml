@@ -1,15 +1,17 @@
 <!--miniprogram/pages/home/home.wxml-->
-<van-search value="{{ value }}" placeholder="请输入搜索关键词" bind:search="onSearch" bind:change="onChangeSearch" use-action-slot="true" >
-  <view slot="action">
-    <van-button id="search" type="default" bind:click="onClick" size="small" 
-    disabled='{{ disabled }}'>搜索</van-button>
-  </view>
-</van-search>
-<van-tabs active="{{ active }}" bind:change="onChange">
-  <van-tab title="全部"></van-tab>
-  <van-tab title="同校区"></van-tab>
-  <van-tab title="跨校区"></van-tab>
-</van-tabs>
+<van-sticky>
+  <van-search value="{{ value }}" placeholder="请输入搜索关键词" bind:search="onSearch" bind:change="onChangeSearch" use-action-slot="true" >
+    <view slot="action">
+      <van-button id="search" type="default" bind:click="onClick" size="small" 
+      disabled='{{ disabled }}'>搜索</van-button>
+    </view>
+  </van-search>
+  <van-tabs active="{{ active }}" bind:change="onChange">
+    <van-tab title="全部"></van-tab>
+    <van-tab title="同校区"></van-tab>
+    <van-tab title="跨校区"></van-tab>
+  </van-tabs>
+</van-sticky>
 <view wx:key="index" wx:for="{{currentOrderList}}">
   <view class="order_card" bindtap="showDetail" data-id="{{item._id}}">
     <van-card num="1" price="{{item.reward}}" desc="{{item.description}}" title="{{item.title}}" thumb="{{item.image}}"

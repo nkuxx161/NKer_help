@@ -132,7 +132,6 @@ Page({
       .catch(err => {
         console.log(err)
       })
-    wx.startPullDownRefresh()
   },
 
   showDetail(id) {
