@@ -1,10 +1,11 @@
-<van-tabs active="{{ active }}" bind:change="onChange">
-  <van-tab title="已接单"></van-tab>
-  <van-tab title="已取消"></van-tab>
-  <van-tab title="已完成"></van-tab>
-  <van-tab title="待处理"></van-tab>
-</van-tabs>
-
+<van-sticky>
+  <van-tabs active="{{ active }}" bind:change="onChange">
+    <van-tab title="已接单"></van-tab>
+    <van-tab title="已取消"></van-tab>
+    <van-tab title="已完成"></van-tab>
+    <van-tab title="待处理"></van-tab>
+  </van-tabs>
+</van-sticky>
 <view wx:key="index" wx:for="{{currentOrderList}}">
   <view class="order_card" bindtap="showDetail" data-id="{{item._id}}">
     <van-card num="1" price="{{item.reward}}" desc="{{item.description}}" title="{{item.title}}" thumb="{{item.image}}"
