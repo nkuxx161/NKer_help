@@ -17,12 +17,13 @@
     "pages/showUserInfo/showUserInfo",
     "pages/showStoR/showStoR",
     "pages/showRtoS/showRtoS",
-    "pages/address/address"
+    "pages/address/address",
+    "pages/addAddress/addAddress"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarBackgroundColor": "#FFC0CB",
     "navigationBarTitleText": "Nker help",
     "navigationBarTextStyle": "black"
   },
@@ -58,5 +59,9 @@
     "van-tabbar-item": "@vant/weapp/tabbar-item/index",
     "van-search": "@vant/weapp/search/index",
     "van-sticky": "@vant/weapp/sticky/index"
+    "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index",
+    "van-switch": "@vant/weapp/switch/index"
+
   }
 }
