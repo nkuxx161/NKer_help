@@ -7,10 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    focus:false,
+    passwordType:'password',
     src: 'https://webvpn.nankai.edu.cn/',
     userid: '',
     password: '',
-    userName: ''
+    userName: '',
+    
   },
 
   /**
@@ -115,12 +118,17 @@ Page({
               sendCount: 0,
               sendScore: 0,
               studentID: this.data.userid,
-              studentName: this.data.userName,
+              studentName: "请输入一个名字",
               userIcon: "0"
             }
           })
+          wx.navigateBack({
+            delta: 1,
+          })
           wx.redirectTo({
-            url: '../userInfo/userInfo?flag=Yes&showToast=Yes'
+            url: '../userInfo/userInfo',
+          })({
+            delta: 1,
           })
         } else {
           wx.showToast({
@@ -131,6 +139,18 @@ Page({
 
       },
       complete: res => {},
+    })
+  },
+  showpassword:function(){
+    if(this.data.passwordType=='password')
+    this.setData({
+      passwordType:'text',
+      focus:true
+    })
+    else
+    this.setData({
+      passwordType:'password',
+      focus:true
     })
   }
 })

@@ -1,23 +1,31 @@
 <!--pages/nk/nk.wxml-->
 <!-- <web-view src="{{src}}" bindload="load"></web-view> -->
+<van-notice-bar
+  left-icon="volume-o"
+  text="请使用自己的账号进行登录，以免造成不必要的损失以及麻烦"
+/>
+<image src="https://img0.baidu.com/it/u=1059724802,2548808143&fm=26&fmt=auto&gp=0.jpg"  style="width:100%; height:300rpx " ></image>
 
-<view>
-姓名
-<input type="text" bindinput="getUserName" model:value="{{userName}}"></input>
+<view class = "info">
+<!-- 姓名部分 -->
+<view class = "item">
+<view class= "title"><text class="font-1">学号</text></view>
+<view class = "right">
+  <input  autofocus type="text" bindinput="getUserId" model:value="{{userid}}" placeholder="请输入学号"></input>
+</view>
+</view>
+<view class = "item">
+  <view class= "title"><text class="font-1">门户密码</text></view>
+
+<view class = "right" >
+  <input focus="{{focus}}" type="{{passwordType}}" bindinput="getPassword" model:value="{{password}}" placeholder="请输入密码" ></input>
+  <view class ="eye" bindtap="showpassword"><van-icon name="eye-o" size="40rpx" /></view>
+</view>
+</view>
 </view>
 
-<view>
-学号
-<input type="text" bindinput="getUserId" model:value="{{userid}}"></input>
+<view style="margin-top:50rpx">
+  <button class="logIn" bindtap="submit">登陆</button>
 </view>
 
-<view>
-信息门户密码
-<input type="text" bindinput="getPassword" model:value="{{password}}"></input>
-</view>
-
-
-
-<view>
-  <button type="primary" bindtap="submit">登陆</button>
-</view>
+<view class="bottom"><text class="font-2">@Nker helper</text></view>

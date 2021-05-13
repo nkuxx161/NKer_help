@@ -4,22 +4,31 @@
   left-icon="volume-o"
   text="使用过程中切记保护个人安全，选择人流量大的地点交接"
 />
-<van-row gutter="10">
-  <van-col span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="{{img}}" /></van-col>
+<van-row wx:if="{{flag=='Yes'}}" gutter="10">
+  <van-col  span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="{{img}}" /></van-col>
   <van-col span="14" offset="1">
     <text wx:if="{{ifLogin=='No'}}">请点击下方按钮登录</text>
     <text wx:if="{{ifLogin=='Yes'}}" style="font-size:40rpx">{{name}}</text>
   </van-col>
 </van-row>
+</view> 
+<view  wx:if="{{flag=='No'}}" class="a3">
+  <view> 
+    <view class="a2"><van-image round width="250rpx" height="250rpx" src="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/WX.png" /></view>
+  </view>
+    <view wx:if="{{flag=='No'}}" class="a4"><text class="font-1" space="emsp"> Nker Helper</text></view>
+
 </view>
+
+
 <button wx:if="{{ifLogin=='No'}}" class='bottom' type='primary' bindtap="getUserProfile">
   授权登录
  </button>
-<button wx:if="{{flag=='No'}}" block bindtap="goNk" class="button1">身份认证</button>
-<button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToDetail" class="button1">个人资料</button>
-<button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToAddress" class="button1">地址管理</button>
-<button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToHelp" class="button1">帮助与反馈</button>
-<button wx:if="{{ifLogin=='Yes'}}" block bindtap="goToAboutUs" class="button1">关于我们</button>
+<button wx:if="{{flag=='No'}}" block bindtap="goNk" class="button2">身份认证</button>
+<button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToDetail" class="button1">个人资料</button>
+<button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToAddress" class="button1">地址管理</button>
+<button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToHelp" class="button1">帮助与反馈</button>
+<button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToAboutUs" class="button1">关于我们</button>
 
 <van-button wx:if="{{ifLogin=='Yes'}}" type="warning"class="quit" block bindtap="showDialog2">退出登录</van-button>
 <van-dialog id="van-dialog" />

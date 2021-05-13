@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    fontFamily:"shuai",
     userInfo: {},
     hasUserInfo: false,
       openid: '',
@@ -26,6 +27,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
+    var that = this;
+    wx.loadFontFace({
+      family: that.data.fontFamily,// 自定义字体的名字 随便起就可以
+      source: 'url("https://7869-xiongxiao-9g0m49qp0514cda7-1305534329.tcb.qcloud.la/font/Artlookin-Regular.ttf?sign=c0d8c3dd900a9b5a04b9bf08a0aa6124&t=1620911193")',//这里填写第二步获取的下载地址
+      success(res) {
+        
+      },
+      fail: function(res) {
+        
+      },
+      complete: function(res) {
+       
+      }
+    });
     //设置tabbar的状态
     if (options.active == undefined) {
       this.setData({
@@ -59,6 +75,9 @@ Page({
               img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
             })
           }
+        }
+        else{
+          toast("请进行身份认证，以便正常使用小程序")
         }
       })
       .catch(err => {
@@ -162,7 +181,7 @@ Page({
    * 去往认证页面
    */
   goNk: function(){
-     wx.redirectTo({ url: '../nk/nk', }) 
+     wx.navigateTo({ url: '../nk/nk', }) 
   },
    /**
    * 去往地址管理

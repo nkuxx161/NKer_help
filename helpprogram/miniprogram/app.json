@@ -2,13 +2,13 @@
   "pages": [
     "pages/home/home",
     "pages/userInfo/userInfo",
+    "pages/nk/nk",
     "pages/showSearchResult/showSearchResult",
     "pages/receivedOrder/receivedOrder",
     "pages/userreview/userreview",
     "pages/showCompletedOrder/showCompletedOrder",
     "pages/createOrder/createOrder",
     "pages/showOrderDetail/showOrderDetail",
-    "pages/nk/nk",
     "pages/inputCancelReason/inputCancelReason",
     "pages/help/help",
     "pages/aboutUs/aboutUs",
@@ -24,7 +24,7 @@
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#FFC0CB",
-    "navigationBarTitleText": "Nker help",
+    "navigationBarTitleText": "Nker Helper",
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json",

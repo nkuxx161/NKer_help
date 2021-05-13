@@ -1,4 +1,7 @@
 /**app.wxss**/
+page{
+  font-family: "font-czy";
+}
 .container {
   display: flex;
   flex-direction: column;
