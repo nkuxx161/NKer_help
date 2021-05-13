@@ -1,2 +1,23 @@
 <!--pages/nk/nk.wxml-->
-<web-view src="{{src}}" bindload="load"></web-view>
+<!-- <web-view src="{{src}}" bindload="load"></web-view> -->
+
+<view>
+姓名
+<input type="text" bindinput="getUserName" model:value="{{userName}}"></input>
+</view>
+
+<view>
+学号
+<input type="text" bindinput="getUserId" model:value="{{userid}}"></input>
+</view>
+
+<view>
+信息门户密码
+<input type="text" bindinput="getPassword" model:value="{{password}}"></input>
+</view>
+
+
+
+<view>
+  <button type="primary" bindtap="submit">登陆</button>
+</view>

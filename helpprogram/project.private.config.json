@@ -41,6 +41,12 @@
           "pathName": "pages/userreview/userreview",
           "query": "id=28ee4e3e607d6f50108d861f61a838fc&studentID=1813036&type=RtoS",
           "scene": null
+        },
+        {
+          "name": "身份认证",
+          "pathName": "pages/nk/nk",
+          "query": "",
+          "scene": null
         }
       ]
     }

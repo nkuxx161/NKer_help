@@ -1,1 +1,4 @@
 /* pages/nk/nk.wxss */
+input {
+  border: 2rpx solid red;
+}
