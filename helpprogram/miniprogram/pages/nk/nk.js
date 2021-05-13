@@ -127,8 +127,6 @@ Page({
           })
           wx.redirectTo({
             url: '../userInfo/userInfo',
-          })({
-            delta: 1,
           })
         } else {
           wx.showToast({
