@@ -7,13 +7,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-      src:'https://webvpn.nankai.edu.cn/'
+    src: 'https://webvpn.nankai.edu.cn/',
+    userid: '',
+    password: '',
+    userName: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
   },
 
   /**
@@ -64,30 +68,69 @@ Page({
   onShareAppMessage: function () {
 
   },
-  load: function (e) {
-    // 获取url
-    const src = e.detail.src;
-    console.log(src)
-    const nkweb= "https://webvpn.nankai.edu.cn/"
-    // 检测到指定值执行跳转逻辑
-    // console.log(this.data.ifLogin)
-    if(src == nkweb){
-      // console.log(this.data.ifLogin)
-      db.add({
-        data:{
-        college:"未设置",
-        defaultCampus:"未设置",
-        email:"未设置",
-        phoneNumber:"未设置",
-        receiveCount: 0,
-        receiveScore: 0,
-        sendCount: 0,
-        sendScore:0,
-        studentID: " ",
-        studentName:"请输入一个名字",
-        userIcon:"0"
-      }})
-      wx.redirectTo({ url: '../userInfo/userInfo?flag=Yes&showToast=Yes'}) 
-    }
+
+  getUserId(event) {
+    // console.log('userid:', event.detail.value)
+    this.setData({
+      userid: event.detail.value
+    })
+  },
+
+  getPassword(event) {
+    // console.log('password:', event.detail.value)
+    this.setData({
+      password: event.detail.value
+    })
+  },
+
+  getUserName(event) {
+    // console.log('userName:', event.detail.value)
+    this.setData({
+      userName: event.detail.value
+    })
+  },
+
+  submit() {
+    wx.cloud.callFunction({
+      name: 'identityAuthentication',
+      data: {
+        userid: this.data.userid,
+        password: this.data.password
+      },
+      success: (res) => {
+        console.log(res)
+        if (res.result.message === "Success") {
+          wx.showToast({
+            title: '身份验证成功',
+            icon: 'success'
+          })
+          db.add({
+            data: {
+              college: "未设置",
+              defaultCampus: "未设置",
+              email: "未设置",
+              phoneNumber: "未设置",
+              receiveCount: 0,
+              receiveScore: 0,
+              sendCount: 0,
+              sendScore: 0,
+              studentID: this.data.userid,
+              studentName: this.data.userName,
+              userIcon: "0"
+            }
+          })
+          wx.redirectTo({
+            url: '../userInfo/userInfo?flag=Yes&showToast=Yes'
+          })
+        } else {
+          wx.showToast({
+            title: '账号或密码错误',
+            icon: 'fail'
+          })
+        }
+
+      },
+      complete: res => {},
+    })
   }
 })
