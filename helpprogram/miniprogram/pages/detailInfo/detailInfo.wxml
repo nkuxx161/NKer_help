@@ -24,8 +24,8 @@
   is-link
   title="学院"
   icon="wap-home-o"
-  bind:click="toShowCollage"
-  label="{{collage}}" 
+  bind:click="toShowCollege"
+  label="{{college}}" 
 />
 <van-cell
   is-link
@@ -81,16 +81,16 @@
 />
 </van-popup>
 <van-popup 
-  show="{{showCollage}}" 
-  bind:close="closeShowCollage"
+  show="{{showCollege}}" 
+  bind:close="closeShowCollege"
   closeable
   close-icon="passed"
   position="bottom"
   custom-style="height: 40%"
 >
 <van-picker
-  columns="{{ allCollage }}"
-  bind:change="changeCollage"
+  columns="{{ allCollege }}"
+  bind:change="changeCollege"
 />
 </van-popup>
 <van-popup 
