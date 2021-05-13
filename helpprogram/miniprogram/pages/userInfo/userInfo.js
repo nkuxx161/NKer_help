@@ -26,9 +26,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      active:options.active
-    })
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'userInfo'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
 
     wx.cloud.callFunction({
       name: 'getOpenID',
@@ -172,7 +179,8 @@ Page({
   showDialog2:function(){
     Dialog.confirm({
       title: '是否确认退出',
-      message: '小程序需要您的授权才能提供正常的服务哦'
+      message: '小程序需要您的授权才能提供正常的服务哦',
+      theme: 'round-button',
     })
       .then(() => {
         this.setData({

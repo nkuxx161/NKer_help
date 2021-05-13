@@ -108,10 +108,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 获取用户openid
-    this.setData({
-      active:options.active
-    })
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'myOrder'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
+    //提交或者评价订单后需要重新请求订单的数据
     if (options.status == 3) {
       this.setData({
         status: 3,
@@ -120,6 +127,7 @@ Page({
       })
       this.getList()
     }
+    // 获取用户openid
     wx.cloud.callFunction({
         name: 'getOpenID',
       })
@@ -197,6 +205,7 @@ Page({
     Dialog.confirm({
         title: '确认取消订单吗？',
         message: '取消后将不再接受他人的接单',
+        theme: 'round-button',
       })
       .then(() => {
         let id = event.currentTarget.dataset.id
