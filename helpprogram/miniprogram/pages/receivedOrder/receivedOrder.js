@@ -18,13 +18,34 @@ Page({
     completedOrderList: [],
     currentOrderList: [],
     pendingOrderList: [],
-    active: 0
+    active: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'receiveOrder'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
+
+    //提交或者评价订单后需要重新请求订单的数据
+    if (options.status == 3) {
+      this.setData({
+        status: 3,
+        completedOrderList: [],
+        currentOrderList: []
+      })
+      this.getList()
+    }
+
     // 获取用户openid
     wx.cloud.callFunction({
         name: 'getOpenID',
@@ -38,7 +59,6 @@ Page({
       .catch(err => {
         console.log(err)
       })
-    wx.startPullDownRefresh()
   },
 
   /**
@@ -185,7 +205,7 @@ Page({
 
   //切换订单列表
   onChange(event) {
-    // console.log("切换的栏目编号", event.detail.index)
+    console.log("切换的栏目编号", event.detail.index)
     this.setData({
       status: event.detail.index + 1,
     })
@@ -219,7 +239,6 @@ Page({
 
   //取消订单
   cancelOrder(event) {
-    //待实现
     let orderId = event.currentTarget.dataset.id
     console.log('取消订单', orderId)
     wx.navigateTo({
@@ -273,16 +292,69 @@ Page({
     })
   },
 
-  //处理取消订单，联系客服介入
+  //处理取消订单，联系客服介入后的回调函数
   service() {
-    //待实现
+    //不用实现什么
     console.log('接单人联系客服介入')
   },
 
   //处理取消订单，同意取消
-  agreeCancel() {
-    //待实现
-    console.log('接单人同意取消')
+  agreeCancel(options) {
+    Dialog.confirm({
+        title: '完成接单',
+        message: '确认同意取消此订单吗',
+        theme: 'round-button',
+      })
+      .then(() => {
+        let orderId = options.currentTarget.dataset.id
+        let sendStudentOpenId = options.currentTarget.dataset.sendstudentid
+        let title = options.currentTarget.dataset.title
+        let description = options.currentTarget.dataset.description
+        // console.log('接单人同意取消订单', orderId, sendStudentOpenId, title, description)
+        //修改数据库
+        wx.cloud.callFunction({
+            name: 'updateOrderStatus',
+            data: {
+              id: orderId,
+              status: 2
+            }
+          })
+          .then(res => {
+            console.log("接单人同意取消订单成功", res)
+            this.setData({
+              currentOrderList: [],
+              pendingOrderList: []
+            })
+            this.getList()
+            //推送取消消息
+            wx.cloud.callFunction({
+              name: 'pushAgreeCancelMsg',
+              data: {
+                url: '/pages/receivedOrder/receivedOrder',
+                openId: sendStudentOpenId,
+                title: title,
+                orderId: orderId,
+                description: description,
+              }
+            }).then(res => {
+              console.log('推送取消消息成功', res)
+            }).catch(err => {
+              console.log('推送取消消息失败', err)
+            })
+          })
+          .catch(err => {
+            console.log("接单人同意取消订单失败", err)
+          })
+      })
+      .catch(() => {
+        //取消提交订单
+        console.log('接单人取消同意的操作')
+      })
+  },
+
+  //捕获冒泡事件
+  nothing() {
+    //空方法，不用实现
   },
 
   changeBar(event) {
@@ -293,13 +365,13 @@ Page({
     switch (this.data.active) {
       case 'home': {
         wx.redirectTo({
-          url: '../home/home',
+          url: '../home/home?active='+'home',
         })
         break
       }
       case 'myOrder': {
         wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder',
+          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
         })
         break
       }
@@ -311,17 +383,17 @@ Page({
       }
       case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder',
+          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
         })
         break
       }
       case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo',
+          url: '../userInfo/userInfo?active='+'userInfo',
         })
         break
       }
     }
-  },
+  }
 
 })

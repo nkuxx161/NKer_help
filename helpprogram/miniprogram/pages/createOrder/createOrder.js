@@ -11,7 +11,7 @@ Page({
    */
   data: {
     //订单表
-    // _id
+    currentOrder: '',
     openid: '',
     sendStudentID: '',
     receiveStudentID: '',
@@ -23,7 +23,7 @@ Page({
     end: '八里台校区',
     goodsPlace: '',
     dealPlace: '',
-    type: '',
+    type: 0,
     date: '',
     contact: '',
     status: '',
@@ -70,10 +70,39 @@ Page({
     ],
   },
 
+  initOrder(){
+    this.setData({
+      sendStudentID: this.data.currentOrder.sendStudentID,
+      title: this.data.currentOrder.title,
+      fileList: [].concat(JSON.parse('{"url":'+"\""+this.data.currentOrder.image+"\"}")),
+      description: this.data.currentOrder.description,
+      start: this.data.currentOrder.start,
+      end: this.data.currentOrder.end,
+      goodsPlace: this.data.currentOrder.goodsPlace,
+      dealPlace: this.data.currentOrder.dealPlace,
+      type: this.data.currentOrder.type,
+      date: this.data.currentOrder.date,
+      contact: this.data.currentOrder.contact,
+      status: 0,
+      reward: this.data.currentOrder.reward,
+      isStoRReviewed: false,
+      isRtoSReviewed: false,
+      cancelPerson: ''
+    })
+    console.log('init',this.data.fileList)
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
+    if(JSON.stringify(options)!="{}"){
+      this.setData({
+        currentOrder: JSON.parse(options.order)
+      })
+      this.initOrder()
+    }
     // 获取用户openid
     wx.cloud.callFunction({
         name: 'getOpenID',
@@ -253,7 +282,7 @@ Page({
   //让用户获取消息推送的授权
   getAccess() {
     wx.requestSubscribeMessage({
-      tmplIds: ['mVQCWb63Fa1nGEDlNU4GHp3lgUyfGD49ITzwHknynNM'],
+      tmplIds: ['XgpA413z8X4ki83NugtAKcIYXWSUJaYyKvpxhABWoTE'],
       success: (res) => {
         console.log('授权成功', res)
       },
@@ -285,7 +314,8 @@ Page({
           status: 0,
           reward: this.data.reward,
           isStoRReviewed: false,
-          isRtoSReviewed: false
+          isRtoSReviewed: false,
+          cancelPerson: ''
         }
       })
     } else {
@@ -316,7 +346,8 @@ Page({
               status: 0,
               reward: this.data.reward,
               isStoRReviewed: false,
-              isRtoSReviewed: false
+              isRtoSReviewed: false,
+              cancelPerson: ''
             }
           })
           Toast({
@@ -345,6 +376,7 @@ Page({
     this.setData({
       fileList: [].concat(file)
     })
+    console.log('fileList',this.data.fileList)
   },
 
   //删除选择的图片

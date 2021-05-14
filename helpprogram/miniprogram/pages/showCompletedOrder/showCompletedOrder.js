@@ -108,7 +108,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 获取用户openid
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'myOrder'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
+    //提交或者评价订单后需要重新请求订单的数据
     if (options.status == 3) {
       this.setData({
         status: 3,
@@ -117,6 +127,7 @@ Page({
       })
       this.getList()
     }
+    // 获取用户openid
     wx.cloud.callFunction({
         name: 'getOpenID',
       })
@@ -129,7 +140,6 @@ Page({
       .catch(err => {
         console.log(err)
       })
-    wx.startPullDownRefresh()
   },
 
   showDetail(id) {
@@ -195,6 +205,7 @@ Page({
     Dialog.confirm({
         title: '确认取消订单吗？',
         message: '取消后将不再接受他人的接单',
+        theme: 'round-button',
       })
       .then(() => {
         let id = event.currentTarget.dataset.id
@@ -204,7 +215,7 @@ Page({
               data: {
                 id: id,
                 status: 2,
-                cancelPerson: 1
+                cancelPerson: 'sender'
               }
             })
             .then(res => {
@@ -229,7 +240,7 @@ Page({
             cancelFlag: true
           })
           wx.navigateTo({
-            url: '../inputCancelReason/inputCancelReason?orderId=' + event.currentTarget.dataset.id,
+            url: '../inputCancelReason/inputCancelReason?orderId=' + event.currentTarget.dataset.id + '&type=sender',
           })
         }
       })
@@ -306,6 +317,18 @@ Page({
     })
   },
 
+  createAgain(options){
+    wx.redirectTo({
+      url: '../createOrder/createOrder?order='+JSON.stringify(options.currentTarget.dataset.order),
+    })
+    console.log(options.currentTarget.dataset.order)
+  },
+
+  //空方法用于捕获tap防止冒泡
+  null() {
+
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -367,13 +390,13 @@ Page({
     switch (this.data.active) {
       case 'home': {
         wx.redirectTo({
-          url: '../home/home',
+          url: '../home/home?active='+'home',
         })
         break
       }
       case 'myOrder': {
         wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder',
+          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
         })
         break
       }
@@ -385,16 +408,16 @@ Page({
       }
       case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder',
+          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
         })
         break
       }
       case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo',
+          url: '../userInfo/userInfo?active='+'userInfo',
         })
         break
       }
     }
-  },
+  }
 })

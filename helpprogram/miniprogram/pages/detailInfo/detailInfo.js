@@ -10,20 +10,24 @@ Page({
     id:'',
     openid:'',
     allCampus:['泰达校区', '津南校区', '八里台校区', ],
-    allCollage:['材料科学与工程学院', '电子信息与光学工程学院', '法学院','汉语言学院','化学学院','环境科学与工程学院','计算机学院','网络空间安全学院','金融学院','经济学院','历史学院','旅游与服务学院','马克思主义学院','人工智能学院', '商学院','生命科学学院','泰达学院','软件学院','统计与数据科学学院','外国语学院','文学院','物理科学学院','药学院','医学院','哲学院','周恩来政府管理学院',],
+    allCollege:['材料科学与工程学院', '电子信息与光学工程学院', '法学院','汉语言学院','化学学院','环境科学与工程学院','计算机学院','网络空间安全学院','金融学院','经济学院','历史学院','旅游与服务学院','马克思主义学院','人工智能学院', '商学院','生命科学学院','泰达学院','软件学院','统计与数据科学学院','外国语学院','文学院','物理科学学院','药学院','医学院','哲学院','周恩来政府管理学院',],
     showCampus:false,
-    showCollage:false,
+    showCollege:false,
     showPhone:false,
     showEmail:false,
     name:'请输入一个名称',
     campus:'未设置',
-    collage:'未设置',
-    tempPhoneNumber:' ',
+    college:'未设置',
+    tempPhoneNumber:'',
     tempEmail:'',
     phoneNumber:'未设置',
     email:'未设置',
     error:'',
     img:'',
+    rCount:0,
+    sCount:0,
+    rRate:0,
+    sRate:0,
   },
 
   /**
@@ -46,20 +50,28 @@ Page({
           this.setData({
             id:res.data[0]._id,
             campus:res.data[0].defaultCampus,
-            collage:res.data[0].collage,
-            telePhoneNumber:res.data[0].phoneNumber,
+            college:res.data[0].college,
+            phoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
             name:res.data[0].studentName,
+            rCount:res.data[0].receiveCount,
+            sCount:res.data[0].sendCount,
+            rRate:(res.data[0].receiveScore/res.data[0].receiveCount),
+            sRate:(res.data[0].sendScore/res.data[0].sendCount),
             img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
           })
           else
           this.setData({
             id:res.data[0]._id,
             campus:res.data[0].defaultCampus,
-            collage:res.data[0].collage,
-            telePhoneNumber:res.data[0].phoneNumber,
+            college:res.data[0].college,
+            phoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
             name:res.data[0].studentName,
+            rCount:res.data[0].receiveCount,
+            sCount:res.data[0].sendCount,
+            rRate:(res.data[0].receiveScore/res.data[0].receiveCount),
+            sRate:(res.data[0].sendScore/res.data[0].sendCount),
             img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
           })
         }
@@ -101,8 +113,8 @@ Page({
     db.doc(this.data.id).update({
       data:{
         defaultCampus:this.data.campus,
-        collage:this.data.collage,
-        phoneNumber:this.data.telePhoneNumber,
+        college:this.data.college,
+        phoneNumber:this.data.phoneNumber,
         email:this.data.email,
         studentName:this.data.name
       },
@@ -155,22 +167,22 @@ Page({
     /**
    * 显示学院弹出框
    */
-  toShowCollage() {
-    this.setData({ showCollage: true });
+  toShowCollege() {
+    this.setData({ showCollege: true });
   },
 /**
  * 关闭学院弹出框
  */
-  closeShowCollage() {
-    this.setData({ showCollage: false });
+  closeShowCollege() {
+    this.setData({ showCollege: false });
   },
   /**
    * 选择学院
    * @param {*} event 
    */
-  changeCollage(event) {
+  changeCollege(event) {
     const { picker, value, index } = event.detail;
-    this.setData({ collage: value });
+    this.setData({ college: value });
   },
   /**
    * 显示电话弹出框
@@ -189,7 +201,6 @@ Page({
    * @param {*} event 
    */
   changePhone(event) {
-    event.detail;
     this.setData({ tempPhoneNumber: event.detail });
   },
   /**
@@ -208,6 +219,7 @@ Page({
       error:'',
       showPhone: false
     })
+    console.log(this.data.phoneNumber)
   }
   },
     /**
@@ -285,7 +297,6 @@ Page({
               duration: 1000
             })
           }
-
         })
       }
     })

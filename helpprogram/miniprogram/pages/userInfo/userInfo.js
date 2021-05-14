@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    fontFamily:"shuai",
     userInfo: {},
     hasUserInfo: false,
       openid: '',
@@ -26,6 +27,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
+    var that = this;
+    wx.loadFontFace({
+      family: that.data.fontFamily,// 自定义字体的名字 随便起就可以
+      source: 'url("https://7869-xiongxiao-9g0m49qp0514cda7-1305534329.tcb.qcloud.la/font/Artlookin-Regular.ttf?sign=c0d8c3dd900a9b5a04b9bf08a0aa6124&t=1620911193")',//这里填写第二步获取的下载地址
+      success(res) {
+        
+      },
+      fail: function(res) {
+        
+      },
+      complete: function(res) {
+       
+      }
+    });
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'userInfo'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
+
     wx.cloud.callFunction({
       name: 'getOpenID',
     })
@@ -48,6 +75,9 @@ Page({
               img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
             })
           }
+        }
+        else{
+          toast("请进行身份认证，以便正常使用小程序")
         }
       })
       .catch(err => {
@@ -151,8 +181,14 @@ Page({
    * 去往认证页面
    */
   goNk: function(){
-     wx.redirectTo({ url: '../nk/nk', }) 
+     wx.navigateTo({ url: '../nk/nk', }) 
   },
+   /**
+   * 去往地址管理
+   */
+  goToAddress: function(){
+    wx.navigateTo({ url: '../address/address', }) 
+ },
   onClose() {
     this.setData({ show: false });
   },
@@ -162,7 +198,8 @@ Page({
   showDialog2:function(){
     Dialog.confirm({
       title: '是否确认退出',
-      message: '小程序需要您的授权才能提供正常的服务哦'
+      message: '小程序需要您的授权才能提供正常的服务哦',
+      theme: 'round-button',
     })
       .then(() => {
         this.setData({
@@ -191,38 +228,41 @@ Page({
   },
   changeBar(event) {
     // event.detail 的值为当前选中项的索引
-    this.setData({ active: event.detail });
-    switch (this.data.active){
-      case 'home':{ wx.redirectTo({
-        url: '../home/home',
-      })
-      break
-    }
-      case 'myOrder':{
+    this.setData({
+      active: event.detail
+    });
+    switch (this.data.active) {
+      case 'home': {
         wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder',
+          url: '../home/home?active='+'home',
         })
         break
       }
-      case 'createOrder':{
+      case 'myOrder': {
+        wx.redirectTo({
+          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
+        })
+        break
+      }
+      case 'createOrder': {
         wx.navigateTo({
           url: '../createOrder/createOrder',
         })
         break
       }
-      case 'receiveOrder':{
+      case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder',
+          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
         })
         break
       }
-      case 'userInfo':{
+      case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo',
+          url: '../userInfo/userInfo?active='+'userInfo',
         })
         break
       }
     }
-  },
+  }
     
 })

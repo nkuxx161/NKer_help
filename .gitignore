@@ -1,2 +1,3 @@
 helpprogram/miniprogram/miniprogram_npm/*
 helpprogram/miniprogram/node_modules/*
+helpprogram/cloudfunctions/identityAuthentication/node_modules/*

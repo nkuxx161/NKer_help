@@ -135,6 +135,7 @@ Page({
     Dialog.confirm({
       title: '确认接单吗？',
       message: '确认后需在要求时间内完成订单！',
+      theme: 'round-button',
     })
     .then(res => {
       let id = event.currentTarget.dataset.id
@@ -169,6 +170,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // console.log(options.active)
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'home'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
 
     // 获取用户openid
     wx.cloud.callFunction({
@@ -208,6 +220,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.hideHomeButton({
+      success: (res) => {},
+    })
     this.setData({
       flag: 0,
       currentOrderList: [],
@@ -257,37 +272,40 @@ Page({
   },
   changeBar(event) {
     // event.detail 的值为当前选中项的索引
-    this.setData({ active: event.detail });
-    switch (this.data.active){
-      case 'home':{ wx.redirectTo({
-        url: '../home/home',
-      })
-      break
-    }
-      case 'myOrder':{
+    this.setData({
+      active: event.detail
+    });
+    switch (this.data.active) {
+      case 'home': {
         wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder',
+          url: '../home/home?active='+'home',
         })
         break
       }
-      case 'createOrder':{
+      case 'myOrder': {
+        wx.redirectTo({
+          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
+        })
+        break
+      }
+      case 'createOrder': {
         wx.navigateTo({
           url: '../createOrder/createOrder',
         })
         break
       }
-      case 'receiveOrder':{
+      case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder',
+          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
         })
         break
       }
-      case 'userInfo':{
+      case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo',
+          url: '../userInfo/userInfo?active='+'userInfo',
         })
         break
       }
     }
-  },
+  }
 })

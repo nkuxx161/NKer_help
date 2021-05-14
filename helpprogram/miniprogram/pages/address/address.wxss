@@ -1,0 +1,88 @@
+/* pages/address/address.wxss */
+page{
+  background-color: rgb(235,235,235);
+}
+.add{
+  width:100%;
+  position:fixed;
+  bottom:0;  
+}
+.a1{
+  margin: 25rpx;
+  height: 260rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  box-shadow: 2px 2px 5px rgb(220, 220, 220),-2px -2px 5px rgb(220, 220, 220);
+}
+.a2{
+  display: flex;
+  align-items: center;
+  height: 180rpx;
+  margin: 0 20rpx;
+  background-color: white;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  border-bottom: 5rpx solid rgb(235,235,235);
+}
+.a3{
+  display: flex;
+  height: 60rpx;
+  margin: 10rpx 20rpx;
+  background-color: white;
+  border-radius: 20rpx;
+}
+.a4{
+  display: flex;
+  height: 60rpx;
+  width: 55%;
+  border-radius: 20rpx;
+}
+.a5{
+  margin-left: 25rpx;
+  margin-top:15rpx;
+  height: 165rpx;
+  width: 100%;
+}
+.a6{
+  display: flex;
+  height: 40%;
+  align-items: center;
+}
+.a7{
+  height: 70rpx;
+  display: flex;
+}
+.a8{
+  width: 85%;
+  display: flex;
+}
+.a9{
+  height: 100rpx;
+}
+.name{
+  font-size:42rpx;
+  font-weight:600;
+}
+.font-1{
+  font-size:27rpx;
+  color:rgb(180, 180, 180);
+}
+.font-2{
+  font-weight:600;
+  color:red;
+}
+.font-3{
+  display: -webkit-box;
+  font-size:27rpx;
+  font-weight:525;  
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;  
+}
+.content-all {
+}
+.content-breif {
+  -webkit-line-clamp:2; 
+}

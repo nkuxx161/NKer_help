@@ -24,8 +24,8 @@
   is-link
   title="学院"
   icon="wap-home-o"
-  bind:click="toShowCollage"
-  label="{{collage}}" 
+  bind:click="toShowCollege"
+  label="{{college}}" 
 />
 <van-cell
   is-link
@@ -43,18 +43,29 @@
 />
 <van-cell
   title="接单数"
+  value="{{rCount}}"
 />
 <van-cell
   title="发单数"
+  value="{{sCount}}"
 />
 <van-cell
   title="接单总分"
-/>
+>
+<van-rate wx:if="{{rRate>=4}}" allow-half value="{{rRate}}" color="red" void-icon="fire-o" icon="fire" readonly/>
+<van-rate wx:elif="{{rRate>2}}" allow-half value="{{rRate}}" color="pink"
+  void-icon="like-o" icon="like" readonly/>
+<van-rate wx:else allow-half value="{{rRate}}" color="rgb(255, 204, 65)" readonly/>
+</van-cell>
 <van-cell
   title="发单总分"
-/>
+>
+<van-rate wx:if="{{sRate>=4}}" allow-half value="{{sRate}}" color="red" void-icon="fire-o" icon="fire" readonly/>
+<van-rate wx:elif="{{sRate>2}}" allow-half value="{{sRate}}" color="pink"
+  void-icon="like-o" icon="like" readonly/>
+<van-rate wx:else allow-half value="{{sRate}}" color="rgb(255, 204, 65)" readonly/>
+</van-cell>
 </van-cell-group>
-
 </view>
 <van-popup 
   show="{{showCampus}}" 
@@ -70,16 +81,16 @@
 />
 </van-popup>
 <van-popup 
-  show="{{showCollage}}" 
-  bind:close="closeShowCollage"
+  show="{{showCollege}}" 
+  bind:close="closeShowCollege"
   closeable
   close-icon="passed"
   position="bottom"
   custom-style="height: 40%"
 >
 <van-picker
-  columns="{{ allCollage }}"
-  bind:change="changeCollage"
+  columns="{{ allCollege }}"
+  bind:change="changeCollege"
 />
 </van-popup>
 <van-popup 
