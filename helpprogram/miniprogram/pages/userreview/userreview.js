@@ -94,7 +94,7 @@ Page({
 
   //跳转到订单详情页
   showDetail(id) {
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../showOrderDetail/showOrderDetail?orderId=' + id.currentTarget.dataset.id,
     })
   },
@@ -142,6 +142,7 @@ Page({
         // console.log(this.data)
         wx.cloud.database().collection('RtoSReview').add({
             data: {
+              title: this.data.title,
               receiveStudentID: this.data.studentID,
               orderId: this.data.orderId,
               RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
@@ -152,28 +153,23 @@ Page({
             wx.cloud.callFunction({
                 name: 'updateIsRtoSReviewed',
                 data: {
-                  <<
-                  << << < Updated upstream
-                  id: this.data.orderId ===
-                    === =
-                    title: this.data.title,
-                  receiveStudentID: this.data.studentID,
-                  orderId: this.data.orderId,
-                  RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
-                  RtoSScore: this.data.score,
-                  RtoSWord: this.data.word,
-                  >>>
-                  >>> > Stashed changes
+                  id: this.data.orderId
                 }
               })
               .then(res => {
                 Toast({
                   type: 'success',
-                  message: '更改状态成功',
+                  message: '更改评价状态成功',
+                  onClose: () => {
+                    //评价成功跳回已完成订单界面
+                    wx.redirectTo({
+                      url: '../receivedOrder/receivedOrder?status=' + 3,
+                    })
+                  }
                 })
               })
               .catch(err => {
-                console.log("发单人取消订单失败", err)
+                console.log("更改评价状态失败", err)
               })
           })
           .catch(err => {
@@ -193,7 +189,12 @@ Page({
             // console.log(this.data)
             wx.cloud.database().collection('RtoSReview').add({
                 data: {
-                  id: this.data.orderId,
+                  title: this.data.title,
+                  receiveStudentID: this.data.studentID,
+                  orderId: this.data.orderId,
+                  RtoSImage: this.data.image,
+                  RtoSScore: this.data.score,
+                  RtoSWord: this.data.word,
                 }
               })
               .then(res => {
@@ -206,11 +207,17 @@ Page({
                   .then(res => {
                     Toast({
                       type: 'success',
-                      message: '更改状态成功',
+                      message: '更改评价状态成功',
+                      onClose: () => {
+                        //评价成功跳回已完成订单界面
+                        wx.redirectTo({
+                          url: '../receivedOrder/receivedOrder?status=' + 3,
+                        })
+                      }
                     })
                   })
                   .catch(err => {
-                    console.log("发单人取消订单失败", err)
+                    console.log("更改评价状态失败", err)
                   })
               })
               .catch(err => {
@@ -218,7 +225,7 @@ Page({
               })
             Toast({
               type: 'success',
-              message: '提交评价成功',
+              message: '接单人提交评价成功',
               onClose: () => { //待实现比如说跳转界面等
                 console.log('执行OnClose函数');
               },
@@ -226,17 +233,13 @@ Page({
           },
           fail: err => {
             wx.showToast({
-              title: '提交评价失败',
+              title: '接单人提交评价失败',
               icon: 'fail',
               duration: 1000
             })
           }
-
         })
       }
-
-
-
     } else if (this.data.type == 'StoR') { //当发单人对接单人做评价时
       if (this.data.fileList.length === 0) { //当不上传图片时
         wx.cloud.database().collection('StoRReview').add({
@@ -258,11 +261,17 @@ Page({
               .then(res => {
                 Toast({
                   type: 'success',
-                  message: '更改状态成功',
+                  message: '更改评价状态成功',
+                  onClose: () => {
+                    //评价成功跳回已完成订单界面
+                    wx.redirectTo({
+                      url: '../showCompletedOrder/showCompletedOrder?status=' + 3,
+                    })
+                  }
                 })
               })
               .catch(err => {
-                console.log("发单人取消订单失败", err)
+                console.log("更改评价状态失败", err)
               })
           })
           .catch(err => {
@@ -298,11 +307,17 @@ Page({
                   .then(res => {
                     Toast({
                       type: 'success',
-                      message: '更改状态成功',
+                      message: '更改评价状态成功',
+                      onClose: () => {
+                        //评价成功跳回已完成订单界面
+                        wx.redirectTo({
+                          url: '../showCompletedOrder/showCompletedOrder?status=' + 3,
+                        })
+                      }
                     })
                   })
                   .catch(err => {
-                    console.log("发单人取消订单失败", err)
+                    console.log("更改评价状态失败", err)
                   })
               })
               .catch(err => {
@@ -315,12 +330,10 @@ Page({
                 console.log('执行OnClose函数');
               },
             })
-
-            wx.navigateBack()
           },
           fail: err => {
             wx.showToast({
-              title: '提交评价失败',
+              title: '发单人提交评价失败',
               icon: 'fail',
               duration: 1000
             })
@@ -328,8 +341,5 @@ Page({
         })
       }
     }
-    wx.redirectTo({
-      url: '../showCompletedOrder/showCompletedOrder?status=' + 3,
-    })
   }
 })

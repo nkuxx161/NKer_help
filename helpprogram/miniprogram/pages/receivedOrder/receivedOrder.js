@@ -18,17 +18,34 @@ Page({
     completedOrderList: [],
     currentOrderList: [],
     pendingOrderList: [],
-    active: 0
+    active: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      active:options.active
-    })
-    console.log(this.data.active)
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'receiveOrder'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
+
+    //提交或者评价订单后需要重新请求订单的数据
+    if (options.status == 3) {
+      this.setData({
+        status: 3,
+        completedOrderList: [],
+        currentOrderList: []
+      })
+      this.getList()
+    }
+
     // 获取用户openid
     wx.cloud.callFunction({
         name: 'getOpenID',
@@ -188,7 +205,7 @@ Page({
 
   //切换订单列表
   onChange(event) {
-    // console.log("切换的栏目编号", event.detail.index)
+    console.log("切换的栏目编号", event.detail.index)
     this.setData({
       status: event.detail.index + 1,
     })

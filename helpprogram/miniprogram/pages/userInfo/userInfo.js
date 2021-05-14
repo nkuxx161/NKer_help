@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    fontFamily:"shuai",
     userInfo: {},
     hasUserInfo: false,
       openid: '',
@@ -18,7 +19,7 @@ Page({
       ifLogin:'No',
       name:'',
       showT:'No',
-      flag:'No',
+      flag:'',
       img:'',
   },
 
@@ -26,14 +27,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      active:options.active
-    })
+    
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'userInfo'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
+    if(options.flag !=undefined)
+    this.setData(
+      {
+        flag:options.flag,
+        showT:options.showToast,
+      }
+    )
 
     wx.cloud.callFunction({
       name: 'getOpenID',
     })
     .then(res => {
+      this.setData({
+        openid:res.result.openid
+      })
       db.where({
         _openid:res.result.openid
       }).get()
@@ -53,6 +72,12 @@ Page({
             })
           }
         }
+        else{
+          this.setData({
+            flag:'No'
+          })
+          toast("请进行身份认证，以便正常使用小程序")
+        }
       })
       .catch(err => {
         console.log(err)
@@ -69,12 +94,7 @@ Page({
       ifLogin:'Yes'
     })
   }
-    this.setData(
-      {
-        flag:options.flag,
-        showT:options.showToast,
-      }
-    )
+   
     if(this.data.showT=='Yes'){
       toast.success('认证成功')
       this.setData({
@@ -96,6 +116,29 @@ Page({
   onShow: function () {
     wx.hideHomeButton({
       success: (res) => {},
+    }),
+    db.where({
+      _openid:this.data.openid
+    }).get()
+    .then(res=>{
+      if(res.data.length != 0){
+        if(res.data[0].userIcon=='1')
+        this.setData({
+          name:res.data[0].studentName,
+          img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
+        })
+        else{
+          this.setData({
+            name:res.data[0].studentName,
+            img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
+          })
+        }
+      }
+      else{
+      }
+    })
+    .catch(err => {
+      console.log(err)
     })
   },
 
@@ -155,8 +198,14 @@ Page({
    * 去往认证页面
    */
   goNk: function(){
-     wx.redirectTo({ url: '../nk/nk', }) 
+     wx.navigateTo({ url: '../nk/nk', }) 
   },
+   /**
+   * 去往地址管理
+   */
+  goToAddress: function(){
+    wx.navigateTo({ url: '../address/address', }) 
+ },
   onClose() {
     this.setData({ show: false });
   },
@@ -166,7 +215,8 @@ Page({
   showDialog2:function(){
     Dialog.confirm({
       title: '是否确认退出',
-      message: '小程序需要您的授权才能提供正常的服务哦'
+      message: '小程序需要您的授权才能提供正常的服务哦',
+      theme: 'round-button',
     })
       .then(() => {
         this.setData({

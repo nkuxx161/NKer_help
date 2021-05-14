@@ -9,8 +9,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    img: '',
     userID: '',
-    user: []
+    user: [],
+    rRate: '',
+    sRate: '',
   },
 
   onClickSend(e) {
@@ -30,7 +33,8 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      userID: options.userID
+      userID: options.userID,
+      img: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png',
     })
     console.log(this.data.userID)
 
@@ -44,6 +48,10 @@ Page({
     })
     .catch(err => {
       console.log(err)
+    })
+    this.setData({
+      rRate: (this.data.user.receiveScore/this.data.user.receiveCount),
+      sRate: (this.data.user.sendScore/this.data.user.sendCount)
     })
   },
 

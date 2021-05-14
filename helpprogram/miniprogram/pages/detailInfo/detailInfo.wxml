@@ -6,8 +6,8 @@
 />
 <van-row gutter="10">
   <van-col span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="{{img}}" bindtap='changeImg'/></van-col>
-  <van-col span="14" offset="1">
-    <text bindtap='changeName'>{{name}}</text>
+  <van-col span="14" offset="1" bindtap='changeName'>
+    <text class="font-1" >{{name}}</text> <view style="margin-left:5rpx"><van-icon name="edit" /></view>
   </van-col>
 </van-row>
 </view>
@@ -24,8 +24,8 @@
   is-link
   title="学院"
   icon="wap-home-o"
-  bind:click="toShowCollage"
-  label="{{collage}}" 
+  bind:click="toShowCollege"
+  label="{{college}}" 
 />
 <van-cell
   is-link
@@ -81,16 +81,16 @@
 />
 </van-popup>
 <van-popup 
-  show="{{showCollage}}" 
-  bind:close="closeShowCollage"
+  show="{{showCollege}}" 
+  bind:close="closeShowCollege"
   closeable
   close-icon="passed"
   position="bottom"
   custom-style="height: 40%"
 >
 <van-picker
-  columns="{{ allCollage }}"
-  bind:change="changeCollage"
+  columns="{{ allCollege }}"
+  bind:change="changeCollege"
 />
 </van-popup>
 <van-popup 

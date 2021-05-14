@@ -11,6 +11,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    flags: 0,
+    flag: 0,
     disabled: true,
     value: '',
     openid: '',
@@ -34,58 +36,17 @@ Page({
 
   onSearch(e) {
     wx.navigateTo({
-      url: '../showSearchResult/showSearchResult?value=' + this.data.value +'&index=' + this.data.index,
+      url: '../showSearchResult/showSearchResult?value=' + this.data.value +'&index=' + this.data.index + '&openid=' + this.data.openid,
     })
   },
 
   onClick(e) {
     wx.navigateTo({
-      url: '../showSearchResult/showSearchResult?value=' + this.data.value +'&index=' + this.data.index,
+      url: '../showSearchResult/showSearchResult?value=' + this.data.value +'&index=' + this.data.index + '&openid=' + this.data.openid,
     })
   },
 //查找状态为0的订单 并将同校区、跨校区分类
-  getList() {
-    db.where({
-      status: this.data.status
-    }).skip(this.data.currentOrderList.length).limit(20).get()
-    .then(res => {
-      if (res.data.length == 0) {
-        wx.showToast({
-          title: '已到底',
-        })
-      } else {
-        if(this.data.status == 0){
-          this.setData({
-            waitOrderList: this.data.waitOrderList.concat(res.data)
-          })
-          for(var i=0; i<res.data.length;i++){
-            if(res.data[i].end == res.data[i].start){
-              this.setData({
-                sameCampus: this.data.sameCampus.concat(res.data[i])
-              })
-            } else {
-              this.setData({
-                differentCampus: this.data.differentCampus.concat(res.data[i])
-              })
-            }
-          }
-          if(this.data.index == 1){
-            this.setData({
-              currentOrderList: this.data.waitOrderList
-            })
-          } else if(this.data.index == 2){
-            this.setData({
-              currentOrderList: this.data.sameCampus
-            })
-          } else {
-            this.setData({
-              currentOrderList: this.data.differentCampus
-            })
-          }
-        }
-      }
-    })
-  },
+  
 
   //上部导航栏变化时事件
   onChange(event){
@@ -126,6 +87,7 @@ Page({
     Dialog.confirm({
       title: '确认接单吗？',
       message: '确认后需在要求时间内完成订单！',
+      theme: 'round-button',
     })
     .then(res => {
       let id = event.currentTarget.dataset.id
@@ -160,9 +122,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      active:options.active
-    })
+    // console.log(options.active)
+    //设置tabbar的状态
+    if (options.active == undefined) {
+      this.setData({
+        active: 'home'
+      })
+    } else {
+      this.setData({
+        active: options.active
+      })
+    }
 
     // 获取用户openid
     wx.cloud.callFunction({
@@ -173,6 +143,7 @@ Page({
       this.setData({
         openid: res.result.event.userInfo.openId
       })
+      console.log(this.data.openid)
       // 获取用户学号
       userdb.where({
           '_openid': this.data.openid
@@ -185,9 +156,67 @@ Page({
         }).catch(err => {
           console.log(err)
         })
+        if(this.data.flags == 0) {
+          this.getList()
+          this.setData({
+            flags: 1
+          })
+        }
     })
     .catch(err => {
       console.log(err)
+    })
+  },
+
+  getList() {
+    console.log(this.data.openid)
+    db.where(_.and([
+      {
+        status: 0
+      },
+      {
+        _openid: _.neq(this.data.openid)
+      }
+    ])).skip(this.data.waitOrderList.length).limit(20).get()
+    .then(res => {
+      if (res.data.length == 0 && this.data.flag != 0) {
+        wx.showToast({
+          title: '已到底',
+        })
+      } else {
+        this.setData({
+          flag: 1
+        })
+        if(this.data.status == 0){
+          this.setData({
+            waitOrderList: this.data.waitOrderList.concat(res.data)
+          })
+          for(var i=0; i<res.data.length;i++){
+            if(res.data[i].end == res.data[i].start){
+              this.setData({
+                sameCampus: this.data.sameCampus.concat(res.data[i])
+              })
+            } else {
+              this.setData({
+                differentCampus: this.data.differentCampus.concat(res.data[i])
+              })
+            }
+          }
+          if(this.data.index == 1){
+            this.setData({
+              currentOrderList: this.data.waitOrderList
+            })
+          } else if(this.data.index == 2){
+            this.setData({
+              currentOrderList: this.data.sameCampus
+            })
+          } else {
+            this.setData({
+              currentOrderList: this.data.differentCampus
+            })
+          }
+        }
+      }
     })
   },
 
@@ -202,13 +231,19 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.hideHomeButton({
+      success: (res) => {},
+    })
     this.setData({
+      flag: 0,
       currentOrderList: [],
       waitOrderList: [],
       sameCampus: [],
       differentCampus: [],
     })
-    this.getList()
+    if(this.data.flags != 0) {
+      this.getList()
+    }
   },
 
   /**
@@ -236,7 +271,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getList()
+    setTimeout(function () {
+      wx.stopPullDownRefresh()
+    }, 1000)
   },
 
   /**

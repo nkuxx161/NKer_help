@@ -1,13 +1,61 @@
 <!--miniprogram/pages/showUserInfo/showUserInfo.wxml-->
+<view class="a1">
+<van-row gutter="10">
+  <van-col span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="{{img}}"   /></van-col>
+  <van-col span="14" offset="1">
+    <text>{{user.studentName}} {{user.studentID}}</text>
+  </van-col>
+</van-row>
+</view>
+<view class="a2">
 <van-cell-group>
-  <van-cell title="姓名" value="{{user.studentName}}" />
-  <van-cell title="学号" value="{{user.studentID}}" />
-  <van-cell title="校区" value="{{user.defaultCampus}}" />
-  <van-cell title="学院" value="{{user.college}}" />
-  <van-cell title="发单数" value="{{user.receiveCount}}" />
-  <van-cell title="支出总赏金" value="{{user.receiveScore}}" />
-  <van-cell title="接单数" value="{{user.sendCount}}" />
-  <van-cell title="赚取总赏金" value="{{user.sendScore}}" />
-  <van-cell title="历史发单收到的评价" bind:click="onClickSend" is-link />
-  <van-cell title="历史接单收到的评价" bind:click="onClickReceive" is-link />
+  <van-cell
+  title="校区"
+  icon="location-o"
+  label="{{user.defaultCampus}}"
+/>
+<van-cell
+  title="学院"
+  icon="wap-home-o"
+  label="{{user.college}}" 
+/>
+<van-cell
+  title="手机号"
+  icon="phone-o"
+  label="{{user.phoneNumber}}"
+/>
+<van-cell
+  title="邮箱"
+  icon="comment-o"
+  label="{{user.email}}"
+/>
+<van-cell
+  title="接单数" value="{{user.receiveCount}}"
+/>
+<van-cell
+  title="发单数" value="{{user.sendCount}}"
+/>
+<van-cell title="接单总分">
+  <van-rate wx:if="{{rRate>=4}}" allow-half value="{{rRate}}" color="red" void-icon="fire-o" icon="fire" readonly/>
+  <van-rate wx:elif="{{rRate>2}}" allow-half value="{{rRate}}" color="pink"
+  void-icon="like-o" icon="like" readonly/>
+  <van-rate wx:else allow-half value="{{rRate}}" color="rgb(255, 204, 65)" readonly/>
+</van-cell>
+<van-cell title="发单总分">
+  <van-rate wx:if="{{sRate>=4}}" allow-half value="{{sRate}}" color="red" void-icon="fire-o" icon="fire" readonly/>
+  <van-rate wx:elif="{{sRate>2}}" allow-half value="{{sRate}}" color="pink"
+  void-icon="like-o" icon="like" readonly/>
+  <van-rate wx:else allow-half value="{{sRate}}" color="rgb(255, 204, 65)" readonly/>
+</van-cell>
+<van-cell 
+  is-link 
+  title="发单历史评价"
+  bind:click="onClickSend"
+/>
+<van-cell
+  is-link
+  title="接单历史评价"
+  bind:click="onClickReceive" 
+/>
 </van-cell-group>
+</view>

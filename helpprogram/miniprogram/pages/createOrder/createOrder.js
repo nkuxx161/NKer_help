@@ -97,7 +97,8 @@ Page({
       status: 0,
       reward: this.data.currentOrder.reward,
       isStoRReviewed: false,
-      isRtoSReviewed: false
+      isRtoSReviewed: false,
+      cancelPerson: ''
     })
     console.log('init', this.data.fileList)
   },
@@ -304,7 +305,8 @@ Page({
           status: 0,
           reward: this.data.reward,
           isStoRReviewed: false,
-          isRtoSReviewed: false
+          isRtoSReviewed: false,
+          cancelPerson: ''
         }
       })
     } else {
@@ -335,7 +337,8 @@ Page({
               status: 0,
               reward: this.data.reward,
               isStoRReviewed: false,
-              isRtoSReviewed: false
+              isRtoSReviewed: false,
+              cancelPerson: ''
             }
           })
           Toast({

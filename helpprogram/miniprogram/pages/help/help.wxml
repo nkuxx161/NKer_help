@@ -23,4 +23,5 @@
     czy
   </van-collapse-item>
 </van-collapse>
+<view style="height:120rpx"></view>
 <van-button class="connectWith" block open-type="contact"><van-icon name="service-o"  type/>联系客服</van-button>

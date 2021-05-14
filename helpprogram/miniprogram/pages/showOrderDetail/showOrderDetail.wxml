@@ -9,7 +9,9 @@
   <van-cell title="联系方式" value="{{order.contact}}" />
   <van-cell title="悬赏" value="{{order.reward}}" />
   <van-cell title="详细描述" value="{{order.description}}" />
-  <van-cell title="图片" value="{{order.image}}" />
+  <van-cell title="图片">
+    <van-image width="100" height="100" src="{{order.image}}" />
+  </van-cell>
   <van-cell title="发单人学号" value="{{order.sendStudentID}}" />
   <van-cell title="接单人学号" value="{{order.receiveStudentID}}" />
   <van-cell title="发单人信息" bind:click="onClick" is-link />

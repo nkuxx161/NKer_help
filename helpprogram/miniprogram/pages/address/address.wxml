@@ -1,2 +1,30 @@
 <!--pages/address/address.wxml-->
-<text>pages/address/address.wxml</text>
+<van-radio-group value="{{ radio }}" bind:change="onChange">
+<view wx:key='index' wx:for='{{displaydata}}' class="a1">
+  <view class="a2">
+    <van-image round width="140rpx" height="140rpx" src="{{img}}" />
+    <view class="a5">
+      <view class="a6">
+        <text class="name" space="ensp">{{item.name}} </text>
+        <text class="font-1">{{item.tel}}</text>
+      </view>
+      <view class="a7">
+        <view class="a8">
+        <text class='font-3 {{isShowAllContent? "content-all" :"content-breif"}}'>{{item.campus}}  {{item.location}}</text></view>
+        <van-icon name="edit" bindtap="editaddress" data-id="{{index}}"/>
+      </view>
+    </view>
+  </view>
+  <view class="a3">
+    <van-radio name="{{index}}" checked-color="pink">默认地址</van-radio>
+  <view class="a4">
+  </view>
+  <text class="font-2" bindtap="deleteaddress" data-id="{{index}}">删除</text>
+  </view>
+</view>
+</van-radio-group>
+<view class="a9"></view>
+<van-button class="add" block bindtap="addAdderss"><van-icon name="add" size="25rpx"/>新增地址</van-button>
+<van-dialog id="van-dialog" />
+<van-toast id="van-toast" />
+

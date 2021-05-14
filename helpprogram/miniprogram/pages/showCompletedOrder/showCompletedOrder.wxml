@@ -32,12 +32,13 @@
         <van-button wx:if="{{item.isStoRReviewed}}" type="danger" size="mini" catchtap="createAgain"
           data-order='{{item}}'>再来一单</van-button>
       </view>
+      <!-- 待处理的订单 -->
       <view slot="footer" wx:if="{{item.status == 4}}">
         <van-button open-type="contact" type="default" size="mini" catchtap="service" data-id='{{item._id}}'
-          wx:if="{{item.cancelPerson == 2}}">联系客服</van-button>
+          wx:if="{{item.cancelPerson == 'receiver'}}">联系客服</van-button>
         <van-button type="primary" size="mini" catchtap="agreeCancel" data-id='{{item._id}}'
-          wx:if="{{item.cancelPerson == 2}}">同意取消</van-button>
-        <van-button type="primary" size="mini" wx:if="{{item.cancelPerson == 1}}">处理中</van-button>
+          wx:if="{{item.cancelPerson == 'receiver'}}">同意取消</van-button>
+        <van-button type="primary" catchtap="null" disabled size="mini" wx:if="{{item.cancelPerson == 'sender'}}">等待接单人处理</van-button>
       </view>
     </van-card>
   </view>
