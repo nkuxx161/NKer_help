@@ -16,14 +16,20 @@
         <van-button type="primary" size="mini" catchtap="submitComplete" data-id="{{item._id}}">确认提交</van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">
-        <van-button type="primary" size="mini" catchtap="submitReview" data-id='{{item._id}}' data-studentID="{{item.receiveStudentID}}" wx:if="{{item.isRtoSReviewed == false}}">评价</van-button>
+        <van-button type="primary" size="mini" catchtap="submitReview" data-id='{{item._id}}'
+          data-studentID="{{item.receiveStudentID}}" wx:if="{{item.isRtoSReviewed == false}}">评价</van-button>
         <text wx:if="{{item.isRtoSReviewed}}">已评价</text>
         <!-- <van-button type="primary" size="mini" catchtap="submitReview" data-id="{{item._id}}">评价</van-button> -->
       </view>
+      <!-- 待处理的订单 -->
       <view slot="footer" wx:if="{{item.status == 4}}">
-        <van-button type="default" size="mini" data-id='{{item._id}}' catchtap="nothing" open-type="contact" bindcontact='service'>申请客服介入</van-button>
+        <van-button type="default" size="mini" data-id='{{item._id}}' catchtap="nothing" open-type="contact"
+          bindcontact='service' wx:if="{{item.cancelPerson == 'sender'}}">申请客服介入</van-button>
         <van-button type="primary" size="mini" catchtap="agreeCancel" data-id='{{item._id}}' data-title="{{item.title}}"
-          data-sendstudentid="{{item._openid}}" data-description="{{item.description}}">同意取消</van-button>
+          data-sendstudentid="{{item._openid}}" data-description="{{item.description}}"
+          wx:if="{{item.cancelPerson == 'sender'}}">同意取消</van-button>
+        <van-button type="primary" catchtap="nothing" disabled size="mini" wx:if="{{item.cancelPerson == 'receiver'}}">
+          等待发单人处理</van-button>
       </view>
     </van-card>
   </view>

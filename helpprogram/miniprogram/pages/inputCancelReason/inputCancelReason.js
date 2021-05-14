@@ -51,10 +51,11 @@ Page({
     // console.log(this.data.type)
     if (this.data.type == 'sender') { //发单人申请取消订单
       wx.cloud.callFunction({
-          name: 'updateOrderStatus',
+          name: 'updateCancelStatus',
           data: {
             id: this.data.orderId,
-            status: 4
+            status: 4,
+            cancelPerson: 'sender'
           }
         })
         .then(res => {
@@ -85,10 +86,11 @@ Page({
       })
     } else if (this.data.type == 'receiver') { //接单人申请取消订单
       wx.cloud.callFunction({
-          name: 'updateOrderStatus',
+          name: 'updateCancelStatus',
           data: {
             id: this.data.orderId,
-            status: 4
+            status: 4,
+            cancelPerson: 'receiver'
           }
         })
         .then(res => {
