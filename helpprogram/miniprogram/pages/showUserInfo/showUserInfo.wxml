@@ -50,12 +50,12 @@
 <van-cell 
   is-link 
   title="发单历史评价"
-  bind:click="onClickReceive"
+  bind:click="onClickSend"
 />
 <van-cell
   is-link
   title="接单历史评价"
-  bind:click="onClickSend" 
+  bind:click="onClickReceive" 
 />
 </van-cell-group>
 </view>
