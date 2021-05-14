@@ -215,7 +215,7 @@ Page({
               data: {
                 id: id,
                 status: 2,
-                cancelPerson: 1
+                cancelPerson: 'sender'
               }
             })
             .then(res => {
@@ -240,7 +240,7 @@ Page({
             cancelFlag: true
           })
           wx.navigateTo({
-            url: '../inputCancelReason/inputCancelReason?orderId=' + event.currentTarget.dataset.id,
+            url: '../inputCancelReason/inputCancelReason?orderId=' + event.currentTarget.dataset.id + '&type=sender',
           })
         }
       })
@@ -322,6 +322,11 @@ Page({
       url: '../createOrder/createOrder?order='+JSON.stringify(options.currentTarget.dataset.order),
     })
     console.log(options.currentTarget.dataset.order)
+  },
+
+  //空方法用于捕获tap防止冒泡
+  null() {
+
   },
 
   /**
