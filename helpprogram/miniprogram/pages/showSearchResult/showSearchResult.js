@@ -23,6 +23,7 @@ Page({
   },
 
   getList() {
+    console.log(this.data.flag)
     db.where(_.or([
       {
         title: DB.RegExp({
@@ -52,9 +53,7 @@ Page({
     ])).skip(this.data.waitOrderList.length).limit(20).get()
     .then(res => {
       if(res.data.length == 0 && this.data.flag == 0) {
-        wx.showToast({
-          title: '没有相关的订单！',
-        })
+        Toast('没有相关的订单！')
       } else {
         this.setData({
           flag: 1
@@ -90,6 +89,9 @@ Page({
                 this.setData({
                   currentOrderList: this.data.differentCampus
                 })
+          }
+          if(this.data.currentOrderList.length == 0) {
+            Toast('没有相关的订单！')
           }
         }
       }
@@ -147,18 +149,11 @@ Page({
       currentOrderList: [],
       waitOrderList: [],
       sameCampus: [],
-      differentCampus:[]
+      differentCampus:[],
+      openid: options.openid,
     })
     this.getList()
-    // 获取用户openid
-    wx.cloud.callFunction({
-      name: 'getOpenID',
-    })
-    .then(res => {
-      // console.log(res.result.event.userInfo.openId)
-      this.setData({
-        openid: res.result.event.userInfo.openId
-      })
+    console.log(this.data.openid)
       // 获取用户学号
       userdb.where({
           '_openid': this.data.openid
@@ -171,10 +166,6 @@ Page({
         }).catch(err => {
           console.log(err)
         })
-    })
-    .catch(err => {
-      console.log(err)
-    })
   },
 
   /**

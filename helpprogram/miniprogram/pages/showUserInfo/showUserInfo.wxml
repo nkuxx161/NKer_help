@@ -35,12 +35,18 @@
 <van-cell
   title="发单数" value="{{user.sendCount}}"
 />
-<van-cell
-  title="接单总分" value="{{user.receiveScore}}"
-/>
-<van-cell
-  title="发单总分" value="{{user.sendScore}}"
-/>
+<van-cell title="接单总分">
+  <van-rate wx:if="{{rRate>=4}}" allow-half value="{{rRate}}" color="red" void-icon="fire-o" icon="fire" readonly/>
+  <van-rate wx:elif="{{rRate>2}}" allow-half value="{{rRate}}" color="pink"
+  void-icon="like-o" icon="like" readonly/>
+  <van-rate wx:else allow-half value="{{rRate}}" color="rgb(255, 204, 65)" readonly/>
+</van-cell>
+<van-cell title="发单总分">
+  <van-rate wx:if="{{sRate>=4}}" allow-half value="{{sRate}}" color="red" void-icon="fire-o" icon="fire" readonly/>
+  <van-rate wx:elif="{{sRate>2}}" allow-half value="{{sRate}}" color="pink"
+  void-icon="like-o" icon="like" readonly/>
+  <van-rate wx:else allow-half value="{{sRate}}" color="rgb(255, 204, 65)" readonly/>
+</van-cell>
 <van-cell 
   is-link 
   title="发单历史评价"
