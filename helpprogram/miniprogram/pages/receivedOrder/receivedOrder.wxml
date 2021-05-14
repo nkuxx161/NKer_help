@@ -17,9 +17,9 @@
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">
         <van-button type="primary" size="mini" catchtap="submitReview" data-id='{{item._id}}'
-          data-studentID="{{item.receiveStudentID}}" wx:if="{{item.isRtoSReviewed == false}}">评价</van-button>
+          data-title="{{item.title}}" data-studentID="{{item.receiveStudentID}}"
+          wx:if="{{item.isRtoSReviewed == false}}">评价</van-button>
         <text wx:if="{{item.isRtoSReviewed}}">已评价</text>
-        <!-- <van-button type="primary" size="mini" catchtap="submitReview" data-id="{{item._id}}">评价</van-button> -->
       </view>
       <!-- 待处理的订单 -->
       <view slot="footer" wx:if="{{item.status == 4}}">

@@ -17,21 +17,28 @@ Page({
     addreValue:0,
     addreRange:['未选择','泰达校区','津南校区','八里台校区'],
     door:"详细信息",
+    toAddAddressFlag: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(options.data)
-    for(var i = 0; i < this.data.addreRange.length; i++)
-      if(JSON.parse(options.data).campus==this.data.addreRange[i])
-      this.setData({addreValue:i,
-        name:JSON.parse(options.data).name,
-        tel:JSON.parse(options.data).tel,
-        door:JSON.parse(options.data).location,
-        id:JSON.parse(options.data)._id
+    if (options.toAddAddressFlag) {
+      this.setData({
+        toAddAddressFlag: true
       })
+    }
+    if (options.data)
+      for (var i = 0; i < this.data.addreRange.length; i++)
+        if (JSON.parse(options.data).campus == this.data.addreRange[i])
+          this.setData({
+            addreValue: i,
+            name: JSON.parse(options.data).name,
+            tel: JSON.parse(options.data).tel,
+            door: JSON.parse(options.data).location,
+            id: JSON.parse(options.data)._id
+          })
       wx.cloud.callFunction({
         name: 'getOpenID',
       })
@@ -106,17 +113,17 @@ Page({
   onShareAppMessage: function () {
 
   },
-  setName:function(e){
+  setName: function (e) {
     this.setData({
       name: e.detail.value
     })
   },
-  setPhone:function(e){
+  setPhone: function (e) {
     this.setData({
       tel: e.detail.value
     })
   },
-  setLocation:function(e){
+  setLocation: function (e) {
     this.setData({
       door: e.detail.value
     })
@@ -167,14 +174,18 @@ Page({
         }
       });
     }
-      wx.navigateBack({
-        delta: 0,
-      })
-      wx.redirectTo({
-        url: '../address/address',
-      })
-    
-
+    if (this.data.toAddAddressFlag == true) {
+        wx.navigateBack({
+          delta: 0,
+        })
+      } else {
+        wx.navigateBack({
+          delta: 0,
+        })
+        wx.redirectTo({
+          url: '../address/address',
+        })
+      }
     }
     if(flag==false){
       wx.showModal({

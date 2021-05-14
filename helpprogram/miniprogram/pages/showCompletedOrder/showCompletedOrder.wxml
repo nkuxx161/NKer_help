@@ -26,7 +26,8 @@
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">
         <van-button type="primary" size="mini" catchtap="submitReview" data-id='{{item._id}}'
-          data-studentID="{{item.sendStudentID}}" wx:if="{{item.isStoRReviewed == false}}">评价</van-button>
+          data-title="{{item.title}}" data-studentID="{{item.sendStudentID}}" wx:if="{{item.isStoRReviewed == false}}">
+          评价</van-button>
         <text wx:if="{{item.isStoRReviewed}}">已评价</text>
         <van-button wx:if="{{item.isStoRReviewed}}" type="danger" size="mini" catchtap="createAgain"
           data-order='{{item}}'>再来一单</van-button>

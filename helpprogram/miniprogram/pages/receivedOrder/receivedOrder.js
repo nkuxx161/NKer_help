@@ -288,7 +288,8 @@ Page({
     console.log('评价订单', event.currentTarget.dataset.id)
     let orderId = event.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/userreview/userreview' + '?id=' + orderId + '&studentID=' + this.data.receiveStudentID + '&type=RtoS',
+      url: '/pages/userreview/userreview' + '?id=' + orderId + '&studentID=' + this.data.receiveStudentID + '&type=RtoS' 
+          + '&title=' +  event.currentTarget.dataset.title,
     })
   },
 

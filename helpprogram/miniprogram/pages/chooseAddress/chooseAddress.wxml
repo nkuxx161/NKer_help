@@ -1,0 +1,17 @@
+<!--pages/chooseAddress/chooseAddress.wxml-->
+<view wx:key='index' class="a1" wx:for="{{allAddressJson}}" bindtap="changeAddress" data-item="{{item}}">
+  <view class="a2">
+    <van-image round width="140rpx" height="140rpx" src="{{img}}" />
+    <view class="a5">
+      <view class="a6">
+        <text class="name" space="ensp">{{item.name}} </text>
+        <text class="font-1">{{item.tel}}</text>
+      </view>
+      <view class="a7">
+        <view class="a8">
+        <text class='font-3 {{isShowAllContent? "content-all" :"content-breif"}}'>{{item.campus}}  {{item.location}}</text></view>
+        <!-- <van-icon name="arrow" bindtap="toShowAddress" data-id="{{index}}"/> -->
+      </view>
+    </view>
+  </view>
+</view>

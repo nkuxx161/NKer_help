@@ -313,7 +313,8 @@ Page({
     //待实现
     console.log('评价订单')
     wx.navigateTo({
-      url: '../userreview/userreview?id=' + options.currentTarget.dataset.id + '&studentID=' + options.currentTarget.dataset.studentid + '&type=StoR',
+      url: '../userreview/userreview?id=' + options.currentTarget.dataset.id + '&studentID=' + options.currentTarget.dataset.studentid + '&type=StoR' 
+          + '&title=' + options.currentTarget.dataset.title,
     })
   },
 

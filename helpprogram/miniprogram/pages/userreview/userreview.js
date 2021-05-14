@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title: '',
     type: '',
     orderId: '',
     studentID: '',
@@ -26,7 +27,8 @@ Page({
     this.setData({
       orderId: options.id,
       studentID: options.studentID,
-      type: options.type
+      type: options.type,
+      title: options.title
     })
     wx.cloud.database().collection('orderInfo').doc(this.data.orderId)
       .get()
@@ -140,6 +142,7 @@ Page({
         // console.log(this.data)
         wx.cloud.database().collection('RtoSReview').add({
             data: {
+              title: this.data.title,
               receiveStudentID: this.data.studentID,
               orderId: this.data.orderId,
               RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
@@ -186,6 +189,7 @@ Page({
             // console.log(this.data)
             wx.cloud.database().collection('RtoSReview').add({
                 data: {
+                  title: this.data.title,
                   receiveStudentID: this.data.studentID,
                   orderId: this.data.orderId,
                   RtoSImage: this.data.image,
@@ -311,10 +315,6 @@ Page({
                         })
                       }
                     })
-                    // //评价成功跳回已完成订单界面
-                    // wx.redirectTo({
-                    //   url: '../showCompletedOrder/showCompletedOrder?status=' + 3,
-                    // })
                   })
                   .catch(err => {
                     console.log("更改评价状态失败", err)
