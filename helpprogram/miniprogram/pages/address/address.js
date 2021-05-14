@@ -85,6 +85,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    if(this.data.displaydata.length!=0){
     var id1=this.data.displaydata[0]._id
     var id2=this.data.displaydata[this.data.radio]._id
     db.doc(id1).update({
@@ -102,6 +103,7 @@ Page({
         });
       }
     });
+  }
   },
 
   /**

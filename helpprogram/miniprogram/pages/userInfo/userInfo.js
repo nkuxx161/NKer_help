@@ -28,20 +28,6 @@ Page({
    */
   onLoad: function (options) {
     
-    var that = this;
-    wx.loadFontFace({
-      family: that.data.fontFamily,// 自定义字体的名字 随便起就可以
-      source: 'url("https://7869-xiongxiao-9g0m49qp0514cda7-1305534329.tcb.qcloud.la/font/Artlookin-Regular.ttf?sign=c0d8c3dd900a9b5a04b9bf08a0aa6124&t=1620911193")',//这里填写第二步获取的下载地址
-      success(res) {
-        
-      },
-      fail: function(res) {
-        
-      },
-      complete: function(res) {
-       
-      }
-    });
     //设置tabbar的状态
     if (options.active == undefined) {
       this.setData({
@@ -52,6 +38,13 @@ Page({
         active: options.active
       })
     }
+    if(options.flag !=undefined)
+    this.setData(
+      {
+        flag:options.flag,
+        showT:options.showToast,
+      }
+    )
 
     wx.cloud.callFunction({
       name: 'getOpenID',
@@ -101,12 +94,7 @@ Page({
       ifLogin:'Yes'
     })
   }
-    this.setData(
-      {
-        flag:options.flag,
-        showT:options.showToast,
-      }
-    )
+   
     if(this.data.showT=='Yes'){
       toast.success('认证成功')
       this.setData({
