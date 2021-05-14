@@ -12,6 +12,7 @@ Page({
    */
   data: {
     openid: '',
+    flag: 0,
     studentID: '',
     currentOrderList: [],
     index: 1,
@@ -22,7 +23,6 @@ Page({
   },
 
   getList() {
-    console.log(this.data.value)
     db.where(_.or([
       {
         title: DB.RegExp({
@@ -42,39 +42,56 @@ Page({
           options: 'i',
         })
       }
-    ]).and([{
-      status: 0
-    }])).skip(this.data.currentOrderList.length).limit(20).get()
-    .then(res => {
-      this.setData({
-        waitOrderList: this.data.waitOrderList.concat(res.data)
-      })
-          for(var i=0; i<res.data.length;i++){
-            if(res.data[i].end == res.data[i].start){
-              this.setData({
-                sameCampus: this.data.sameCampus.concat(res.data[i])
-              })
-            } else {
-              this.setData({
-                differentCampus: this.data.differentCampus.concat(res.data[i])
-              })
-            }
-          }
-          if(this.data.index == 1){
-            this.setData({
-              currentOrderList: this.data.waitOrderList
-            })
-          } else if(this.data.index == 2){
-            this.setData({
-              currentOrderList: this.data.sameCampus
-            })
-          } else {
-            this.setData({
-              currentOrderList: this.data.differentCampus
-            })
+    ]).and([
+      {
+        status: 0
+      },
+      {
+        _openid: _.neq(this.data.openid)
       }
-      if(this.data.currentOrderList.length == 0){
-        Toast('没有相关的订单！')
+    ])).skip(this.data.waitOrderList.length).limit(20).get()
+    .then(res => {
+      if(res.data.length == 0 && this.data.flag == 0) {
+        wx.showToast({
+          title: '没有相关的订单！',
+        })
+      } else {
+        this.setData({
+          flag: 1
+        })
+        if(res.data.length == 0){
+          wx.showToast({
+            title: '已到底！',
+          })
+        } else {
+          this.setData({
+            waitOrderList: this.data.waitOrderList.concat(res.data)
+          })
+              for(var i=0; i<res.data.length;i++){
+                if(res.data[i].end == res.data[i].start){
+                  this.setData({
+                    sameCampus: this.data.sameCampus.concat(res.data[i])
+                  })
+                } else {
+                  this.setData({
+                    differentCampus: this.data.differentCampus.concat(res.data[i])
+                  })
+                }
+              }
+              if(this.data.index == 1){
+                this.setData({
+                  currentOrderList: this.data.waitOrderList
+                })
+              } else if(this.data.index == 2){
+                this.setData({
+                  currentOrderList: this.data.sameCampus
+                })
+              } else {
+                this.setData({
+                  currentOrderList: this.data.differentCampus
+                })
+          }
+        }
       }
     })
   },
@@ -124,6 +141,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
+      flag: 0,
       value: options.value,
       index: options.index,
       currentOrderList: [],
@@ -198,7 +216,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getList()
+    setTimeout(function () {
+      wx.stopPullDownRefresh()
+    }, 1000)
   },
 
   /**

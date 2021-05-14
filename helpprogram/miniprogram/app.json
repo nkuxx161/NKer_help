@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/detailInfo/detailInfo",
     "pages/showSearchResult/showSearchResult",
     "pages/receivedOrder/receivedOrder",
     "pages/userreview/userreview",
@@ -12,7 +13,6 @@
     "pages/inputCancelReason/inputCancelReason",
     "pages/help/help",
     "pages/aboutUs/aboutUs",
-    "pages/detailInfo/detailInfo",
     "pages/changeName/changeName",
     "pages/showUserInfo/showUserInfo",
     "pages/showStoR/showStoR",

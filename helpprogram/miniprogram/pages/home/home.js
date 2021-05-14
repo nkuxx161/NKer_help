@@ -11,6 +11,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    flag: 0,
     disabled: true,
     value: '',
     openid: '',
@@ -45,15 +46,23 @@ Page({
   },
 //查找状态为0的订单 并将同校区、跨校区分类
   getList() {
-    db.where({
-      status: this.data.status
-    }).skip(this.data.currentOrderList.length).limit(20).get()
+    db.where(_.and([
+      {
+        status: 0
+      },
+      {
+        _openid: _.neq(this.data.openid)
+      }
+    ])).skip(this.data.waitOrderList.length).limit(20).get()
     .then(res => {
-      if (res.data.length == 0) {
+      if (res.data.length == 0 && this.data.flag != 0) {
         wx.showToast({
           title: '已到底',
         })
       } else {
+        this.setData({
+          flag: 1
+        })
         if(this.data.status == 0){
           this.setData({
             waitOrderList: this.data.waitOrderList.concat(res.data)
@@ -200,6 +209,7 @@ Page({
    */
   onShow: function () {
     this.setData({
+      flag: 0,
       currentOrderList: [],
       waitOrderList: [],
       sameCampus: [],
@@ -233,7 +243,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getList()
+    setTimeout(function () {
+      wx.stopPullDownRefresh()
+    }, 1000)
   },
 
   /**

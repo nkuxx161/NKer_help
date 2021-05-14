@@ -11,7 +11,32 @@ Page({
    */
   data: {
     userID: '',
+    flag: 0,
     showList: []
+  },
+
+  getList(){
+    RSdb.where({
+      _openid: this.data.userID
+    }).skip(this.data.showList.length).limit(20).get()
+    .then(res => {
+      if(res.data.length == 0 && this.data.flag == 0){
+        Toast('暂无相关评价！')
+      } else {
+        this.setData({
+          flag: 1,
+        })
+        if(res.data.length == 0) {
+          wx.showToast({
+            title: '已到底！',
+          })
+        } else {
+          this.setData({
+            showList: this.data.showList.concat(res.data)
+          })
+        }
+      }
+    })
   },
 
   /**
@@ -19,20 +44,11 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      userID: options.userID
+      userID: options.userID,
+      flag: 0,
+      showList: []
     })
-    RSdb.where({
-      _openid: this.data.userID
-    }).skip(this.data.showList.length).limit(20).get()
-    .then(res => {
-      if(res.data.length == 0){
-        Toast('暂无相关评价！')
-      } else {
-        this.setData({
-          showList: res.data
-        })
-      }
-    })
+    this.getList()
   },
 
   /**
@@ -74,7 +90,10 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    this.getList()
+    setTimeout(function () {
+      wx.stopPullDownRefresh()
+    }, 1000)
   },
 
   /**

@@ -1,1 +1,14 @@
 /* miniprogram/pages/showUserInfo/showUserInfo.wxss */
+.a1{
+  border-bottom: 5rpx solid rgb(230, 230, 230);
+}
+.a2{
+  margin: 5% 2%; 
+}
+
+.van-col{
+  height:200rpx;
+  display: flex;
+  align-items: center;
+}
+
