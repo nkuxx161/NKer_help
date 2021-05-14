@@ -6,8 +6,8 @@
 />
 <van-row gutter="10">
   <van-col span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="{{img}}" bindtap='changeImg'/></van-col>
-  <van-col span="14" offset="1">
-    <text bindtap='changeName'>{{name}}</text>
+  <van-col span="14" offset="1" bindtap='changeName'>
+    <text class="font-1" >{{name}}</text> <view style="margin-left:5rpx"><van-icon name="edit" /></view>
   </van-col>
 </van-row>
 </view>

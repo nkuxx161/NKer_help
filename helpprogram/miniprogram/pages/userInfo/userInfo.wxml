@@ -8,7 +8,7 @@
   <van-col  span="7" offset="1"><van-image round width="180rpx" height="180rpx" src="{{img}}" /></van-col>
   <van-col span="14" offset="1">
     <text wx:if="{{ifLogin=='No'}}">请点击下方按钮登录</text>
-    <text wx:if="{{ifLogin=='Yes'}}" style="font-size:40rpx">{{name}}</text>
+    <text wx:if="{{ifLogin=='Yes'}}" class="font-2">{{name}}</text>
   </van-col>
 </van-row>
 </view> 
@@ -20,7 +20,7 @@
 
 </view>
 
-
+<view class="body">
 <button wx:if="{{ifLogin=='No'}}" class='bottom' type='primary' bindtap="getUserProfile">
   授权登录
  </button>
@@ -29,7 +29,7 @@
 <button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToAddress" class="button1">地址管理</button>
 <button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToHelp" class="button1">帮助与反馈</button>
 <button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToAboutUs" class="button1">关于我们</button>
-
+</view>
 <van-button wx:if="{{ifLogin=='Yes'}}" type="warning"class="quit" block bindtap="showDialog2">退出登录</van-button>
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />

@@ -19,7 +19,7 @@ Page({
       ifLogin:'No',
       name:'',
       showT:'No',
-      flag:'No',
+      flag:'',
       img:'',
   },
 
@@ -57,6 +57,9 @@ Page({
       name: 'getOpenID',
     })
     .then(res => {
+      this.setData({
+        openid:res.result.openid
+      })
       db.where({
         _openid:res.result.openid
       }).get()
@@ -77,6 +80,9 @@ Page({
           }
         }
         else{
+          this.setData({
+            flag:'No'
+          })
           toast("请进行身份认证，以便正常使用小程序")
         }
       })
@@ -122,6 +128,29 @@ Page({
   onShow: function () {
     wx.hideHomeButton({
       success: (res) => {},
+    }),
+    db.where({
+      _openid:this.data.openid
+    }).get()
+    .then(res=>{
+      if(res.data.length != 0){
+        if(res.data[0].userIcon=='1')
+        this.setData({
+          name:res.data[0].studentName,
+          img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
+        })
+        else{
+          this.setData({
+            name:res.data[0].studentName,
+            img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
+          })
+        }
+      }
+      else{
+      }
+    })
+    .catch(err => {
+      console.log(err)
     })
   },
 

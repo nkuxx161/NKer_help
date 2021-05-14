@@ -85,7 +85,23 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    var id1=this.data.displaydata[0]._id
+    var id2=this.data.displaydata[this.data.radio]._id
+    db.doc(id1).update({
+      data:{
+        ifdefault:false
+      },
+      success: function (res) {
+        db.doc(id2).update({
+          data:{
+            ifdefault:true
+          },
+          success: function (res) {
+            toast.success("修改成功")
+          }
+        });
+      }
+    });
   },
 
   /**
@@ -109,27 +125,11 @@ Page({
 
   },
   onChange(event) {
-    var id1=this.data.displaydata[0]._id
     this.setData({
       radio: event.detail,
     });
-    var id2=this.data.displaydata[this.data.radio]._id
-    db.doc(id1).update({
-      data:{
-        ifdefault:false
-      },
-      success: function (res) {
-        console.log("修改成功", res)
-      }
-    });
-    db.doc(id2).update({
-      data:{
-        ifdefault:true
-      },
-      success: function (res) {
-        toast.success("修改成功")
-      }
-    });
+   
+    
   },
   addAdderss:function(){
     wx.navigateTo({

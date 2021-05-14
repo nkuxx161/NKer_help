@@ -9,8 +9,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    openid:'',
     id:"0",
-    checked:true,
+    checked:false,
     name:"请填写您的姓名",
     tel:"请填写您的联系方式",
     addreValue:0,
@@ -30,6 +31,30 @@ Page({
         tel:JSON.parse(options.data).tel,
         door:JSON.parse(options.data).location,
         id:JSON.parse(options.data)._id
+      })
+      wx.cloud.callFunction({
+        name: 'getOpenID',
+      })
+      .then(res => {
+        this.setData({
+          openid:res.result.openid
+        })
+        db.where({
+          _openid:res.result.openid
+        }).get()
+        .then(res=>{
+          if(res.data.length == 0){
+            this.setData({
+              checked:true
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+      .catch(err => {
+        console.log(err)
       })
   },
 
@@ -101,9 +126,6 @@ Page({
       addreValue:e.detail.value
     })
   },
-    ifdefault({ detail }) {
-      this.setData({ checked: detail });
-    },
     save:function(e){
       console.log(this.data)
       var warn ="";
@@ -128,7 +150,7 @@ Page({
         tel:this.data.tel,
         campus:this.data.addreRange[this.data.addreValue],
         location:this.data.door,
-        ifdefault:false
+        ifdefault:this.data.checked,
       }})
       toast.success('增加成功')
     }
