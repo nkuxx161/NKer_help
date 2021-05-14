@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    title: '',
     type: '',
     orderId: '',
     studentID: '',
@@ -26,7 +27,8 @@ Page({
     this.setData({
       orderId: options.id,
       studentID: options.studentID,
-      type: options.type
+      type: options.type,
+      title: options.title
     })
     wx.cloud.database().collection('orderInfo').doc(this.data.orderId)
       .get()
@@ -139,33 +141,44 @@ Page({
       if (this.data.fileList.length === 0) { //当不上传图片时
         // console.log(this.data)
         wx.cloud.database().collection('RtoSReview').add({
-          data: {
-            receiveStudentID: this.data.studentID,
-            orderId: this.data.orderId,
-            RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
-            RtoSScore: this.data.score,
-            RtoSWord: this.data.word,
-          }
-        }).then(res=>{
-          wx.cloud.callFunction({
-            name: 'updateIsRtoSReviewed',
             data: {
-              id: this.data.orderId
+              receiveStudentID: this.data.studentID,
+              orderId: this.data.orderId,
+              RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
+              RtoSScore: this.data.score,
+              RtoSWord: this.data.word,
             }
-          })
-          .then(res => {
-            Toast({
-              type: 'success',
-              message: '更改状态成功',
-            })
+          }).then(res => {
+            wx.cloud.callFunction({
+                name: 'updateIsRtoSReviewed',
+                data: {
+                  <<
+                  << << < Updated upstream
+                  id: this.data.orderId ===
+                    === =
+                    title: this.data.title,
+                  receiveStudentID: this.data.studentID,
+                  orderId: this.data.orderId,
+                  RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
+                  RtoSScore: this.data.score,
+                  RtoSWord: this.data.word,
+                  >>>
+                  >>> > Stashed changes
+                }
+              })
+              .then(res => {
+                Toast({
+                  type: 'success',
+                  message: '更改状态成功',
+                })
+              })
+              .catch(err => {
+                console.log("发单人取消订单失败", err)
+              })
           })
           .catch(err => {
-            console.log("发单人取消订单失败", err)
+            consoile.log(err)
           })
-        })
-        .catch(err=>{
-          consoile.log(err)
-        })
 
       } else {
         let imageName = this.data.openid + this.randomString(10)
@@ -179,34 +192,30 @@ Page({
             })
             // console.log(this.data)
             wx.cloud.database().collection('RtoSReview').add({
-              data: {
-                receiveStudentID: this.data.studentID,
-                orderId: this.data.orderId,
-                RtoSImage: this.data.image,
-                RtoSScore: this.data.score,
-                RtoSWord: this.data.word,
-              }
-            })
-            .then(res=>{
-              wx.cloud.callFunction({
-                name: 'updateIsRtoSReviewed',
                 data: {
-                  id: this.data.orderId
+                  id: this.data.orderId,
                 }
               })
               .then(res => {
-                Toast({
-                  type: 'success',
-                  message: '更改状态成功',
-                })
+                wx.cloud.callFunction({
+                    name: 'updateIsRtoSReviewed',
+                    data: {
+                      id: this.data.orderId
+                    }
+                  })
+                  .then(res => {
+                    Toast({
+                      type: 'success',
+                      message: '更改状态成功',
+                    })
+                  })
+                  .catch(err => {
+                    console.log("发单人取消订单失败", err)
+                  })
               })
               .catch(err => {
-                console.log("发单人取消订单失败", err)
+                console.log(err)
               })
-            })
-            .catch(err=>{
-              console.log(err)
-            })
             Toast({
               type: 'success',
               message: '提交评价成功',
@@ -227,60 +236,20 @@ Page({
       }
 
 
-      
+
     } else if (this.data.type == 'StoR') { //当发单人对接单人做评价时
       if (this.data.fileList.length === 0) { //当不上传图片时
         wx.cloud.database().collection('StoRReview').add({
-          data: {
-            sendStudentID: this.data.studentID,
-            orderId: this.data.orderId,
-            StoRScore: this.data.score,
-            StoRImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
-            StoRWord: this.data.word,
-          }
-        })
-        .then(res=>{
-          wx.cloud.callFunction({
-            name: 'updateIsStoRReviewed',
             data: {
-              id: this.data.orderId
+              sendStudentID: this.data.studentID,
+              orderId: this.data.orderId,
+              StoRScore: this.data.score,
+              StoRImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
+              StoRWord: this.data.word,
             }
           })
           .then(res => {
-            Toast({
-              type: 'success',
-              message: '更改状态成功',
-            })
-          })
-          .catch(err => {
-            console.log("发单人取消订单失败", err)
-          })
-        })
-        .catch(err=>{
-          console.log(err)
-        })
-      } else {
-        let imageName = this.data.openid + this.randomString(10)
-        // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
-        wx.cloud.uploadFile({
-          cloudPath: 'images/' + imageName,
-          filePath: file.url,
-          success: res => {
-            this.setData({
-              image: res.fileID
-            })
-            // console.log(this.data)
-            wx.cloud.database().collection('StoRReview').add({
-              data: {
-                sendStudentID: this.data.studentID,
-                orderId: this.data.orderId,
-                StoRScore: this.data.score,
-                StoRImage: this.data.image,
-                StoRWord: this.data.word,
-              }
-            })
-            .then(res=>{
-              wx.cloud.callFunction({
+            wx.cloud.callFunction({
                 name: 'updateIsStoRReviewed',
                 data: {
                   id: this.data.orderId
@@ -295,10 +264,50 @@ Page({
               .catch(err => {
                 console.log("发单人取消订单失败", err)
               })
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        let imageName = this.data.openid + this.randomString(10)
+        // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+        wx.cloud.uploadFile({
+          cloudPath: 'images/' + imageName,
+          filePath: file.url,
+          success: res => {
+            this.setData({
+              image: res.fileID
             })
-            .catch(err=>{
-              console.log(err)
-            })
+            // console.log(this.data)
+            wx.cloud.database().collection('StoRReview').add({
+                data: {
+                  sendStudentID: this.data.studentID,
+                  orderId: this.data.orderId,
+                  StoRScore: this.data.score,
+                  StoRImage: this.data.image,
+                  StoRWord: this.data.word,
+                }
+              })
+              .then(res => {
+                wx.cloud.callFunction({
+                    name: 'updateIsStoRReviewed',
+                    data: {
+                      id: this.data.orderId
+                    }
+                  })
+                  .then(res => {
+                    Toast({
+                      type: 'success',
+                      message: '更改状态成功',
+                    })
+                  })
+                  .catch(err => {
+                    console.log("发单人取消订单失败", err)
+                  })
+              })
+              .catch(err => {
+                console.log(err)
+              })
             Toast({
               type: 'success',
               message: '提交评价成功',
@@ -318,9 +327,9 @@ Page({
           }
         })
       }
-    } 
+    }
     wx.redirectTo({
-      url: '../showCompletedOrder/showCompletedOrder?status='+3,
+      url: '../showCompletedOrder/showCompletedOrder?status=' + 3,
     })
   }
 })

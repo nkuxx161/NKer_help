@@ -1,34 +1,4 @@
-.uploadImage{
-  display: flex;
-  background-color: #fff;
-  margin: 10rpx;
-}
-
-.uploader {
-  margin: 0;
-  margin-left: 200rpx;
-}
-
-.temp{
-  height: 120rpx;
-}
-
-.disp{
-  display: flex;
-}
-
-.text-1{
-  font-size:35rpx;
-}
-
-
-.wordUpload{
-  background-color: #fff;
-  width: 600rpx;
-  margin: auto 30rpx;
-  font-size:35rpx;
-}
-
+/* pages/chooseAddress/chooseAddress.wxss */
 .a1{
   margin: 25rpx;
   height: 180rpx;
@@ -80,22 +50,9 @@
 .a9{
   height: 100rpx;
 }
-.a10{
-  display: flex;
-  height: 100%;
-  align-items: center;
-}
-.a11{
-  height: 10rpx;
-  width: 30%;
-  display: flex;
-}
 .name{
   font-size:42rpx;
   font-weight:600;
-}
-.red{
-  color: red;
 }
 .font-1{
   font-size:27rpx;
@@ -119,8 +76,4 @@
 }
 .content-breif {
   -webkit-line-clamp:2; 
-}
-
-.icon{
-  margin-right: 200rpx;
 }

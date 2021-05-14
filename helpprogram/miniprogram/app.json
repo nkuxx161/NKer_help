@@ -17,7 +17,9 @@
     "pages/showUserInfo/showUserInfo",
     "pages/showStoR/showStoR",
     "pages/showRtoS/showRtoS",
-    "pages/address/address"
+    "pages/address/address",
+    "pages/addAddress/addAddress",
+    "pages/chooseAddress/chooseAddress"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -57,6 +59,10 @@
     "van-tabbar": "@vant/weapp/tabbar/index",
     "van-tabbar-item": "@vant/weapp/tabbar-item/index",
     "van-search": "@vant/weapp/search/index",
-    "van-sticky": "@vant/weapp/sticky/index"
+    "van-sticky": "@vant/weapp/sticky/index",
+    "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index",
+    "van-switch": "@vant/weapp/switch/index",
+    "van-submit-bar": "@vant/weapp/submit-bar/index"
   }
 }

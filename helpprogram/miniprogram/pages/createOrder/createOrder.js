@@ -23,7 +23,10 @@ Page({
     end: '八里台校区',
     goodsPlace: '',
     dealPlace: '',
-    type: 0,
+    address: '',
+    allAddressJson: [],
+    currentAddress: [],
+    type: '外卖',
     date: '',
     contact: '',
     status: '',
@@ -37,6 +40,14 @@ Page({
     // 手动设置的maxDate
     maxDate: new Date(2025, 10, 1).getTime(),
     currentDate: new Date().getTime(),
+
+    showTitle: false,
+    showDate: false,
+    showCampus: false,
+    showAddress: false,
+    showReward: false,
+    showDescription: false,
+    img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png',
 
     businessType: [{
         text: '外卖',
@@ -70,11 +81,11 @@ Page({
     ],
   },
 
-  initOrder(){
+  initOrder() {
     this.setData({
       sendStudentID: this.data.currentOrder.sendStudentID,
       title: this.data.currentOrder.title,
-      fileList: [].concat(JSON.parse('{"url":'+"\""+this.data.currentOrder.image+"\"}")),
+      fileList: [].concat(JSON.parse('{"url":' + "\"" + this.data.currentOrder.image + "\"}")),
       description: this.data.currentOrder.description,
       start: this.data.currentOrder.start,
       end: this.data.currentOrder.end,
@@ -88,7 +99,28 @@ Page({
       isStoRReviewed: false,
       isRtoSReviewed: false
     })
-    console.log('init',this.data.fileList)
+    console.log('init', this.data.fileList)
+  },
+
+  getMyAllAddress() {
+    wx.cloud.database().collection('addressSet').where({
+      _openid: this.data.openid
+    }).get().then(res => {
+      console.log(res)
+      this.setData({
+        allAddressJson: res.data
+      })
+      for (var i = 0; i < this.data.allAddressJson.length; i++) {
+        let a = this.data.allAddressJson[i]
+        if(a.ifdefault == true){
+          this.setData({
+            currentAddress: [a]
+          })
+        }
+        
+      }
+      console.log('current',this.data.currentAddress)
+    })
   },
 
   /**
@@ -96,7 +128,7 @@ Page({
    */
   onLoad: function (options) {
     console.log(options)
-    if(JSON.stringify(options)!="{}"){
+    if (JSON.stringify(options) != "{}") {
       this.setData({
         currentOrder: JSON.parse(options.order)
       })
@@ -123,10 +155,12 @@ Page({
           }).catch(err => {
             console.log(err)
           })
+        this.getMyAllAddress()
       })
       .catch(err => {
         console.log(err)
       })
+
   },
 
   /**
@@ -140,7 +174,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getMyAllAddress()
   },
 
   /**
@@ -176,35 +210,6 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-
-  changeType(e) {
-    switch (e.detail) {
-      case 0: {
-        this.setData({
-          type: '外卖'
-        })
-        break;
-      }
-      case 1: {
-        this.setData({
-          type: '快递'
-        })
-        break;
-      }
-      case 2: {
-        this.setData({
-          type: '代购'
-        })
-        break;
-      }
-      case 3: {
-        this.setData({
-          type: '其他'
-        })
-        break;
-      }
-    }
   },
 
   changeStart(e) {
@@ -252,24 +257,10 @@ Page({
     }
   },
 
-  // onDisplay() {
-  //   this.setData({ show: true });
-  // },
-  // onClose() {
-  //   this.setData({ show: false });
-  // },
   formatDate(date) {
     date = new Date(date);
-    console.log(date)
-    return `${date.getMonth() + 1}/${date.getDate()}`;
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
   },
-  // onConfirm(event) {
-  //   console.log(event.detail)
-  //   this.setData({
-  //     show: false,
-  //     date: this.formatDate(event.detail),
-  //   });
-  // },
 
   onInputDate(event) {
     this.setData({
@@ -294,7 +285,7 @@ Page({
   //向数据库提交订单信息
   submit(e) {
     this.getAccess()
-    if (this.data.fileList.length === 0) {//当不上传图片时
+    if (this.data.fileList.length === 0) { //当不上传图片时
       // console.log(this.data)
       db.add({
         data: {
@@ -373,7 +364,7 @@ Page({
     this.setData({
       fileList: [].concat(file)
     })
-    console.log('fileList',this.data.fileList)
+    console.log('fileList', this.data.fileList)
   },
 
   //删除选择的图片
@@ -391,6 +382,158 @@ Page({
     for (var i = length; i > 0; --i)
       result += str[Math.floor(Math.random() * str.length)];
     return result;
+  },
+
+  //标题
+  toShowTitle() {
+    this.setData({
+      showTitle: true
+    })
+  },
+  closeShowTitle() {
+    this.setData({
+      showTitle: false,
+      title: ''
+    })
+  },
+  comfirmTitle() {
+    this.setData({
+      showTitle: false
+    })
+  },
+  changeTitle(e) {
+    this.setData({
+      title: e.detail
+    })
+  },
+
+  //类型
+  toShowType() {
+    this.setData({
+      showType: true
+    })
+  },
+  closeShowType() {
+    this.setData({
+      showType: false,
+      type: ''
+    })
+  },
+  comfirmType() {
+    this.setData({
+      showType: false
+    })
+  },
+  changeType(e) {
+    this.setData({
+      type: e.detail.value.text
+    })
+  },
+
+  //校区
+  toShowCampus() {
+    this.setData({
+      showCampus: true
+    })
+  },
+  closeShowCampus() {
+    this.setData({
+      showCampus: false,
+    })
+  },
+  comfirmCampus() {
+    this.setData({
+      showCampus: false,
+    })
+  },
+
+
+  toShowAddress() {
+    // this.setData({
+    //   showAddress: true
+    // })
+    wx.navigateTo({
+      url: '../chooseAddress/chooseAddress?address='+JSON.stringify(this.data.allAddressJson),
+    })
+  },
+  closeShowAddress() {
+    this.setData({
+      showAddress: false,
+      // currentDate:  new Date().getTime(),
+    })
+  },
+
+  changeAddress(e) {
+    console.log(e)
+    // this.setData({
+    //   showAddress: false,
+    //   currentAddress: 
+    // })
+  },
+  toAddAddress(){
+    wx.navigateTo({
+      url: '../addAddress/addAddress?toAddAddressFlag=true',
+    })
+  },
+
+  //日期
+  toShowDate() {
+    this.setData({
+      showDate: true
+    })
+  },
+  closeShowDate() {
+    this.setData({
+      showDate: false,
+      currentDate: new Date().getTime(),
+    })
+  },
+  comfirmDate() {
+    this.setData({
+      showDate: false
+    })
+  },
+
+  toShowReward() {
+    this.setData({
+      showReward: true
+    })
+  },
+  closeShowReward() {
+    this.setData({
+      showReward: false,
+    })
+  },
+  comfirmReward() {
+    this.setData({
+      showReward: false
+    })
+  },
+  changeReward(e) {
+    this.setData({
+      reward: e.detail
+    })
+  },
+
+  toShowDescription() {
+    this.setData({
+      showDescription: true
+    })
+  },
+  closeShowDescription() {
+    this.setData({
+      showDescription: false,
+    })
+  },
+  comfirmDescription() {
+    this.setData({
+      showDescription: false
+    })
+  },
+  changeDescription(e) {
+    this.setData({
+      description: e.detail
+    })
   },
 
 })
