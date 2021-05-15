@@ -30,10 +30,10 @@
   label="{{user.email}}"
 />
 <van-cell
-  title="接单数" value="{{user.receiveCount}}"
+  title="接单数" value="{{user.receiveCountUnreviewed}}"
 />
 <van-cell
-  title="发单数" value="{{user.sendCount}}"
+  title="发单数" value="{{user.sendCountUnreviewed}}"
 />
 <van-cell title="接单总分">
   <van-rate wx:if="{{rRate>=4}}" allow-half value="{{rRate}}" color="red" void-icon="fire-o" icon="fire" readonly/>
