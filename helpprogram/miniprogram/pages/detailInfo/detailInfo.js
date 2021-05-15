@@ -54,10 +54,10 @@ Page({
             phoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
             name:res.data[0].studentName,
-            rCount:res.data[0].receiveCount,
-            sCount:res.data[0].sendCount,
-            rRate:(res.data[0].receiveScore/res.data[0].receiveCount),
-            sRate:(res.data[0].sendScore/res.data[0].sendCount),
+            rCount:res.data[0].receiveCountUnreviewed,
+            sCount:res.data[0].sendCountUnreviewed,
+            rRate:(res.data[0].receiveScore/res.data[0].receiveCountUnreviewed),
+            sRate:(res.data[0].sendScore/res.data[0].sendCountUnreviewed),
             img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/'+res.data[0]._openid+'.jpg'
           })
           else
@@ -68,10 +68,10 @@ Page({
             phoneNumber:res.data[0].phoneNumber,
             email:res.data[0].email,
             name:res.data[0].studentName,
-            rCount:res.data[0].receiveCount,
-            sCount:res.data[0].sendCount,
-            rRate:(res.data[0].receiveScore/res.data[0].receiveCount),
-            sRate:(res.data[0].sendScore/res.data[0].sendCount),
+            rCount:res.data[0].receiveCountUnreviewed,
+            sCount:res.data[0].sendCountUnreviewed,
+            rRate:(res.data[0].receiveScore/res.data[0].receiveCountUnreviewed),
+            sRate:(res.data[0].sendScore/res.data[0].sendCountUnreviewed),
             img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
           })
         }
