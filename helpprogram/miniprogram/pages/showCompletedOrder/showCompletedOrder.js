@@ -286,6 +286,7 @@ Page({
 
   //提交订单 
   submitComplete(e) {
+    console.log(e) //打印提交订单的数据
     //更改状态
     db.doc(e.currentTarget.dataset.id).update({
         data: {
@@ -302,25 +303,75 @@ Page({
           currentOrderList: this.data.doingOrderList
         })
         this.getList()
+        //更改已完成但未评价的订单数
+        this.updateCountUnreviewed(e.currentTarget.dataset.receivestudentid, 'receiver')
+        this.updateCountUnreviewed(e.currentTarget.dataset.sendstudentid, 'sender')
       })
       .catch(err => {
         console.log(err)
       })
   },
 
+  //根据学号获取userId（唯一）,再更新完成但未评价的订单数
+  updateCountUnreviewed(studentID, type) {
+    wx.cloud.database().collection('userInfo').where({
+        studentID: studentID
+      })
+      .get()
+      .then(res => {
+        // console.log('用户信息', res)
+        if (type == 'sender') {
+          let sendUserId = res.data[0]._id
+          let sendCountUnreviewed = res.data[0].sendCountUnreviewed
+          wx.cloud.callFunction({
+            name: 'updateCountUnreviewed',
+            data: {
+              type: 'sender',
+              userId: sendUserId,
+              sendCountUnreviewed: sendCountUnreviewed + 1
+            }
+          }).then(res => {
+            console.log('更新发单人完成单未评价的订单数成功', res)
+          }).catch(err => {
+            console.log('更新发单人完成单未评价的订单数失败', err)
+          })
+        } else if(type == 'receiver') {
+          let receiveUserId = res.data[0]._id
+          let receiveCountUnreviewed = res.data[0].receiveCountUnreviewed
+          wx.cloud.callFunction({
+            name: 'updateCountUnreviewed',
+            data: {
+              type: 'receiver',
+              userId: receiveUserId,
+              receiveCountUnreviewed: receiveCountUnreviewed + 1
+            }
+          }).then(res => {
+            console.log('更新接单人完成单未评价的订单数成功', res)
+          }).catch(err => {
+            console.log('更新接单人完成单未评价的订单数失败', err)
+          })
+        } else {
+          console.log('提交完成时传入的type参数有误')
+        }
+      })
+      .catch(err => {
+        console.log('查询用户信息失败', err)
+      })
+  },
+
   //评价订单
   submitReview(options) {
-    //待实现
+    //已实现
     console.log('评价订单')
     wx.navigateTo({
-      url: '../userreview/userreview?id=' + options.currentTarget.dataset.id + '&studentID=' + options.currentTarget.dataset.studentid + '&type=StoR' 
-          + '&title=' + options.currentTarget.dataset.title,
+      url: '../userreview/userreview?id=' + options.currentTarget.dataset.id + '&studentID=' + options.currentTarget.dataset.studentid + '&type=StoR' +
+        '&title=' + options.currentTarget.dataset.title + '&oppositeStudentID=' + options.currentTarget.dataset.oppositestudentid,
     })
   },
 
-  createAgain(options){
+  createAgain(options) {
     wx.redirectTo({
-      url: '../createOrder/createOrder?order='+JSON.stringify(options.currentTarget.dataset.order),
+      url: '../createOrder/createOrder?order=' + JSON.stringify(options.currentTarget.dataset.order),
     })
     console.log(options.currentTarget.dataset.order)
   },
@@ -391,13 +442,13 @@ Page({
     switch (this.data.active) {
       case 'home': {
         wx.redirectTo({
-          url: '../home/home?active='+'home',
+          url: '../home/home?active=' + 'home',
         })
         break
       }
       case 'myOrder': {
         wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
+          url: '../showCompletedOrder/showCompletedOrder?active=' + 'myOrder',
         })
         break
       }
@@ -409,13 +460,13 @@ Page({
       }
       case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
+          url: '../receivedOrder/receivedOrder?active=' + 'receiveOrder',
         })
         break
       }
       case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo?active='+'userInfo',
+          url: '../userInfo/userInfo?active=' + 'userInfo',
         })
         break
       }
