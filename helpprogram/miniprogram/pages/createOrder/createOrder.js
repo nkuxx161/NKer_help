@@ -30,7 +30,7 @@ Page({
     date: '',
     contact: '',
     status: '',
-    reward: '',
+    reward: '0',
 
     show: false,
 

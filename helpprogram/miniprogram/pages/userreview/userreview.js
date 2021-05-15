@@ -12,6 +12,7 @@ Page({
     type: '',
     orderId: '',
     studentID: '',
+    oppositeStudentID: '', //接收评价的人的id
     score: 5,
     word: '',
     image: '',
@@ -28,12 +29,14 @@ Page({
       orderId: options.id,
       studentID: options.studentID,
       type: options.type,
-      title: options.title
+      title: options.title,
+      oppositeStudentID: options.oppositeStudentID
     })
+    //下面这个函数好像没有用
     wx.cloud.database().collection('orderInfo').doc(this.data.orderId)
       .get()
       .then(res => {
-        // console.log('评价的商品信息', res)
+        // console.log('评价的商品订单信息', res)
         this.setData({
           goods: res.data
         })
@@ -133,6 +136,56 @@ Page({
     return result;
   },
 
+  //根据学号获取userId（唯一）,再更新完成但未评价的订单数
+  updateCountUnreviewed(studentID, type) {
+    wx.cloud.database().collection('userInfo').where({
+        studentID: studentID
+      })
+      .get()
+      .then(res => {
+        // console.log('用户信息', res)
+        if (type == 'sender') {
+          let sendUserId = res.data[0]._id
+          let sendCount = res.data[0].sendCount
+          let sendScore = res.data[0].sendScore
+          wx.cloud.callFunction({
+            name: 'updateCountReviewed',
+            data: {
+              type: 'sender',
+              userId: sendUserId,
+              sendCount: sendCount + 1,
+              sendScore: sendScore + this.data.score
+            }
+          }).then(res => {
+            console.log('更新发单人完成单且已评价的订单数成功', res)
+          }).catch(err => {
+            console.log('更新发单人完成单且已评价的订单数失败', err)
+          })
+        } else if (type == 'receiver') {
+          let receiveUserId = res.data[0]._id
+          let receiveCount = res.data[0].receiveCount
+          let receiveScore = res.data[0].receiveScore
+          wx.cloud.callFunction({
+            name: 'updateCountReviewed',
+            data: {
+              type: 'receiver',
+              userId: receiveUserId,
+              receiveCount: receiveCount + 1,
+              receiveScore: receiveScore + this.data.score
+            }
+          }).then(res => {
+            console.log('更新发单人完成单且已评价的订单数成功', res)
+          }).catch(err => {
+            console.log('更新发单人完成单且已评价的订单数失败', err)
+          })
+        } else {
+          console.log('提交完成时传入的type参数有误')
+        }
+      })
+      .catch(err => {
+        console.log('查询用户信息失败', err)
+      })
+  },
 
   //提交评价
   completeReview() {
@@ -157,6 +210,8 @@ Page({
                 }
               })
               .then(res => {
+                //更改发单人的评价总分
+                this.updateCountUnreviewed(this.data.oppositeStudentID, 'sender')
                 Toast({
                   type: 'success',
                   message: '更改评价状态成功',
@@ -175,9 +230,8 @@ Page({
           .catch(err => {
             consoile.log(err)
           })
-
       } else {
-        let imageName = this.data.openid + this.randomString(10)
+        let imageName = this.data.openid + this.randomString(10) //当上传图片时
         // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
         wx.cloud.uploadFile({
           cloudPath: 'images/' + imageName,
@@ -205,6 +259,8 @@ Page({
                     }
                   })
                   .then(res => {
+                    //更改发单人的评价总分
+                    this.updateCountUnreviewed(this.data.oppositeStudentID, 'sender')
                     Toast({
                       type: 'success',
                       message: '更改评价状态成功',
@@ -259,6 +315,8 @@ Page({
                 }
               })
               .then(res => {
+                //更改接单人的评价总分
+                this.updateCountUnreviewed(this.data.oppositeStudentID, 'receiver')
                 Toast({
                   type: 'success',
                   message: '更改评价状态成功',
@@ -305,6 +363,8 @@ Page({
                     }
                   })
                   .then(res => {
+                    //更改接单人的评价总分
+                    this.updateCountUnreviewed(this.data.oppositeStudentID, 'receiver')
                     Toast({
                       type: 'success',
                       message: '更改评价状态成功',
