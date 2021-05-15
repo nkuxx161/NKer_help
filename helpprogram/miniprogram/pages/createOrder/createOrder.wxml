@@ -34,14 +34,11 @@
   <!-- 选择业务类型 -->
   <van-cell is-link title="类型" icon="flag-o" bind:click="toShowType" label="{{type}}" />
 
-
-
+  <van-cell is-link title="取货地点" icon="bag-o" bind:click="toShowGoodsPlace" label="{{goodsPlace}}" />
 
   <!-- 校区 -->
   <van-cell is-link title="选择校区" icon="location-o" bind:click="toShowCampus" label="{{start}}——>{{end}}" />
 
-  <!-- <van-field label="取货地点" model:value="{{ goodsPlace }}" placeholder="请输入取货地点" />
-  <van-field label="交易地点" model:value="{{ dealPlace }}" placeholder="请输入交易地点" /> -->
   <!-- 时间 -->
   <van-cell is-link title="选择时间" icon="underway-o" bind:click="toShowDate" label="{{date}}" />
 
@@ -78,6 +75,16 @@
     <button bindtap="comfirmType"><text class="text-1">确认</text></button>
   </view>
   <van-picker columns="{{ businessType }}" bind:change="changeType" />
+</van-popup>
+
+<van-popup show="{{showGoodsPlace}}" bind:close="closeShowGoodsPlace" position="bottom" custom-style="height:40%">
+  <view class="disp">
+    <button bindtap="closeShowGoodsPlace"><text class="text-1">取消</text></button>
+    <view style="width:50%"></view>
+    <button bindtap="comfirmGoodsPlace"><text class="text-1">确认</text></button>
+  </view>
+  <van-field placeholder="请输入取货地点" value="{{ goodsPlace }}" border="{{ false }}" bind:change="changeGoodsPlace"
+    error-message='{{error}}' />
 </van-popup>
 
 <van-popup show="{{showDate}}" bind:close="closeShowDate" position="bottom" custom-style="height:40%">

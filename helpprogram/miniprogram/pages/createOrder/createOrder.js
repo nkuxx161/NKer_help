@@ -23,7 +23,7 @@ Page({
     end: '八里台校区',
     goodsPlace: '',
     dealPlace: '',
-    address: '',
+    // address: '',
     allAddressJson: [],
     currentAddress: [],
     type: '外卖',
@@ -45,9 +45,10 @@ Page({
     showDate: false,
     showCampus: false,
     showAddress: false,
+    showGoodsPlace: false,
     showReward: false,
     showDescription: false,
-    img:'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png',
+    img: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png',
 
     businessType: [{
         text: '外卖',
@@ -113,14 +114,14 @@ Page({
       })
       for (var i = 0; i < this.data.allAddressJson.length; i++) {
         let a = this.data.allAddressJson[i]
-        if(a.ifdefault == true){
+        if (a.ifdefault == true) {
           this.setData({
             currentAddress: [a]
           })
         }
-        
+
       }
-      console.log('current',this.data.currentAddress)
+      console.log('current', this.data.currentAddress)
     })
   },
 
@@ -175,7 +176,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getMyAllAddress()
+
   },
 
   /**
@@ -258,17 +259,7 @@ Page({
     }
   },
 
-  formatDate(date) {
-    date = new Date(date);
-    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
-  },
 
-  onInputDate(event) {
-    this.setData({
-      currentDate: event.detail,
-      date: this.formatDate(event.detail),
-    });
-  },
 
   //让用户获取消息推送的授权
   getAccess() {
@@ -283,32 +274,89 @@ Page({
     })
   },
 
+  fixInfo(currentAddress) {
+    this.setData({
+      contact: currentAddress[0].tel,
+      dealPlace: currentAddress[0].campus + currentAddress[0].location
+    })
+  },
+
+  checkInfo() {
+    // 地址、标题、类型、取货地点、选择校区、选择时间为必填
+    // 其中，类型、选择校区、选择时间有默认值不可能为空
+    // 悬赏、详细描述可为空
+    if (this.data.currentAddress.length != 0) {
+      this.fixInfo(this.data.currentAddress)
+    } else {
+      wx.showToast({
+        title: '请添加地址',
+        icon: 'fail',
+        duration: 1000
+      })
+      return false
+    }
+
+    if (this.data.title == '') {
+      wx.showToast({
+        title: '请填写标题',
+        icon: 'fail',
+        duration: 1000
+      })
+      return false
+    }
+
+    if (this.data.goodsPlace == '') {
+      wx.showToast({
+        title: '请填写取货地点',
+        icon: 'fail',
+        duration: 1000
+      })
+      return false
+    }
+    return true
+  },
+
   //向数据库提交订单信息
   submit(e) {
+    if (this.checkInfo() == false) return
     this.getAccess()
     if (this.data.fileList.length === 0) { //当不上传图片时
       // console.log(this.data)
       db.add({
-        data: {
-          sendStudentID: this.data.sendStudentID,
-          receiveStudentID: this.data.receiveStudentID,
-          title: this.data.title,
-          image: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
-          description: this.data.description,
-          start: this.data.start,
-          end: this.data.end,
-          goodsPlace: this.data.goodsPlace,
-          dealPlace: this.data.dealPlace,
-          type: this.data.type,
-          date: this.data.date,
-          contact: this.data.contact,
-          status: 0,
-          reward: this.data.reward,
-          isStoRReviewed: false,
-          isRtoSReviewed: false,
-          cancelPerson: ''
-        }
-      })
+          data: {
+            sendStudentID: this.data.sendStudentID,
+            receiveStudentID: this.data.receiveStudentID,
+            title: this.data.title,
+            image: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
+            description: this.data.description,
+            start: this.data.start,
+            end: this.data.end,
+            goodsPlace: this.data.goodsPlace,
+            dealPlace: this.data.dealPlace,
+            type: this.data.type,
+            date: this.data.date,
+            contact: this.data.contact,
+            status: 0,
+            reward: this.data.reward,
+            isStoRReviewed: false,
+            isRtoSReviewed: false,
+            cancelPerson: ''
+          }
+        }).then(res => {
+          Toast({
+            type: 'success',
+            message: '提交成功',
+            onClose: () => { //待实现比如说跳转界面等
+              console.log('执行OnClose函数')
+              wx.navigateBack({
+                delta: 0,
+              })
+            },
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     } else {
       let imageName = this.data.openid + this.randomString(10)
       // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
@@ -321,33 +369,41 @@ Page({
           })
           // console.log(this.data)
           db.add({
-            data: {
-              sendStudentID: this.data.sendStudentID,
-              receiveStudentID: this.data.receiveStudentID,
-              title: this.data.title,
-              image: this.data.image,
-              description: this.data.description,
-              start: this.data.start,
-              end: this.data.end,
-              goodsPlace: this.data.goodsPlace,
-              dealPlace: this.data.dealPlace,
-              type: this.data.type,
-              date: this.data.date,
-              contact: this.data.contact,
-              status: 0,
-              reward: this.data.reward,
-              isStoRReviewed: false,
-              isRtoSReviewed: false,
-              cancelPerson: ''
-            }
-          })
-          Toast({
-            type: 'success',
-            message: '提交成功',
-            onClose: () => { //待实现比如说跳转界面等
-              console.log('执行OnClose函数');
-            },
-          });
+              data: {
+                sendStudentID: this.data.sendStudentID,
+                receiveStudentID: this.data.receiveStudentID,
+                title: this.data.title,
+                image: this.data.image,
+                description: this.data.description,
+                start: this.data.start,
+                end: this.data.end,
+                goodsPlace: this.data.goodsPlace,
+                dealPlace: this.data.dealPlace,
+                type: this.data.type,
+                date: this.data.date,
+                contact: this.data.contact,
+                status: 0,
+                reward: this.data.reward,
+                isStoRReviewed: false,
+                isRtoSReviewed: false,
+                cancelPerson: ''
+              }
+            }).then(res => {
+              Toast({
+                type: 'success',
+                message: '提交成功',
+                onClose: () => { //待实现比如说跳转界面等
+                  console.log('执行OnClose函数')
+                  wx.navigateBack({
+                    delta: 0,
+                  })
+                },
+              })
+            })
+            .catch(err => {
+              console.log(err)
+            })
+
         },
         fail: err => {
           wx.showToast({
@@ -419,7 +475,7 @@ Page({
   closeShowType() {
     this.setData({
       showType: false,
-      type: ''
+      type: '外卖'
     })
   },
   comfirmType() {
@@ -433,6 +489,28 @@ Page({
     })
   },
 
+  toShowGoodsPlace() {
+    this.setData({
+      showGoodsPlace: true
+    })
+  },
+  closeShowGoodsPlace() {
+    this.setData({
+      showGoodsPlace: false,
+      goodsPlace: ''
+    })
+  },
+  comfirmGoodsPlace() {
+    this.setData({
+      showGoodsPlace: false
+    })
+  },
+  changeGoodsPlace(e) {
+    this.setData({
+      goodsPlace: e.detail
+    })
+  },
+
   //校区
   toShowCampus() {
     this.setData({
@@ -442,6 +520,8 @@ Page({
   closeShowCampus() {
     this.setData({
       showCampus: false,
+      start: '八里台校区',
+      end: '八里台校区'
     })
   },
   comfirmCampus() {
@@ -452,44 +532,41 @@ Page({
 
 
   toShowAddress() {
-    // this.setData({
-    //   showAddress: true
-    // })
     wx.navigateTo({
-      url: '../chooseAddress/chooseAddress?address='+JSON.stringify(this.data.allAddressJson),
-    })
-  },
-  closeShowAddress() {
-    this.setData({
-      showAddress: false,
-      // currentDate:  new Date().getTime(),
+      url: '../chooseAddress/chooseAddress?address=' + JSON.stringify(this.data.allAddressJson),
     })
   },
 
-  changeAddress(e) {
-    console.log(e)
-    // this.setData({
-    //   showAddress: false,
-    //   currentAddress: 
-    // })
-  },
-  toAddAddress(){
+  toAddAddress() {
     wx.navigateTo({
       url: '../addAddress/addAddress?toAddAddressFlag=true',
     })
   },
 
   //日期
+
   toShowDate() {
     this.setData({
       showDate: true
     })
   },
+
   closeShowDate() {
     this.setData({
       showDate: false,
-      currentDate: new Date().getTime(),
+      currentDate: new Date()
     })
+  },
+  formatDate(date) {
+    date = new Date(date);
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+  },
+
+  onInputDate(event) {
+    this.setData({
+      currentDate: event.detail,
+      date: this.formatDate(event.detail),
+    });
   },
   comfirmDate() {
     this.setData({
