@@ -23,7 +23,8 @@
         <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder" data-id='{{item._id}}'>取消订单
         </van-button>
         <van-button type="primary" size="mini" catchtap="submitComplete" data-id='{{item._id}}'
-          data-sendstudentid="{{item.sendStudentID}}" data-receivestudentid="{{item.receiveStudentID}}">确认提交
+          data-sendstudentid="{{item.sendStudentID}}" data-receivestudentid="{{item.receiveStudentID}}"
+          data-title="{{item.title}}" data-goodsplace="{{item.goodsPlace}}" data-dealplace="{{item.dealPlace}}">确认提交
         </van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">
@@ -40,7 +41,8 @@
         <van-button open-type="contact" type="default" size="mini" catchtap="service" data-id='{{item._id}}'
           wx:if="{{item.cancelPerson == 'receiver'}}">联系客服</van-button>
         <van-button type="primary" size="mini" catchtap="agreeCancel" data-id='{{item._id}}'
-          wx:if="{{item.cancelPerson == 'receiver'}}">同意取消</van-button>
+          data-receivestudentid="{{item.receiveStudentID}}" data-title="{{item.title}}"
+          data-description="{{item.description}}" wx:if="{{item.cancelPerson == 'receiver'}}">同意取消</van-button>
         <van-button type="primary" catchtap="null" disabled size="mini" wx:if="{{item.cancelPerson == 'sender'}}">
           等待接单人处理</van-button>
       </view>

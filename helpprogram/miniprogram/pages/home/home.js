@@ -81,6 +81,18 @@ Page({
     })
   },
 
+  //让用户获取消息推送的授权
+  getAccess() {
+    wx.requestSubscribeMessage({
+      tmplIds: ['NlnbaJpPf3MWlCKcFOpr55Q2MHN91ChLUX1P9WdxM_8', 'TAJUXfIcw4LyLGaJuPiI0FLJu4jg-iNguvvFdoEjpbI', 'XgpA413z8X4ki83NugtAKcIYXWSUJaYyKvpxhABWoTE'],
+      success: (res) => {
+        console.log('授权成功', res)
+      },
+      fail: (err) => {
+        console.log('授权失败', err)
+      }
+    })
+  },
 
   /** 确认接单 */
   confirmOrder(event) {
@@ -90,6 +102,7 @@ Page({
       theme: 'round-button',
     })
     .then(res => {
+      this.getAccess() //接单完成后允许推送以后的完成订单，接单消息，申请取消订单的消息
       let id = event.currentTarget.dataset.id
       wx.cloud.callFunction({
         name: 'updateReceiveStudentID',
@@ -100,6 +113,22 @@ Page({
         }
       })
       .then(res => {
+        //发送接单推送
+        wx.cloud.callFunction({
+          name: 'pushAcceptMessage',
+          data: {
+            openId: event.currentTarget.dataset.openid,
+            url: '/pages/showCompletedOrder/showCompletedOrder',
+            orderId: event.currentTarget.dataset.id,
+            type: event.currentTarget.dataset.type,
+            title: event.currentTarget.dataset.title,
+          }
+        }).then(res => {
+          console.log('已接单消息推送成功', res)
+        }).catch(err => {
+          console.log('已接单消息推送失败', err)
+        })
+        
         this.setData({
           waitOrderList:[],
           currentOrderList:[],

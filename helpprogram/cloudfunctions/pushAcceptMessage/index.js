@@ -5,30 +5,27 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })
 
-// 云函数入口函数
+// 云函数入口函数 要5个参数
 exports.main = async (event, context) => {
-  if (event.description == '') {
-    event.description = '无'
-  }
   try {
     const result = await cloud.openapi.subscribeMessage.send({
       touser: event.openId, //要推送给那个用户
       page: event.url, //要跳转到那个小程序页面
       data: { //推送的内容
-        thing1: {
-          value: event.title
-        },
-        character_string2: {
+        character_string19: {
           value: event.orderId
         },
-        phrase11: {
-          value: '已取消'
+        thing11: {
+          value: event.type
         },
-        thing15: {
-          value: event.description
+        thing7: {
+          value: event.title
+        },
+        thing5: {
+          value: '在收到货品前，请勿提前转账'
         }
       },
-      templateId: 'mVQCWb63Fa1nGEDlNU4GHgVlEOmiKyH6_wlWQr4ijxY'//模板id
+      templateId: 'NlnbaJpPf3MWlCKcFOpr55Q2MHN91ChLUX1P9WdxM_8'//模板id
     })
     return result
   } catch (err) {
