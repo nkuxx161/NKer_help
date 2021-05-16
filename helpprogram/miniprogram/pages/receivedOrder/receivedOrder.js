@@ -267,6 +267,24 @@ Page({
           })
           .then(res => {
             // console.log("接单人提交订单成功", res)
+            //向发单人推送订单完成的消息
+            wx.cloud.callFunction({
+              name: 'pushSubmitMessage',
+              data: {
+                url: '/pages/showCompletedOrder/showCompletedOrder',
+                openId: event.currentTarget.dataset.sendstudentopenid,
+                orderId: event.currentTarget.dataset.id,
+                title: event.currentTarget.dataset.title,
+                goodsPlace: event.currentTarget.dataset.goodsplace,
+                dealPlace: event.currentTarget.dataset.dealplace
+              }
+            }).then(res => {
+              console.log('接单人完成订单消息推送成功', res)
+            }).catch(err => {
+              console.log('接单人完成订单消息推送失败', err)
+            })
+
+            //接单人提交订单后需要从新获取数据
             this.setData({
               currentOrderList: [],
               doingOrderList: []
@@ -381,7 +399,7 @@ Page({
             wx.cloud.callFunction({
               name: 'pushAgreeCancelMsg',
               data: {
-                url: '/pages/receivedOrder/receivedOrder',
+                url: '/pages/showCompletedOrder/showCompletedOrder',
                 openId: sendStudentOpenId,
                 title: title,
                 orderId: orderId,

@@ -264,7 +264,7 @@ Page({
   //让用户获取消息推送的授权
   getAccess() {
     wx.requestSubscribeMessage({
-      tmplIds: ['XgpA413z8X4ki83NugtAKcIYXWSUJaYyKvpxhABWoTE'],
+      tmplIds: ['NlnbaJpPf3MWlCKcFOpr55Q2MHN91ChLUX1P9WdxM_8', 'TAJUXfIcw4LyLGaJuPiI0FLJu4jg-iNguvvFdoEjpbI', 'XgpA413z8X4ki83NugtAKcIYXWSUJaYyKvpxhABWoTE'],
       success: (res) => {
         console.log('授权成功', res)
       },
