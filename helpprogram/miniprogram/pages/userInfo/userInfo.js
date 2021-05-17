@@ -213,20 +213,7 @@ Page({
    * 退出提示
    */
   showDialog2:function(){
-    Dialog.confirm({
-      title: '是否确认退出',
-      message: '小程序需要您的授权才能提供正常的服务哦',
-      theme: 'round-button',
-    })
-      .then(() => {
-        this.setData({
-          ifLogin:'No'
-        })
-        Toast.success('退出成功');
-      })
-      .catch(() => {
-        // on cancel
-      });
+    
   },
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认
@@ -240,6 +227,18 @@ Page({
           hasUserInfo: true,
           ifLogin:'Yes'
         })
+      },
+      fail:(err)=>{
+        this.setData({
+          ifLogin:'No'
+        });
+        Dialog.confirm({
+          title: '请进行授权',
+          message: '小程序需要您的授权才能提供正常的服务哦',
+          theme: 'round-button',
+        })
+          .then(() => {
+          })
       }
     })
   },
