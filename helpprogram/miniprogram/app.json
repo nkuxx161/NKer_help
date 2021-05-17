@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/userInfo/userInfo",
     "pages/home/home",
     "pages/detailInfo/detailInfo",
-    "pages/userInfo/userInfo",
+   
     "pages/nk/nk",
     "pages/showSearchResult/showSearchResult",
     "pages/receivedOrder/receivedOrder",

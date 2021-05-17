@@ -27,7 +27,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    const self = this
+    wx.loadFontFace({
+      family: this.data.fontFamily,
+      source: 'url("https://7869-xiongxiao-9g0m49qp0514cda7-1305534329.tcb.qcloud.la/font/Artlookin-Regular.ttf?sign=d91a10788836a943b1f89fa83834b260&t=1621255640")',
+      success(res) {
+      },
+      fail: function(res) {
+      },
+      complete: function(res) {
+      }
+    });
     //设置tabbar的状态
     if (options.active == undefined) {
       this.setData({
