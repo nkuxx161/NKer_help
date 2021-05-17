@@ -14,7 +14,10 @@
         <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder" data-id="{{item._id}}">取消订单
         </van-button>
         <van-button type="primary" size="mini" catchtap="submitComplete" data-id="{{item._id}}"
-          data-sendstudentid="{{item.sendStudentID}}" data-receivestudentid="{{item.receiveStudentID}}">确认提交
+          data-sendstudentid="{{item.sendStudentID}}" data-receivestudentid="{{item.receiveStudentID}}"
+          data-sendstudentopenid="{{item._openid}}" data-title="{{item.title}}" data-goodsplace="{{item.goodsPlace}}"
+          data-dealplace="{{item.dealPlace}}">
+          确认提交
         </van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">

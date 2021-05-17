@@ -1,9 +1,9 @@
 <!--miniprogram/pages/home/home.wxml-->
 <van-sticky>
-  <van-search value="{{ value }}" placeholder="请输入搜索关键词" bind:search="onSearch" bind:change="onChangeSearch" use-action-slot="true" >
+  <van-search value="{{ value }}" placeholder="请输入搜索关键词" bind:search="onSearch" bind:change="onChangeSearch"
+    use-action-slot="true">
     <view slot="action">
-      <van-button id="search" type="default" bind:click="onClick" size="small" 
-      disabled='{{ disabled }}'>搜索</van-button>
+      <van-button id="search" type="default" bind:click="onClick" size="small" disabled='{{ disabled }}'>搜索</van-button>
     </view>
   </van-search>
   <van-tabs active="{{ active }}" bind:change="onChange">
@@ -17,7 +17,8 @@
     <van-card num="1" price="{{item.reward}}" desc="{{item.description}}" title="{{item.title}}" thumb="{{item.image}}"
       lazy-load tag="{{item.type}}" thumb-mode="aspectFill">
       <view slot="footer" wx:if="{{item.status == 0}}">
-        <van-button class="btn_confirm" type="danger" size="mini" catchtap="confirmOrder" data-id='{{item._id}}'>确认接单</van-button>
+        <van-button class="btn_confirm" type="danger" size="mini" catchtap="confirmOrder" data-openid="{{item._openid}}"
+          data-type="{{item.type}}" data-title="{{item.title}}" data-id='{{item._id}}'>确认接单</van-button>
       </view>
     </van-card>
   </view>
@@ -27,7 +28,9 @@
 <van-tabbar active="{{ active }}" bind:change="changeBar" placeholder active-color="pink">
   <van-tabbar-item name="home" icon="home-o">主页</van-tabbar-item>
   <van-tabbar-item name="myOrder" icon="balance-list-o">我的订单</van-tabbar-item>
-  <van-tabbar-item name="createOrder"><van-icon name="add" size="65rpx" color="pink"/></van-tabbar-item>
+  <van-tabbar-item name="createOrder">
+    <van-icon name="add" size="65rpx" color="pink" />
+  </van-tabbar-item>
   <van-tabbar-item name="receiveOrder" icon="goods-collect-o">接受的订单</van-tabbar-item>
   <van-tabbar-item name="userInfo" icon="manager-o">我</van-tabbar-item>
 </van-tabbar>
