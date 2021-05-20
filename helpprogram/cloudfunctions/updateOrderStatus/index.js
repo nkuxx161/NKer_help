@@ -11,7 +11,8 @@ exports.main = async (event, context) => {
     .doc(event.id)
     .update({
       data: {
-        status: event.status
+        status: event.status,
+        updateTime: event.updateTime
       }
     })
 }
