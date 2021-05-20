@@ -1,6 +1,7 @@
 // pages/nk/nk.js
 const DB = wx.cloud.database()
 const db = DB.collection('userInfo')
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
 Page({
 
   /**
@@ -94,6 +95,12 @@ Page({
   },
 
   submit() {
+    Toast.loading({
+      duration: 1,
+      message: '认证中...',
+      forbidClick: true,
+      loadingType: 'spinner',
+    });
     wx.cloud.callFunction({
       name: 'identityAuthentication',
       data: {
@@ -103,38 +110,49 @@ Page({
       success: (res) => {
         console.log(res)
         if (res.result.message === "Success") {
-          wx.showToast({
-            title: '身份验证成功',
-            icon: 'success'
-          })
-          db.add({
-            data: {
-              college: "未设置",
-              defaultCampus: "未设置",
-              email: "未设置",
-              phoneNumber: "未设置",
-              receiveCount: 0,
-              receiveScore: 0,
-              sendCount: 0,
-              sendScore: 0,
-              studentID: this.data.userid,
-              studentName: "请输入一个名字",
-              userIcon: "0",
-              sendCountUnreviewed: 0,
-              receiveCountUnreviewed: 0
-            }
-          })
-          wx.navigateBack({
-            delta: 1,
-          })
-          wx.redirectTo({
-            url: '../userInfo/userInfo',
+            db.where({
+              _id:this.data.userid
+            }).get()
+            .then(res=>{
+              
+              if(res.data.length != 0){
+                Toast.clear()
+                Toast.success("认证成功")
+                db.add({
+                  data: {
+                    college: "未设置",
+                    defaultCampus: "未设置",
+                    email: "未设置",
+                    phoneNumber: "未设置",
+                    receiveCount: 0,
+                    receiveScore: 0,
+                    sendCount: 0,
+                    sendScore: 0,
+                    studentID: this.data.userid,
+                    studentName: "请输入一个名字",
+                    userIcon: "0",
+                    sendCountUnreviewed: 0,
+                    receiveCountUnreviewed: 0
+                  }
+                })
+                wx.navigateBack({
+                  delta: 1,
+                })
+                wx.redirectTo({
+                  url: '../userInfo/userInfo',
+                })
+              }
+              else{
+                Toast.clear()
+                Toast.fail("该学号已经注册，请联系客服进行处理！(点击认证界面下面的@Nker Helper)")
+              }
+            })
+          .catch(err => {
+            console.log(err)
           })
         } else {
-          wx.showToast({
-            title: '账号或密码错误',
-            icon: 'fail'
-          })
+          Toast.clear()
+          Toast.fail("账号或者密码错误")
         }
 
       },

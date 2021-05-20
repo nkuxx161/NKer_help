@@ -52,6 +52,7 @@ input {
   font-weight: 600;
 }
 .font-2{
+  font-size:35rpx;
   color: rgb(206, 206, 206);
 }
 .bottom {

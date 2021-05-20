@@ -28,4 +28,5 @@
   <button class="logIn" bindtap="submit">登陆</button>
 </view>
 
-<view class="bottom"><text class="font-2">@Nker helper</text></view>
+<view class="bottom"><button open-type="contact" ><text class="font-2" >@Nker helper</text></button></view>
+<van-toast id="van-toast"></van-toast>

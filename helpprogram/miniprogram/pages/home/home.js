@@ -183,6 +183,9 @@ Page({
             studentID: res.data[0].studentID
           })
         }).catch(err => {
+          wx.redirectTo({
+            url: '../userInfo/userInfo',
+          })
           console.log(err)
         })
         if(this.data.flags == 0) {
