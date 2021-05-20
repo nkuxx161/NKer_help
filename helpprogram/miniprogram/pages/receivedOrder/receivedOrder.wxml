@@ -13,12 +13,17 @@
       <view slot="footer" wx:if="{{item.status == 1}}">
         <van-button class="btn_cancel" type="danger" size="mini" catchtap="cancelOrder" data-id="{{item._id}}">取消订单
         </van-button>
-        <van-button type="primary" size="mini" catchtap="submitComplete" data-id="{{item._id}}">确认提交</van-button>
+        <van-button type="primary" size="mini" catchtap="submitComplete" data-id="{{item._id}}"
+          data-sendstudentid="{{item.sendStudentID}}" data-receivestudentid="{{item.receiveStudentID}}"
+          data-sendstudentopenid="{{item._openid}}" data-title="{{item.title}}" data-goodsplace="{{item.goodsPlace}}"
+          data-dealplace="{{item.dealPlace}}">
+          确认提交
+        </van-button>
       </view>
       <view slot="footer" wx:if="{{item.status == 3}}">
         <van-button type="primary" size="mini" catchtap="submitReview" data-id='{{item._id}}'
           data-title="{{item.title}}" data-studentID="{{item.receiveStudentID}}"
-          wx:if="{{item.isRtoSReviewed == false}}">评价</van-button>
+          data-oppositeStudentID="{{item.sendStudentID}}" wx:if="{{item.isRtoSReviewed == false}}">评价</van-button>
         <text wx:if="{{item.isRtoSReviewed}}">已评价</text>
       </view>
       <!-- 待处理的订单 -->

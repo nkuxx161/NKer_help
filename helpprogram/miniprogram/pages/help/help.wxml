@@ -16,11 +16,11 @@
   <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (3).png" title="怎么样提高自己的星级与查看别人的星级" name="4" >
     无论是接单与发单，系统都会记录，星级体现的不仅仅是接单的量更是完成的质量，可以去往他的主页得到他的信息
   </van-collapse-item>
-  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (4).png" title="暂定" name="5" >
-    czy
+  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (4).png" title="更改头像后没有反应" name="5" >
+    头像的更改需要后台服务器的反应时间，如果提示修改成功请耐心等待，不要重复更改
   </van-collapse-item>
-  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (5).png" title="暂定" name="6" >
-    czy
+  <van-collapse-item icon="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/number (5).png" title="未完待续..." name="6" >
+  您的支持，就是对我们最大的鼓励
   </van-collapse-item>
 </van-collapse>
 <view style="height:120rpx"></view>

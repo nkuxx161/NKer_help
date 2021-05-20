@@ -119,7 +119,9 @@ Page({
               sendScore: 0,
               studentID: this.data.userid,
               studentName: "请输入一个名字",
-              userIcon: "0"
+              userIcon: "0",
+              sendCountUnreviewed: 0,
+              receiveCountUnreviewed: 0
             }
           })
           wx.navigateBack({

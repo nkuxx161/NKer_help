@@ -201,7 +201,7 @@ Page({
 
   //取消订单
   cancelOrder(event) {
-    //待实现
+    //已实现
     Dialog.confirm({
         title: '确认取消订单吗？',
         message: '取消后将不再接受他人的接单',
@@ -251,23 +251,11 @@ Page({
     console.log('取消订单')
   },
 
+  //同意取消订单并且发送同意取消的推送
   agreeCancel(event) {
     console.log(event)
     let id = event.currentTarget.dataset.id
     console.log(id)
-<<<<<<< Updated upstream
-    wx.cloud.callFunction({
-        name: 'updateOrderStatus',
-        data: {
-          id: id,
-          status: 2
-        }
-      })
-      .then(res => {
-        Toast({
-          type: 'success',
-          message: '已取消订单',
-=======
     Dialog.confirm({
       title: '完成接单',
       message: '确认同意取消此订单吗',
@@ -314,18 +302,47 @@ Page({
             cancelFlag: true
           })
           this.getList()
->>>>>>> Stashed changes
         })
-        this.setData({
-          currentOrderList: [],
-          pendingOrderList: [],
-          cancelFlag: true
+        .then(res => {
+          //根据接单人学号找到其对应的openid号
+          wx.cloud.database().collection('userInfo').where({
+              studentID: event.currentTarget.dataset.receivestudentid
+            }).get()
+            .then(res => {
+              let openid = res.data[0]._openid
+              //发送推送
+              wx.cloud.callFunction({
+                name: 'pushAgreeCancelMsg',
+                data: {
+                  openId: openid,
+                  url: '/pages/receivedOrder/receivedOrder',
+                  orderId: event.currentTarget.dataset.id,
+                  description: event.currentTarget.dataset.description,
+                  title: event.currentTarget.dataset.title,
+                }
+              }).then(res => {
+                console.log('同意取消订单消息推送成功', res)
+              }).catch(err => {
+                console.log('同意取消订单消息推送失败', err)
+              })
+            }).catch(err => {
+              console.log('根据学号查询openid失败', err)
+            })
+
+          //同意取消后重新获得待处理的订单列表
+          this.setData({
+            currentOrderList: [],
+            pendingOrderList: [],
+            cancelFlag: true
+          })
+          this.getList()
         })
-        this.getList()
-      })
-      .catch(err => {
-        console.log("发单人取消订单失败", err)
-      })
+        .catch(err => {
+          console.log("发单人取消订单失败", err)
+        })
+    }).catch(() => {
+      console.log('发单人取消同意')
+    })
   },
 
   onClose() {
@@ -336,13 +353,6 @@ Page({
 
   //提交订单 
   submitComplete(e) {
-<<<<<<< Updated upstream
-    //更改状态
-    db.doc(e.currentTarget.dataset.id).update({
-        data: {
-          status: 3
-        }
-=======
     console.log(e) //打印提交订单的数据
     Dialog.confirm({
       title: '完成接单',
@@ -409,7 +419,6 @@ Page({
   updateCountUnreviewed(studentID, type) {
     wx.cloud.database().collection('userInfo').where({
         studentID: studentID
->>>>>>> Stashed changes
       })
       .then(res => {
         console.log(res)
@@ -417,29 +426,115 @@ Page({
           doingOrderList: [],
           flag: true
         })
-        this.setData({
-          currentOrderList: this.data.doingOrderList
+        .then(res => {
+          //根据接单人学号获取接单人的openid
+          wx.cloud.database().collection('userInfo').where({
+            studentID: e.currentTarget.dataset.receivestudentid
+          }).get().then(res => {
+            let receivestudentopenid = res.data[0]._openid
+            //向接单人推送订单完成的消息
+            wx.cloud.callFunction({
+              name: 'pushSubmitMessage',
+              data: {
+                url: '/pages/receivedOrder/receivedOrder',
+                openId: receivestudentopenid,
+                orderId: e.currentTarget.dataset.id,
+                title: e.currentTarget.dataset.title,
+                goodsPlace: e.currentTarget.dataset.goodsplace,
+                dealPlace: e.currentTarget.dataset.dealplace
+              }
+            }).then(res => {
+              console.log('接单人完成订单消息推送成功', res)
+            }).catch(err => {
+              console.log('接单人完成订单消息推送失败', err)
+            })
+          }).catch(err => {
+            console.log('根据学号获取接单人openid失败', err)
+          })
+
+          //更改状态后从新请求数据
+          console.log(res)
+          this.setData({
+            doingOrderList: [],
+            flag: true
+          })
+          this.setData({
+            currentOrderList: this.data.doingOrderList
+          })
+          this.getList()
+          //更改已完成但未评价的订单数
+          this.updateCountUnreviewed(e.currentTarget.dataset.receivestudentid, 'receiver')
+          this.updateCountUnreviewed(e.currentTarget.dataset.sendstudentid, 'sender')
         })
-        this.getList()
+        .catch(err => {
+          console.log(err)
+        })
+    }).catch(() => {
+      console.log('取消提交订单')
+    })
+
+  },
+
+  //根据学号获取userId（唯一）,再更新完成但未评价的订单数
+  updateCountUnreviewed(studentID, type) {
+    wx.cloud.database().collection('userInfo').where({
+        studentID: studentID
+      })
+      .get()
+      .then(res => {
+        // console.log('用户信息', res)
+        if (type == 'sender') {
+          let sendUserId = res.data[0]._id
+          let sendCountUnreviewed = res.data[0].sendCountUnreviewed
+          wx.cloud.callFunction({
+            name: 'updateCountUnreviewed',
+            data: {
+              type: 'sender',
+              userId: sendUserId,
+              sendCountUnreviewed: sendCountUnreviewed + 1
+            }
+          }).then(res => {
+            console.log('更新发单人完成单未评价的订单数成功', res)
+          }).catch(err => {
+            console.log('更新发单人完成单未评价的订单数失败', err)
+          })
+        } else if (type == 'receiver') {
+          let receiveUserId = res.data[0]._id
+          let receiveCountUnreviewed = res.data[0].receiveCountUnreviewed
+          wx.cloud.callFunction({
+            name: 'updateCountUnreviewed',
+            data: {
+              type: 'receiver',
+              userId: receiveUserId,
+              receiveCountUnreviewed: receiveCountUnreviewed + 1
+            }
+          }).then(res => {
+            console.log('更新接单人完成单未评价的订单数成功', res)
+          }).catch(err => {
+            console.log('更新接单人完成单未评价的订单数失败', err)
+          })
+        } else {
+          console.log('提交完成时传入的type参数有误')
+        }
       })
       .catch(err => {
-        console.log(err)
+        console.log('查询用户信息失败', err)
       })
   },
 
   //评价订单
   submitReview(options) {
-    //待实现
+    //已实现
     console.log('评价订单')
     wx.navigateTo({
-      url: '../userreview/userreview?id=' + options.currentTarget.dataset.id + '&studentID=' + options.currentTarget.dataset.studentid + '&type=StoR' 
-          + '&title=' + options.currentTarget.dataset.title,
+      url: '../userreview/userreview?id=' + options.currentTarget.dataset.id + '&studentID=' + options.currentTarget.dataset.studentid + '&type=StoR' +
+        '&title=' + options.currentTarget.dataset.title + '&oppositeStudentID=' + options.currentTarget.dataset.oppositestudentid,
     })
   },
 
-  createAgain(options){
+  createAgain(options) {
     wx.redirectTo({
-      url: '../createOrder/createOrder?order='+JSON.stringify(options.currentTarget.dataset.order),
+      url: '../createOrder/createOrder?order=' + JSON.stringify(options.currentTarget.dataset.order),
     })
     console.log(options.currentTarget.dataset.order)
   },
@@ -510,14 +605,11 @@ Page({
     switch (this.data.active) {
       case 'home': {
         wx.redirectTo({
-          url: '../home/home?active='+'home',
+          url: '../home/home?active=' + 'home',
         })
         break
       }
       case 'myOrder': {
-        wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder?active='+'myOrder',
-        })
         break
       }
       case 'createOrder': {
@@ -528,13 +620,13 @@ Page({
       }
       case 'receiveOrder': {
         wx.redirectTo({
-          url: '../receivedOrder/receivedOrder?active='+'receiveOrder',
+          url: '../receivedOrder/receivedOrder?active=' + 'receiveOrder',
         })
         break
       }
       case 'userInfo': {
         wx.redirectTo({
-          url: '../userInfo/userInfo?active='+'userInfo',
+          url: '../userInfo/userInfo?active=' + 'userInfo',
         })
         break
       }

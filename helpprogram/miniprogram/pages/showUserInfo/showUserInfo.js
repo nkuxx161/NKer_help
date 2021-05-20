@@ -45,13 +45,27 @@ Page({
       this.setData({
         user: res.data[0]
       })
+      if(this.data.user.receiveCount == 0){
+        this.setData({
+          rRate: 0
+        })
+      } else {
+        this.setData({
+          rRate: (this.data.user.receiveScore/this.data.user.receiveCount)
+        })
+      }
+      if(this.data.user.sendCount == 0){
+        this.setData({
+          sRate: 0
+        })
+      } else {
+        this.setData({
+          sRate: (this.data.user.sendScore/this.data.user.sendCount)
+        })
+      }
     })
     .catch(err => {
       console.log(err)
-    })
-    this.setData({
-      rRate: (this.data.user.receiveScore/this.data.user.receiveCount),
-      sRate: (this.data.user.sendScore/this.data.user.sendCount)
     })
   },
 

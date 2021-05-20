@@ -217,11 +217,11 @@ Page({
           orderId: this.data.orderId,
           reason: this.data.cancelReason,
           type: this.data.goodsType
-        }.then(res => {
-          console.log('推送取消消息成功', res)
-        }).catch(err => {
-          console.log('推送取消消息失败', err)
-        })
+        }
+      }).then(res => {
+        console.log('推送取消消息成功', res)
+      }).catch(err => {
+        console.log('推送取消消息失败', err)
       })
     }
   },

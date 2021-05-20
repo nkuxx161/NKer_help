@@ -13,27 +13,23 @@
 </van-row>
 </view> 
 <view  wx:if="{{flag=='No'}}" class="a3">
-  <view> 
-    <view class="a2"><van-image round width="250rpx" height="250rpx" src="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/WX.png" /></view>
-  </view>
-    <view wx:if="{{flag=='No'}}" class="a4"><text class="font-1" space="emsp"> Nker Helper</text></view>
-
+    <view class="a2"><van-image round width="250rpx" height="250rpx" src="cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/WX.png" style="margin-top:10rpx"/></view>
+    <view class="a4"><text class="font-1" space="emsp">Nker Helper</text></view>
 </view>
 
-<view class="body">
+<button wx:if="{{flag=='No'}}" block bindtap="goNk" class="button2">身份认证</button>
 <button wx:if="{{ifLogin=='No'}}" class='bottom' type='primary' bindtap="getUserProfile">
   授权登录
  </button>
-<button wx:if="{{flag=='No'}}" block bindtap="goNk" class="button2">身份认证</button>
-<button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToDetail" class="button1">个人资料</button>
-<button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToAddress" class="button1">地址管理</button>
-<button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToHelp" class="button1">帮助与反馈</button>
-<button wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" block bindtap="goToAboutUs" class="button1">关于我们</button>
+<view wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}" class="body">
+<button  block bindtap="goToDetail" class="button1">个人资料</button>
+<button  block bindtap="goToAddress" class="button1">地址管理</button>
+<button  block bindtap="goToHelp" class="button1">帮助与反馈</button>
+<button  block bindtap="goToAboutUs" class="button1">关于我们</button>
 </view>
-<van-button wx:if="{{ifLogin=='Yes'}}" type="warning"class="quit" block bindtap="showDialog2">退出登录</van-button>
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />
-<van-tabbar active="{{ active }}" bind:change="changeBar" placeholder active-color="pink">
+<van-tabbar  wx:if="{{(ifLogin=='Yes')&&(flag=='Yes')}}"   active="{{ active }}" bind:change="changeBar" placeholder active-color="pink">
   <van-tabbar-item name="home" icon="home-o">主页</van-tabbar-item>
   <van-tabbar-item name="myOrder" icon="balance-list-o">我的订单</van-tabbar-item>
   <van-tabbar-item name="createOrder"><van-icon name="add" size="65rpx" color="pink"/></van-tabbar-item>
