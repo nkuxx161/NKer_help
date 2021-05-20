@@ -578,7 +578,45 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    switch (this.data.status) {
+      case 0: {
+        this.setData({
+          waitOrderList: []
+        })
+        break;
+      }
+      case 1: {
+        this.setData({
+          doingOrderList: []
+        })
+        break;
+      }
+      case 2: {
+        this.setData({
+          cancelledOrderList: []
+        })
+        break;
+      }
+      case 3: {
+        this.setData({
+          completedOrderList: []
+        })
+        break;
+      }
+      case 4: {
+        this.setData({
+          pendingOrderList: []
+        })
+        break;
+      }
+    }
+    this.setData({
+      currentOrderList: [],
+    })
+    this.getList()
+    wx.stopPullDownRefresh({
+      success: (res) => {},
+    })
   },
 
   /**
