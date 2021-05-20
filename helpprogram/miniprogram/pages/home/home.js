@@ -297,7 +297,21 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    switch (this.data.status) {
+      case 0: {
+        this.setData({
+          waitOrderList: []
+        })
+        break;
+      }
+    }
+    this.setData({
+      currentOrderList: [],
+    })
+    this.getList()
+    wx.stopPullDownRefresh({
+      success: (res) => {},
+    })
   },
 
   /**
