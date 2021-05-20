@@ -142,7 +142,7 @@ Page({
     db.where({
         status: this.data.status,
         receiveStudentID: this.data.receiveStudentID
-      }).skip(this.data.currentOrderList.length).limit(20).get()
+      }).orderBy('updateTime', 'desc').skip(this.data.currentOrderList.length).limit(20).get()
       .then(res => {
         if (res.data.length == 0) {
           wx.showToast({
@@ -262,7 +262,8 @@ Page({
             name: 'updateOrderStatus',
             data: {
               id: id,
-              status: 3
+              status: 3,
+              updateTime: new Date().getTime()
             }
           })
           .then(res => {
@@ -385,7 +386,8 @@ Page({
             name: 'updateOrderStatus',
             data: {
               id: orderId,
-              status: 2
+              status: 2,
+              updateTime: new Date().getTime()
             }
           })
           .then(res => {

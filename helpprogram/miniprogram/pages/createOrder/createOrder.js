@@ -40,6 +40,7 @@ Page({
     // 手动设置的maxDate
     maxDate: new Date(2025, 10, 1).getTime(),
     currentDate: new Date().getTime(),
+    updateTime: 0,
 
     showTitle: false,
     showDate: false,
@@ -335,6 +336,7 @@ Page({
             dealPlace: this.data.dealPlace,
             type: this.data.type,
             date: this.data.date,
+            updateTime: new Date().getTime(),
             contact: this.data.contact,
             status: 0,
             reward: this.data.reward,
@@ -381,6 +383,7 @@ Page({
                 dealPlace: this.data.dealPlace,
                 type: this.data.type,
                 date: this.data.date,
+                updateTime: new Date().getTime(),
                 contact: this.data.contact,
                 status: 0,
                 reward: this.data.reward,

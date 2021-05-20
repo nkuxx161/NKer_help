@@ -27,7 +27,7 @@ Page({
     db.where({
         status: this.data.status,
         _openid: this.data.openid
-      }).skip(this.data.currentOrderList.length).get()
+      }).orderBy('updateTime','desc').skip(this.data.currentOrderList.length).get()
       .then(res => {
         if (res.data.length == 0) {
           wx.showToast({
@@ -83,7 +83,7 @@ Page({
           status: 4,
           _openid: this.data.openid,
           // cancelPerson: 2
-        }).skip(this.data.currentOrderList.length).get()
+        }).orderBy('updateTime','desc').skip(this.data.currentOrderList.length).get()
         .then(res => {
           if (res.data.length == 0) {
             wx.showToast({
@@ -215,7 +215,8 @@ Page({
               data: {
                 id: id,
                 status: 2,
-                cancelPerson: 'sender'
+                cancelPerson: 'sender',
+                updateTime: new Date().getTime()
               }
             })
             .then(res => {
@@ -264,7 +265,8 @@ Page({
           name: 'updateOrderStatus',
           data: {
             id: id,
-            status: 2
+            status: 2,
+            updateTime: new Date().getTime()
           }
         })
         .then(res => {
@@ -326,7 +328,8 @@ Page({
       //更改状态
       db.doc(e.currentTarget.dataset.id).update({
           data: {
-            status: 3
+            status: 3,
+            updateTime: new Date().getTime()
           }
         })
         .then(res => {

@@ -11,6 +11,7 @@ exports.main = async (event, context) => {
       data: {
         status: event.status,
         receiveStudentID: event.studentID,
+        updateTime: event.updateTime
       }
     })
 }

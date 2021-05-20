@@ -12,7 +12,8 @@ exports.main = async (event, context) => {
     .update({
       data: {
         status: event.status,
-        cancelPerson: event.cancelPerson
+        cancelPerson: event.cancelPerson,
+        updateTime: event.updateTime
       }
     })
 }
