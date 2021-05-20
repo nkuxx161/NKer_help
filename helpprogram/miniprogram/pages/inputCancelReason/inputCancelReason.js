@@ -55,7 +55,8 @@ Page({
           data: {
             id: this.data.orderId,
             status: 4,
-            cancelPerson: 'sender'
+            cancelPerson: 'sender',
+            updateTime: new Date().getTime()
           }
         })
         .then(res => {
@@ -90,7 +91,8 @@ Page({
           data: {
             id: this.data.orderId,
             status: 4,
-            cancelPerson: 'receiver'
+            cancelPerson: 'receiver',
+            updateTime: new Date().getTime()
           }
         })
         .then(res => {

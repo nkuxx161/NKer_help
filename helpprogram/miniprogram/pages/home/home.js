@@ -109,7 +109,8 @@ Page({
         data:{
           id: id,
           status: 1,
-          studentID: this.data.studentID
+          studentID: this.data.studentID,
+          updateTime: new Date().getTime()
         }
       })
       .then(res => {
@@ -206,7 +207,7 @@ Page({
       {
         _openid: _.neq(this.data.openid)
       }
-    ])).skip(this.data.waitOrderList.length).limit(20).get()
+    ])).orderBy('updateTime','desc').skip(this.data.waitOrderList.length).limit(20).get()
     .then(res => {
       if (res.data.length == 0 && this.data.flag != 0) {
         wx.showToast({

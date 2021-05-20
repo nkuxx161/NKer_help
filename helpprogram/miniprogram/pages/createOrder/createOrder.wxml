@@ -105,7 +105,7 @@
   </view>
   <van-dropdown-menu>
     <van-dropdown-item title="起始校区" value="{{ 0 }}" options="{{ allCampus }}" bind:change="changeStart" />
-    <van-dropdown-item title="起始校区" value="{{ 0 }}" options="{{ allCampus }}" bind:change="changeEnd" />
+    <van-dropdown-item title="目的校区" value="{{ 0 }}" options="{{ allCampus }}" bind:change="changeEnd" />
   </van-dropdown-menu>
 </van-popup>
 

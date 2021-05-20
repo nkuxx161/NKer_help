@@ -27,7 +27,7 @@ Page({
     db.where({
         status: this.data.status,
         _openid: this.data.openid
-      }).skip(this.data.currentOrderList.length).get()
+      }).orderBy('updateTime', 'desc').skip(this.data.currentOrderList.length).get()
       .then(res => {
         if (res.data.length == 0) {
           wx.showToast({
@@ -83,7 +83,7 @@ Page({
           status: 4,
           _openid: this.data.openid,
           // cancelPerson: 2
-        }).skip(this.data.currentOrderList.length).get()
+        }).orderBy('updateTime', 'desc').skip(this.data.currentOrderList.length).get()
         .then(res => {
           if (res.data.length == 0) {
             wx.showToast({
@@ -215,7 +215,8 @@ Page({
               data: {
                 id: id,
                 status: 2,
-                cancelPerson: 'sender'
+                cancelPerson: 'sender',
+                updateTime: new Date().getTime()
               }
             })
             .then(res => {
@@ -264,8 +265,43 @@ Page({
           name: 'updateOrderStatus',
           data: {
             id: id,
-            status: 2
+            status: 2,
+            updateTime: new Date().getTime()
           }
+        })
+        .then(res => {
+          //根据接单人学号找到其对应的openid号
+          wx.cloud.database().collection('userInfo').where({
+              studentID: event.currentTarget.dataset.receivestudentid
+            }).get()
+            .then(res => {
+              let openid = res.data[0]._openid
+              //发送推送
+              wx.cloud.callFunction({
+                name: 'pushAgreeCancelMsg',
+                data: {
+                  openId: openid,
+                  url: '/pages/receivedOrder/receivedOrder',
+                  orderId: event.currentTarget.dataset.id,
+                  description: event.currentTarget.dataset.description,
+                  title: event.currentTarget.dataset.title,
+                }
+              }).then(res => {
+                console.log('同意取消订单消息推送成功', res)
+              }).catch(err => {
+                console.log('同意取消订单消息推送失败', err)
+              })
+            }).catch(err => {
+              console.log('根据学号查询openid失败', err)
+            })
+
+          //同意取消后重新获得待处理的订单列表
+          this.setData({
+            currentOrderList: [],
+            pendingOrderList: [],
+            cancelFlag: true
+          })
+          this.getList()
         })
         .then(res => {
           //根据接单人学号找到其对应的openid号
@@ -326,8 +362,69 @@ Page({
       //更改状态
       db.doc(e.currentTarget.dataset.id).update({
           data: {
-            status: 3
+            status: 3,
+            updateTime: new Date().getTime()
           }
+        })
+        .then(res => {
+          //根据接单人学号获取接单人的openid
+          wx.cloud.database().collection('userInfo').where({
+            studentID: e.currentTarget.dataset.receivestudentid
+          }).get().then(res => {
+            let receivestudentopenid = res.data[0]._openid
+            //向接单人推送订单完成的消息
+            wx.cloud.callFunction({
+              name: 'pushSubmitMessage',
+              data: {
+                url: '/pages/receivedOrder/receivedOrder',
+                openId: receivestudentopenid,
+                orderId: e.currentTarget.dataset.id,
+                title: e.currentTarget.dataset.title,
+                goodsPlace: e.currentTarget.dataset.goodsplace,
+                dealPlace: e.currentTarget.dataset.dealplace
+              }
+            }).then(res => {
+              console.log('接单人完成订单消息推送成功', res)
+            }).catch(err => {
+              console.log('接单人完成订单消息推送失败', err)
+            })
+          }).catch(err => {
+            console.log('根据学号获取接单人openid失败', err)
+          })
+
+          //更改状态后从新请求数据
+          console.log(res)
+          this.setData({
+            doingOrderList: [],
+            flag: true
+          })
+          this.setData({
+            currentOrderList: this.data.doingOrderList
+          })
+          this.getList()
+          //更改已完成但未评价的订单数
+          this.updateCountUnreviewed(e.currentTarget.dataset.receivestudentid, 'receiver')
+          this.updateCountUnreviewed(e.currentTarget.dataset.sendstudentid, 'sender')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }).catch(() => {
+      console.log('取消提交订单')
+    })
+
+  },
+
+  //根据学号获取userId（唯一）,再更新完成但未评价的订单数
+  updateCountUnreviewed(studentID, type) {
+    wx.cloud.database().collection('userInfo').where({
+        studentID: studentID
+      })
+      .then(res => {
+        console.log(res)
+        this.setData({
+          doingOrderList: [],
+          flag: true
         })
         .then(res => {
           //根据接单人学号获取接单人的openid
