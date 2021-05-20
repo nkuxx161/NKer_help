@@ -201,6 +201,7 @@ Page({
               RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
               RtoSScore: this.data.score,
               RtoSWord: this.data.word,
+              sendStudentID: this.data.oppositeStudentID
             }
           }).then(res => {
             wx.cloud.callFunction({
@@ -249,6 +250,7 @@ Page({
                   RtoSImage: this.data.image,
                   RtoSScore: this.data.score,
                   RtoSWord: this.data.word,
+                  sendStudentID: this.data.oppositeStudentID
                 }
               })
               .then(res => {
@@ -305,6 +307,7 @@ Page({
               StoRScore: this.data.score,
               StoRImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
               StoRWord: this.data.word,
+              receiveStudentID: this.data.oppositeStudentID
             }
           })
           .then(res => {
@@ -353,6 +356,7 @@ Page({
                   StoRScore: this.data.score,
                   StoRImage: this.data.image,
                   StoRWord: this.data.word,
+                  receiveStudentID: this.data.oppositeStudentID
                 }
               })
               .then(res => {
