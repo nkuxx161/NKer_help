@@ -283,9 +283,7 @@ Page({
         break
       }
       case 'userInfo': {
-        wx.redirectTo({
-          url: '../userInfo/userInfo?active='+'userInfo',
-        })
+        
         break
       }
     }

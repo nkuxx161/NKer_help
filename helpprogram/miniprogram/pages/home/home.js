@@ -319,9 +319,6 @@ Page({
     });
     switch (this.data.active) {
       case 'home': {
-        wx.redirectTo({
-          url: '../home/home?active='+'home',
-        })
         break
       }
       case 'myOrder': {

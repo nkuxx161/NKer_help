@@ -513,9 +513,6 @@ Page({
         break
       }
       case 'myOrder': {
-        wx.redirectTo({
-          url: '../showCompletedOrder/showCompletedOrder?active=' + 'myOrder',
-        })
         break
       }
       case 'createOrder': {

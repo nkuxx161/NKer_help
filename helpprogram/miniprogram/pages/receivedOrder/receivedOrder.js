@@ -451,9 +451,6 @@ Page({
         break
       }
       case 'receiveOrder': {
-        wx.redirectTo({
-          url: '../receivedOrder/receivedOrder?active=' + 'receiveOrder',
-        })
         break
       }
       case 'userInfo': {
