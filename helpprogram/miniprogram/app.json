@@ -2,6 +2,8 @@
   "pages": [
     
     "pages/home/home",
+    "pages/showRtoS/showRtoS",
+    "pages/showStoR/showStoR",
     "pages/detailInfo/detailInfo",
     "pages/userInfo/userInfo",
     "pages/nk/nk",
@@ -16,8 +18,6 @@
     "pages/aboutUs/aboutUs",
     "pages/changeName/changeName",
     "pages/showUserInfo/showUserInfo",
-    "pages/showStoR/showStoR",
-    "pages/showRtoS/showRtoS",
     "pages/address/address",
     "pages/addAddress/addAddress",
     "pages/chooseAddress/chooseAddress"

@@ -10,14 +10,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userID: '',
+    studentID: '',
     flag: 0,
     showList: []
   },
 
   getList(){
     RSdb.where({
-      _openid: this.data.userID
+      sendStudentID: this.data.studentID
     }).skip(this.data.showList.length).limit(20).get()
     .then(res => {
       if(res.data.length == 0 && this.data.flag == 0){
@@ -44,7 +44,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      userID: options.userID,
+      studentID: options.studentID,
       flag: 0,
       showList: []
     })

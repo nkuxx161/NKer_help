@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    studentID:'',
     img: '',
     userID: '',
     user: [],
@@ -18,13 +19,13 @@ Page({
 
   onClickSend(e) {
     wx.navigateTo({
-      url: '../showRtoS/showRtoS?userID=' + this.data.userID,
+      url: '../showRtoS/showRtoS?studentID=' + this.data.studentID,
     })
   },
 
   onClickReceive(e) {
     wx.navigateTo({
-      url: '../showStoR/showStoR?userID=' + this.data.userID,
+      url: '../showStoR/showStoR?studentID=' + this.data.studentID,
     })
   },
 
@@ -63,6 +64,9 @@ Page({
           sRate: (this.data.user.sendScore/this.data.user.sendCount)
         })
       }
+      this.setData({
+        studentID: this.data.user.studentID
+      })
     })
     .catch(err => {
       console.log(err)
