@@ -17,6 +17,7 @@ Page({
     word: '',
     image: '',
     goods: '',
+    userImage: '',
     fileList: []
   },
 
@@ -32,7 +33,7 @@ Page({
       title: options.title,
       oppositeStudentID: options.oppositeStudentID
     })
-    //下面这个函数好像没有用
+    //获取评价商品的信息用于卡片展示
     wx.cloud.database().collection('orderInfo').doc(this.data.orderId)
       .get()
       .then(res => {
@@ -44,6 +45,8 @@ Page({
       .catch(err => {
         console.log('返回评价的商品信息失败', err)
       })
+    //调用函数获取评价人的头像
+    this.getUserIcon()
   },
 
   /**
@@ -95,6 +98,24 @@ Page({
 
   },
 
+  //获取评价人的头像
+  getUserIcon() {
+    wx.cloud.database().collection('userInfo').where({
+        studentID: this.data.studentID
+      }).get()
+      .then(res => {
+        if (res.data[0].userIcon == '1')
+          this.setData({
+            userImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/' + res.data[0]._openid + '.jpg'
+          })
+        else {
+          this.setData({
+            userImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
+          })
+        }
+      })
+  },
+
   //跳转到订单详情页
   showDetail(id) {
     wx.redirectTo({
@@ -108,6 +129,7 @@ Page({
       score: event.detail
     })
     // console.log('更改后的得分', this.data.score)
+    // console.log('评价人icon', this.data.userImage)
   },
 
   //选择图片的回调函数
@@ -201,7 +223,8 @@ Page({
               RtoSImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
               RtoSScore: this.data.score,
               RtoSWord: this.data.word,
-              sendStudentID: this.data.oppositeStudentID
+              sendStudentID: this.data.oppositeStudentID,
+              icon: this.data.userImage,
             }
           }).then(res => {
             wx.cloud.callFunction({
@@ -250,7 +273,8 @@ Page({
                   RtoSImage: this.data.image,
                   RtoSScore: this.data.score,
                   RtoSWord: this.data.word,
-                  sendStudentID: this.data.oppositeStudentID
+                  sendStudentID: this.data.oppositeStudentID,
+                  icon: this.data.userImage
                 }
               })
               .then(res => {
@@ -302,12 +326,14 @@ Page({
       if (this.data.fileList.length === 0) { //当不上传图片时
         wx.cloud.database().collection('StoRReview').add({
             data: {
+              title: this.data.title,
               sendStudentID: this.data.studentID,
               orderId: this.data.orderId,
               StoRScore: this.data.score,
               StoRImage: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultGoods.png',
               StoRWord: this.data.word,
-              receiveStudentID: this.data.oppositeStudentID
+              receiveStudentID: this.data.oppositeStudentID,
+              icon: this.data.userImage
             }
           })
           .then(res => {
@@ -351,12 +377,14 @@ Page({
             // console.log(this.data)
             wx.cloud.database().collection('StoRReview').add({
                 data: {
+                  title: this.data.title,
                   sendStudentID: this.data.studentID,
                   orderId: this.data.orderId,
                   StoRScore: this.data.score,
                   StoRImage: this.data.image,
                   StoRWord: this.data.word,
-                  receiveStudentID: this.data.oppositeStudentID
+                  receiveStudentID: this.data.oppositeStudentID,
+                  icon: this.data.userImage
                 }
               })
               .then(res => {
