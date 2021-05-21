@@ -2,10 +2,10 @@
 <view wx:key="index" wx:for="{{ showList }}">
   <view id="card2">
     <view id="tou">
-      <image id="uimage" alt="无" src="{{item.RtoSImage}}" />
+      <image id="uimage" alt="无" src="{{item.icon}}" data-id="{{item.receiveStudentID}}" bindtap="onClick"/>
     </view>
     <view id="remark">
-      <text>订单标题</text>
+      <text>{{item.title}}</text>
       <view>
         <van-rate wx:if="{{item.RtoSScore>=4}}" allow-half value="{{item.RtoSScore}}" color="red" void-icon="fire-o" size="15px" icon="fire" readonly/>
         <van-rate wx:elif="{{item.RtoSScore>2}}" allow-half size="15px" value="{{item.RtoSScore}}" color="pink"
