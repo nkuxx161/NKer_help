@@ -139,17 +139,14 @@ Page({
       name: 'getOpenID',
     })
     .then(res => {
-      // console.log(res.result.event.userInfo.openId)
       this.setData({
         openid: res.result.event.userInfo.openId
       })
-      console.log(this.data.openid)
       // 获取用户学号
       userdb.where({
           '_openid': this.data.openid
         }).get()
         .then(res => {
-          console.log(res.data[0].studentID)
           this.setData({
             studentID: res.data[0].studentID
           })
@@ -169,7 +166,6 @@ Page({
   },
 
   getList() {
-    console.log(this.data.openid)
     db.where(_.and([
       {
         status: 0

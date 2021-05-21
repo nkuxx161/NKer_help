@@ -15,6 +15,7 @@ Page({
     user: [],
     rRate: '',
     sRate: '',
+    flag: true,
   },
 
   onClickSend(e) {
@@ -37,7 +38,11 @@ Page({
       userID: options.userID,
       img: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png',
     })
-    console.log(this.data.userID)
+    if(options.pageflag){
+      this.setData({
+        flag: false
+      })
+    }
 
     userdb.where({
       _openid: this.data.userID

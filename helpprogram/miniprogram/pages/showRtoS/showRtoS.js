@@ -3,6 +3,7 @@ import Dialog from '@vant/weapp/dialog/dialog'
 import Toast from '@vant/weapp/toast/toast'
 const DB = wx.cloud.database()
 const RSdb = DB.collection('RtoSReview')
+const usdb = DB.collection('userInfo')
 const _ = wx.cloud.database().command
 Page({
 
@@ -12,7 +13,27 @@ Page({
   data: {
     studentID: '',
     flag: 0,
-    showList: []
+    showList: [],
+    userID: '',
+    openid: '',
+    pageflag: 1,
+  },
+
+  onClick(e){
+    this.setData({
+      userID: e.currentTarget.dataset.id
+    })
+    usdb.where({
+      studentID: this.data.userID
+    }).get()
+    .then(res => {
+      this.setData({
+        openid: res.data[0]._openid
+      })
+      wx.navigateTo({
+        url: '../showUserInfo/showUserInfo?userID=' + this.data.openid + '&pageflag=' + this.data.pageflag,
+      })
+    })
   },
 
   getList(){
