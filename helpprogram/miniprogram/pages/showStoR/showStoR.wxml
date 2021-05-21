@@ -1,8 +1,23 @@
 <!--miniprogram/pages/showStoR/showStoR.wxml-->
 <view wx:key="index" wx:for="{{ showList }}">
-  <van-panel title="{{item.title}}" desc="{{ item.StoRWord }}" status="评分：{{ item.StoRScore }}">
-    <view><van-image width="100" height="100" src="{{item.StoRImage}}" /></view>
-  </van-panel>
+  <view id="card2">
+    <view id="tou">
+      <image id="uimage" alt="无" src="{{item.StoRImage}}" />
+    </view>
+    <view id="remark">
+      <text>订单标题</text>
+      <view>
+        <van-rate wx:if="{{item.StoRScore>=4}}" allow-half value="{{item.StoRScore}}" color="red" void-icon="fire-o" size="15px" icon="fire" readonly/>
+        <van-rate wx:elif="{{item.StoRScore>2}}" allow-half size="15px" value="{{item.StoRScore}}" color="pink"
+        void-icon="like-o" icon="like" readonly/>
+        <van-rate wx:else allow-half value="{{item.StoRScore}}" size="15px" color="rgb(255, 204, 65)" readonly/>
+      </view>
+      <view id="main">
+        {{item.StoRWord }}
+      </view>
+      <image id="image" alt="无" src="{{item.StoRImage}}" />
+    </view>
+  </view>
   <van-divider />
 </view>
 <van-toast id="van-toast" />

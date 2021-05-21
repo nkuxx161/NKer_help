@@ -1,1 +1,38 @@
 /* miniprogram/pages/showRtoS/showRtoS.wxss */
+
+#card2{
+  border-radius: 10px;
+  border: 2px solid #ffffffc2;
+  margin-left: 2%;
+  margin-right: 2%;
+  display: flex;
+}
+#tou{
+  width: 17%;
+  display: flex;
+  justify-content: center;
+}
+#remark{
+  width: 83%;
+}
+
+#main{
+  font-size: medium;
+  color: #969799;
+  border-top: 1px solid #ebedf0;
+  word-break: break-all;
+}
+
+
+#uimage{
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+  margin-top: 7px;
+}
+
+#image{
+  border-radius: 10px;
+  height: 160px;
+  width: 160px;
+}

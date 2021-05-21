@@ -1,8 +1,23 @@
 <!--miniprogram/pages/showRtoS/showRtoS.wxml-->
 <view wx:key="index" wx:for="{{ showList }}">
-  <van-panel title="{{item.title}}" desc="{{ item.RtoSWord }}" status="评分：{{ item.RtoSScore }}">
-    <view><van-image width="100" height="100" src="{{item.RtoSImage}}" /></view>
-  </van-panel>
+  <view id="card2">
+    <view id="tou">
+      <image id="uimage" alt="无" src="{{item.RtoSImage}}" />
+    </view>
+    <view id="remark">
+      <text>订单标题</text>
+      <view>
+        <van-rate wx:if="{{item.RtoSScore>=4}}" allow-half value="{{item.RtoSScore}}" color="red" void-icon="fire-o" size="15px" icon="fire" readonly/>
+        <van-rate wx:elif="{{item.RtoSScore>2}}" allow-half size="15px" value="{{item.RtoSScore}}" color="pink"
+        void-icon="like-o" icon="like" readonly/>
+        <van-rate wx:else allow-half value="{{item.RtoSScore}}" size="15px" color="rgb(255, 204, 65)" readonly/>
+      </view>
+      <view id="main">
+        {{item.RtoSWord }}
+      </view>
+      <image id="image" alt="无" src="{{item.RtoSImage}}" />
+    </view>
+  </view>
   <van-divider />
 </view>
 <van-toast id="van-toast" />
