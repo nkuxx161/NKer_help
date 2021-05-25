@@ -360,7 +360,7 @@ Page({
           console.log(err)
         })
     } else {
-      let imageName = this.data.openid + this.randomString(10)
+      let imageName = this.data.openid + this.randomString(10) + '.png'
       // 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
       wx.cloud.uploadFile({
         cloudPath: 'images/' + imageName,

@@ -8,13 +8,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    focus:false,
-    passwordType:'password',
+    focus: false,
+    passwordType: 'password',
     src: 'https://webvpn.nankai.edu.cn/',
     userid: '',
     password: '',
     userName: '',
-    
+
   },
 
   /**
@@ -110,12 +110,11 @@ Page({
       success: (res) => {
         console.log(res)
         if (res.result.message === "Success") {
-            db.where({
-              _id:this.data.userid
+          db.where({
+              studentID: this.data.userid
             }).get()
-            .then(res=>{
-              
-              if(res.data.length != 0){
+            .then(res => {
+              if (res.data.length == 0) {
                 Toast.clear()
                 Toast.success("认证成功")
                 db.add({
@@ -141,15 +140,14 @@ Page({
                 wx.redirectTo({
                   url: '../userInfo/userInfo',
                 })
-              }
-              else{
+              } else {
                 Toast.clear()
                 Toast.fail("该学号已经注册，请联系客服进行处理！(点击认证界面下面的@Nker Helper)")
               }
             })
-          .catch(err => {
-            console.log(err)
-          })
+            .catch(err => {
+              console.log(err)
+            })
         } else {
           Toast.clear()
           Toast.fail("账号或者密码错误")
@@ -159,16 +157,16 @@ Page({
       complete: res => {},
     })
   },
-  showpassword:function(){
-    if(this.data.passwordType=='password')
-    this.setData({
-      passwordType:'text',
-      focus:true
-    })
+  showpassword: function () {
+    if (this.data.passwordType == 'password')
+      this.setData({
+        passwordType: 'text',
+        focus: true
+      })
     else
-    this.setData({
-      passwordType:'password',
-      focus:true
-    })
+      this.setData({
+        passwordType: 'password',
+        focus: true
+      })
   }
 })
