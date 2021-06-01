@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    studentID:'',
+    studentID: '',
     img: '',
     userID: '',
     user: [],
@@ -38,44 +38,53 @@ Page({
       userID: options.userID,
       img: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png',
     })
-    if(options.pageflag){
+    if (options.pageflag) {
       this.setData({
         flag: false
       })
     }
 
     userdb.where({
-      _openid: this.data.userID
-    }).get()
-    .then(res => {
-      this.setData({
-        user: res.data[0]
+        _openid: this.data.userID
+      }).get()
+      .then(res => {
+        this.setData({
+          user: res.data[0]
+        })
+        if (res.data[0].userIcon == '1')
+          this.setData({
+            img: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/' + res.data[0]._openid + '.jpg'
+          })
+        else {
+          this.setData({
+            img: 'cloud://xiongxiao-9g0m49qp0514cda7.7869-xiongxiao-9g0m49qp0514cda7-1305534329/images/defaultImg.png'
+          })
+        }
+        if (this.data.user.receiveCount == 0) {
+          this.setData({
+            rRate: 0
+          })
+        } else {
+          this.setData({
+            rRate: (this.data.user.receiveScore / this.data.user.receiveCount)
+          })
+        }
+        if (this.data.user.sendCount == 0) {
+          this.setData({
+            sRate: 0
+          })
+        } else {
+          this.setData({
+            sRate: (this.data.user.sendScore / this.data.user.sendCount)
+          })
+        }
+        this.setData({
+          studentID: this.data.user.studentID
+        })
       })
-      if(this.data.user.receiveCount == 0){
-        this.setData({
-          rRate: 0
-        })
-      } else {
-        this.setData({
-          rRate: (this.data.user.receiveScore/this.data.user.receiveCount)
-        })
-      }
-      if(this.data.user.sendCount == 0){
-        this.setData({
-          sRate: 0
-        })
-      } else {
-        this.setData({
-          sRate: (this.data.user.sendScore/this.data.user.sendCount)
-        })
-      }
-      this.setData({
-        studentID: this.data.user.studentID
+      .catch(err => {
+        console.log(err)
       })
-    })
-    .catch(err => {
-      console.log(err)
-    })
   },
 
   /**
